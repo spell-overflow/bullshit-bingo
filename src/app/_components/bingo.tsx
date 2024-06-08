@@ -20,15 +20,16 @@ export default function Bingo() {
 
   return (
     <>
-      <h1 className="p-8 text-4xl text-indigo-600">Bingo</h1>
+      <h1 className="p-8 text-4xl text-gray-200">Bingo</h1>
       <div className="flex space-x-5 text-center">
-        <div className="flex-auto text-indigo-200">
+        <div className="flex-auto text-gray-200">
           <Playfield entries={bingoEntries} />
         </div>
         <div className="flex-auto rounded bg-indigo-800 p-2">
           <input
-            className="m-2 rounded bg-indigo-200 p-1 text-black shadow"
+            className="m-2 h-8 rounded bg-gray-200 p-1 text-indigo-950 shadow"
             onChange={(e) => {
+              e.preventDefault();
               setEntryInput(e.target.value);
             }}
             value={entryInput}
@@ -36,7 +37,7 @@ export default function Bingo() {
           />
           <button
             onClick={addEntry}
-            className="m-2 rounded bg-indigo-950 p-1 text-indigo-200"
+            className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
           >
             add
           </button>
