@@ -7,10 +7,11 @@ type FieldObject = { text: string; crossed: boolean };
 
 export default function Playfield({
   entries,
+  numberOfColumns,
 }: {
   entries: FieldObject[];
+  numberOfColumns: number;
 }): JSX.Element {
-  const numberOfColumns = 5;
   const fieldSize = numberOfColumns * numberOfColumns;
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
@@ -81,7 +82,7 @@ export default function Playfield({
     } else {
       setOpen(true);
     }
-  }, [playfield, fieldSize]);
+  }, [playfield, fieldSize, numberOfColumns]);
 
   return (
     <>
@@ -101,8 +102,13 @@ export default function Playfield({
             key={i}
             entry={e}
             onChange={(state) => {
-              playfield[i]!.crossed = state;
-              setPlayfield([...playfield]);
+              const newPlayfield = [...playfield];
+              const oldPlayfieldEntry = playfield[i];
+              if (oldPlayfieldEntry) {
+                newPlayfield[i] = { ...oldPlayfieldEntry };
+                newPlayfield[i]!.crossed = state;
+                setPlayfield(newPlayfield);
+              }
             }}
           />
         ))}

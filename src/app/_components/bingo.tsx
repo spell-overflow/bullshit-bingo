@@ -4,8 +4,11 @@ import React from "react";
 import Playfield from "./playfield";
 
 export default function Bingo() {
+  const numberOfColumns = 5;
+
   const [bingoEntries, setBingoEntries] = React.useState<string[]>([]);
   const [entryInput, setEntryInput] = React.useState("");
+  const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
 
   const addEntry = () => {
     setBingoEntries([...bingoEntries, entryInput]);
@@ -24,7 +27,8 @@ export default function Bingo() {
       <div className="flex space-x-5 text-center">
         <div className="flex-auto text-gray-200">
           <Playfield
-            entries={bingoEntries.map((entry) => ({
+            numberOfColumns={numberOfColumns}
+            entries={playfieldEntries.map((entry) => ({
               text: entry,
               crossed: false,
             }))}
@@ -46,6 +50,27 @@ export default function Bingo() {
           >
             add
           </button>
+          <button
+            onClick={() => {
+              const playfieldSize = numberOfColumns * numberOfColumns;
+              const entries: string[] = [];
+              for (let i = 0; i < playfieldSize; i++) {
+                const randomNumber = Math.round(
+                  Math.random() * (bingoEntries.length - 1),
+                );
+                entries.push(bingoEntries[randomNumber] ?? "");
+              }
+              setPlayfieldEntries(entries);
+            }}
+            className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
+          >
+            fill playfield
+          </button>
+          <ul>
+            {bingoEntries.map((entry) => (
+              <li key={entry}>{entry}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </>
