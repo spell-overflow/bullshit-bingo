@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ModalDialog from "./modalDialog";
 
 type FieldObject = { text: string; crossed: boolean };
 
@@ -13,6 +14,7 @@ export default function Playfield({
   const fieldSize = numberOfColumns * numberOfColumns;
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const newPlayfield: FieldObject[] = [];
@@ -27,37 +29,21 @@ export default function Playfield({
     setPlayfield(newPlayfield);
   }, [entries, fieldSize]);
 
-  const firstRow = playfield.slice(0, numberOfColumns);
-  const firstColumn = playfield.filter((value, index) => {
-    return index % numberOfColumns === 0;
-  });
-  const winInFirstRow = firstRow.find((entry, index) => {
-    if (!entry.crossed) {
-      return false;
-    }
-
-    let returnValue = true;
-    for (let i = index + numberOfColumns; i < fieldSize; i += numberOfColumns) {
-      if (!playfield[i]?.crossed) {
-        returnValue = false;
-      }
-    }
-
-    return returnValue;
-  });
-
-  if (!winInFirstRow) {
-    const winInFirstColumn = firstColumn.find((entry, index) => {
+  useEffect(() => {
+    const firstRow = playfield.slice(0, numberOfColumns);
+    const firstColumn = playfield.filter((value, index) => {
+      return index % numberOfColumns === 0;
+    });
+    const winInFirstRow = firstRow.find((entry, index) => {
       if (!entry.crossed) {
         return false;
       }
 
-      const indexInPlayfield = index * numberOfColumns;
       let returnValue = true;
       for (
-        let i = indexInPlayfield + 1;
-        i < indexInPlayfield + numberOfColumns;
-        i++
+        let i = index + numberOfColumns;
+        i < fieldSize;
+        i += numberOfColumns
       ) {
         if (!playfield[i]?.crossed) {
           returnValue = false;
@@ -67,27 +53,54 @@ export default function Playfield({
       return returnValue;
     });
 
-    if (winInFirstColumn) {
-      console.log("Row Full!");
+    if (!winInFirstRow) {
+      const winInFirstColumn = firstColumn.find((entry, index) => {
+        if (!entry.crossed) {
+          return false;
+        }
+
+        const indexInPlayfield = index * numberOfColumns;
+        let returnValue = true;
+        for (
+          let i = indexInPlayfield + 1;
+          i < indexInPlayfield + numberOfColumns;
+          i++
+        ) {
+          if (!playfield[i]?.crossed) {
+            returnValue = false;
+          }
+        }
+
+        return returnValue;
+      });
+
+      if (winInFirstColumn) {
+        console.log("Row Full!");
+        setOpen(true);
+      }
+    } else {
+      console.log("Column Full!");
+      setOpen(true);
     }
-  } else {
-    console.log("Column Full!");
-  }
+  }, [playfield, fieldSize]);
 
   return (
-    <div className="grid grid-cols-5 gap-5">
-      {playfield.map((e, i) => (
-        <PlayfieldElement
-          key={i}
-          entry={e}
-          onChange={(state) => {
-            console.log(`${i} has changed to ${state}`);
-            playfield[i]!.crossed = state;
-            setPlayfield([...playfield]);
-          }}
-        />
-      ))}
-    </div>
+    <>
+      <ModalDialog open={open} setOpen={setOpen} />
+      <div className="grid grid-cols-5 gap-5">
+        {playfield.map((e, i) => (
+          <PlayfieldElement
+            key={i}
+            entry={e}
+            onChange={(state) => {
+              console.log(`${i} has changed to ${state}`);
+              playfield[i]!.crossed = state;
+              setPlayfield([...playfield]);
+            }}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

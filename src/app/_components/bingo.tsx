@@ -23,7 +23,12 @@ export default function Bingo() {
       <h1 className="p-8 text-4xl text-gray-200">Bingo</h1>
       <div className="flex space-x-5 text-center">
         <div className="flex-auto text-gray-200">
-          <Playfield entries={bingoEntries} />
+          <Playfield
+            entries={bingoEntries.map((entry) => ({
+              text: entry,
+              crossed: false,
+            }))}
+          />
         </div>
         <div className="flex-auto rounded bg-indigo-800 p-2">
           <input
