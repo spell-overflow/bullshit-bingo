@@ -2,25 +2,77 @@
 
 import { useEffect, useState } from "react";
 
+type FieldObject = { text: string; crossed: boolean };
+
 export default function Playfield({
   entries,
 }: {
-  entries: string[];
+  entries: FieldObject[];
 }): JSX.Element {
-  const [playfield, setPlayfield] = useState<string[]>([]);
+  const numberOfColumns = 5;
+  const fieldSize = numberOfColumns * numberOfColumns;
+
+  const [playfield, setPlayfield] = useState<FieldObject[]>([]);
 
   useEffect(() => {
-    const newPlayfield: string[] = [];
+    const newPlayfield: FieldObject[] = [];
 
     // initilize playfield
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < fieldSize; i++) {
       const entry = entries[i];
 
-      newPlayfield.push(entry ?? "");
+      newPlayfield.push(entry ?? { text: "", crossed: false });
     }
 
     setPlayfield(newPlayfield);
-  }, [entries]);
+  }, [entries, fieldSize]);
+
+  const firstRow = playfield.slice(0, numberOfColumns);
+  const firstColumn = playfield.filter((value, index) => {
+    return index % numberOfColumns === 0;
+  });
+  const winInFirstRow = firstRow.find((entry, index) => {
+    if (!entry.crossed) {
+      return false;
+    }
+
+    let returnValue = true;
+    for (let i = index + numberOfColumns; i < fieldSize; i += numberOfColumns) {
+      if (!playfield[i]?.crossed) {
+        returnValue = false;
+      }
+    }
+
+    return returnValue;
+  });
+
+  if (!winInFirstRow) {
+    const winInFirstColumn = firstColumn.find((entry, index) => {
+      if (!entry.crossed) {
+        return false;
+      }
+
+      const indexInPlayfield = index * numberOfColumns;
+      let returnValue = true;
+      for (
+        let i = indexInPlayfield + 1;
+        i < indexInPlayfield + numberOfColumns;
+        i++
+      ) {
+        if (!playfield[i]?.crossed) {
+          returnValue = false;
+        }
+      }
+
+      return returnValue;
+    });
+
+    if (winInFirstColumn) {
+      console.log("Row Full!");
+    }
+  } else {
+    console.log("Column Full!");
+  }
 
   return (
     <div className="grid grid-cols-5 gap-5">
@@ -28,7 +80,11 @@ export default function Playfield({
         <PlayfieldElement
           key={i}
           entry={e}
-          onChange={(state) => console.log(`${i} has changed to ${state}`)}
+          onChange={(state) => {
+            console.log(`${i} has changed to ${state}`);
+            playfield[i]!.crossed = state;
+            setPlayfield([...playfield]);
+          }}
         />
       ))}
     </div>
@@ -39,21 +95,18 @@ function PlayfieldElement({
   entry,
   onChange,
 }: {
-  entry: string;
+  entry: FieldObject;
   onChange: (state: boolean) => void;
 }): JSX.Element {
-  const [isDone, setIsDone] = useState(false);
-
   return (
     <div
       className="relative h-24 w-24 overflow-hidden text-ellipsis rounded-xl bg-indigo-800 p-3 shadow-md"
       onClick={() => {
-        onChange(!isDone);
-        setIsDone(!isDone);
+        onChange(!entry.crossed);
       }}
     >
-      {entry}
-      {isDone ? (
+      {entry.text}
+      {entry.crossed ? (
         <>
           <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-gray-500/50"></div>
           <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-gray-500/50"></div>
