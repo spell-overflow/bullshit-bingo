@@ -11,9 +11,15 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 export default function ModalDialog({
   open,
   setOpen,
+  title,
+  text,
+  buttonText,
 }: {
   open: boolean;
   setOpen: (state: boolean) => void;
+  title: string;
+  text: string;
+  buttonText: string;
 }) {
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -40,13 +46,10 @@ export default function ModalDialog({
                   as="h3"
                   className="text-base font-semibold leading-6 text-gray-900"
                 >
-                  Payment successful
+                  {title}
                 </DialogTitle>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consequatur amet labore.
-                  </p>
+                  <p className="text-sm text-gray-500">{text}</p>
                 </div>
               </div>
             </div>
@@ -56,7 +59,7 @@ export default function ModalDialog({
                 onClick={() => setOpen(false)}
                 className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Go back to dashboard
+                {buttonText}
               </button>
             </div>
           </DialogPanel>

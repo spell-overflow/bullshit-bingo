@@ -16,7 +16,7 @@ export default function Playfield({
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  const initializePlayfield = () => {
     const newPlayfield: FieldObject[] = [];
 
     // initilize playfield
@@ -27,7 +27,8 @@ export default function Playfield({
     }
 
     setPlayfield(newPlayfield);
-  }, [entries, fieldSize]);
+  };
+  useEffect(initializePlayfield, [entries, fieldSize]);
 
   useEffect(() => {
     const firstRow = playfield.slice(0, numberOfColumns);
@@ -75,25 +76,31 @@ export default function Playfield({
       });
 
       if (winInFirstColumn) {
-        console.log("Row Full!");
         setOpen(true);
       }
     } else {
-      console.log("Column Full!");
       setOpen(true);
     }
   }, [playfield, fieldSize]);
 
   return (
     <>
-      <ModalDialog open={open} setOpen={setOpen} />
+      <ModalDialog
+        open={open}
+        setOpen={(newState) => {
+          initializePlayfield();
+          setOpen(newState);
+        }}
+        title="Won Game!"
+        text="Gratulation! You have won this game!"
+        buttonText="Start a New Game"
+      />
       <div className="grid grid-cols-5 gap-5">
         {playfield.map((e, i) => (
           <PlayfieldElement
             key={i}
             entry={e}
             onChange={(state) => {
-              console.log(`${i} has changed to ${state}`);
               playfield[i]!.crossed = state;
               setPlayfield([...playfield]);
             }}
