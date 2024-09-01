@@ -41,18 +41,18 @@ export default function Playfield({
         return false;
       }
 
-      let returnValue = true;
+      let rowFull = true;
       for (
         let i = index + numberOfColumns;
         i < fieldSize;
         i += numberOfColumns
       ) {
         if (!playfield[i]?.crossed) {
-          returnValue = false;
+          rowFull = false;
         }
       }
 
-      return returnValue;
+      return rowFull;
     });
 
     if (!winInFirstRow) {
@@ -62,18 +62,18 @@ export default function Playfield({
         }
 
         const indexInPlayfield = index * numberOfColumns;
-        let returnValue = true;
+        let columnFull = true;
         for (
           let i = indexInPlayfield + 1;
           i < indexInPlayfield + numberOfColumns;
           i++
         ) {
           if (!playfield[i]?.crossed) {
-            returnValue = false;
+            columnFull = false;
           }
         }
 
-        return returnValue;
+        return columnFull;
       });
 
       if (winInFirstColumn) {
