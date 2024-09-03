@@ -10,8 +10,14 @@ export default function Bingo() {
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
 
+  const inputValidationAndTrim = (entryInput: string): string => {
+    const trimmedEntryInput = entryInput.trim();
+    return trimmedEntryInput;
+  };
+
   const addEntry = () => {
-    setBingoEntries([...bingoEntries, entryInput]);
+    const trimmedEntryInput = inputValidationAndTrim(entryInput);
+    setBingoEntries([...bingoEntries, trimmedEntryInput]);
     setEntryInput("");
   };
 
