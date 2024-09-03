@@ -55,7 +55,7 @@ export default function ModalDialog({
             </div>
             <div className="mt-5 sm:mt-6">
               <button
-                type="button"
+                type="submit"
                 onClick={() => setOpen(false)}
                 className="inline-flex w-full justify-center rounded-md bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800"
               >
