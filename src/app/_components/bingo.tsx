@@ -2,6 +2,7 @@
 
 import React from "react";
 import Playfield from "./playfield";
+import ModalDialog from "./modalDialog";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -9,6 +10,8 @@ export default function Bingo() {
   const [bingoEntries, setBingoEntries] = React.useState<string[]>([]);
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   const inputValidationAndTrim = (entryInput: string): string => {
     const trimmedEntryInput = entryInput.trim();
@@ -17,6 +20,15 @@ export default function Bingo() {
 
   const addEntry = () => {
     const trimmedEntryInput = inputValidationAndTrim(entryInput);
+
+    if (trimmedEntryInput.length > 24) {
+      setError("Entry is too long. Try a shorter one!");
+      setIsModalOpen(true);
+      return;
+    } else {
+      setError(null);
+    }
+
     setBingoEntries([...bingoEntries, trimmedEntryInput]);
     setEntryInput("");
   };
@@ -79,6 +91,16 @@ export default function Bingo() {
           </ul>
         </div>
       </div>
+
+      {isModalOpen && (
+        <ModalDialog
+          open={isModalOpen}
+          setOpen={setIsModalOpen}
+          title="Error"
+          text={error ?? ""}
+          buttonText="OKAY"
+        />
+      )}
     </>
   );
 }
