@@ -126,7 +126,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative h-24 w-24 overflow-hidden text-ellipsis rounded-xl bg-indigo-800 p-3 shadow-md"
+      className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-indigo-800 shadow-md"
       onClick={() => {
         onChange(!entry.crossed);
       }}
