@@ -47,6 +47,12 @@ export default function Bingo() {
     }
   };
 
+  const handleRemoveItem = (entry: string) => {
+    // remove item
+    setBingoEntries(bingoEntries.filter((item) => item !== entry));
+    console.log(`remove item`);
+  };
+
   return (
     <>
       <h1 className="p-8 text-4xl text-gray-200">Bingo</h1>
@@ -94,7 +100,16 @@ export default function Bingo() {
           </button>
           <ul>
             {bingoEntries.map((entry) => (
-              <li key={entry}>{entry}</li>
+              <li key={entry}>
+                <button
+                  type="button"
+                  className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
+                  onClick={() => handleRemoveItem(entry)}
+                >
+                  remove item
+                </button>
+                {entry}
+              </li>
             ))}
           </ul>
         </div>
