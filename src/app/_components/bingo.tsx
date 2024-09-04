@@ -100,7 +100,11 @@ export default function Bingo() {
           </button>
           <ul>
             {bingoEntries.map((entry) => (
-              <li key={entry}>
+              <li
+                key={entry}
+                className="flex items-center justify-between py-1"
+              >
+                <span>{entry}</span>
                 <button
                   type="button"
                   className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
@@ -108,7 +112,7 @@ export default function Bingo() {
                 >
                   remove item
                 </button>
-                {entry}
+                {/* {entry} */}
               </li>
             ))}
           </ul>
