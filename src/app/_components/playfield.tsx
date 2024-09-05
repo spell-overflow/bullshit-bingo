@@ -85,7 +85,7 @@ export default function Playfield({
   }, [playfield, fieldSize, numberOfColumns]);
 
   return (
-    <>
+    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
       <ModalDialog
         open={open}
         setOpen={(newState) => {
@@ -113,7 +113,7 @@ export default function Playfield({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -126,7 +126,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-indigo-800 shadow-md"
+      className="bg-curious-blue-300 relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl shadow-md"
       onClick={() => {
         onChange(!entry.crossed);
       }}
@@ -134,8 +134,8 @@ function PlayfieldElement({
       {entry.text}
       {entry.crossed ? (
         <>
-          <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-gray-500/50"></div>
-          <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-gray-500/50"></div>
+          <div className="bg-curious-blue-900/50 absolute -left-12 top-12 h-1 w-48 rotate-45"></div>
+          <div className="bg-curious-blue-900/50 absolute -left-12 top-12 h-1 w-48 -rotate-45"></div>
         </>
       ) : (
         <></>

@@ -3,6 +3,7 @@
 import React from "react";
 import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
+import Button from "./button";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -53,11 +54,22 @@ export default function Bingo() {
     console.log(`remove item`);
   };
 
+  const handleFillPlayfield = () => {
+    const playfieldSize = numberOfColumns * numberOfColumns;
+    const entries: string[] = [];
+    for (let i = 0; i < playfieldSize; i++) {
+      const randomNumber = Math.round(
+        Math.random() * (bingoEntries.length - 1),
+      );
+      entries.push(bingoEntries[randomNumber] ?? "");
+    }
+    setPlayfieldEntries(entries);
+  };
   return (
     <>
-      <h1 className="p-8 text-4xl text-gray-200">Bingo</h1>
+      <h1 className="text-curious-blue-200 p-8 text-4xl">Bingo</h1>
       <div className="flex space-x-5 text-center">
-        <div className="flex-auto text-gray-200">
+        <div className="text-curious-blue-200 flex-auto">
           <Playfield
             numberOfColumns={numberOfColumns}
             entries={playfieldEntries.map((entry) => ({
@@ -66,9 +78,9 @@ export default function Bingo() {
             }))}
           />
         </div>
-        <div className="flex-auto rounded bg-indigo-800 p-2">
+        <div className="bg-curious-blue-300 flex-auto  p-2">
           <input
-            className="m-2 h-8 rounded bg-gray-200 p-1 text-indigo-950 shadow"
+            className="bg-curious-blue-200 m-2 h-8 rounded p-1 text-indigo-950 shadow"
             onChange={(e) => {
               e.preventDefault();
               setEntryInput(e.target.value);
@@ -76,43 +88,30 @@ export default function Bingo() {
             value={entryInput}
             onKeyDown={handleKeyDown}
           />
-          <button
+          <Button
+            buttonText="add"
+            buttonType="prim"
             onClick={addEntry}
-            className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
-          >
-            add
-          </button>
-          <button
-            onClick={() => {
-              const playfieldSize = numberOfColumns * numberOfColumns;
-              const entries: string[] = [];
-              for (let i = 0; i < playfieldSize; i++) {
-                const randomNumber = Math.round(
-                  Math.random() * (bingoEntries.length - 1),
-                );
-                entries.push(bingoEntries[randomNumber] ?? "");
-              }
-              setPlayfieldEntries(entries);
-            }}
-            className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
-          >
-            fill playfield
-          </button>
+          ></Button>
+          <Button
+            buttonText="fill playfield"
+            buttonType="sec"
+            onClick={handleFillPlayfield}
+          ></Button>
           <ul>
             {bingoEntries.map((entry) => (
               <li
                 key={entry}
-                className="flex items-center justify-between py-1"
+                className="bg-curious-blue-500 flex items-center justify-between py-1"
               >
                 <span>{entry}</span>
                 <button
                   type="button"
-                  className="m-2 h-8 rounded bg-indigo-950 p-1 text-indigo-200 shadow"
+                  className="bg-curious-blue-950 text-curious-blue-200 m-2 h-8 rounded p-1 shadow"
                   onClick={() => handleRemoveItem(entry)}
                 >
                   remove item
                 </button>
-                {/* {entry} */}
               </li>
             ))}
           </ul>
