@@ -1,4 +1,4 @@
-type PrimButtonProperties = {
+type ButtonProperties = {
   buttonText: string;
   buttonType: "prim" | "sec";
   onClick: () => void;
@@ -8,7 +8,7 @@ export default function Button({
   buttonText,
   buttonType,
   onClick,
-}: PrimButtonProperties) {
+}: ButtonProperties) {
   const btnClass =
     buttonType === "prim"
       ? "bg-curious-blue-500 hover:bg-curious-blue-600"

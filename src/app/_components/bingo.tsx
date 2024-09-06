@@ -4,6 +4,7 @@ import React from "react";
 import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
 import Button from "./button";
+import Input from "./input";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -65,6 +66,12 @@ export default function Bingo() {
     }
     setPlayfieldEntries(entries);
   };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setEntryInput(event.target.value);
+  };
+
   return (
     <>
       <h1 className="text-curious-blue-200 p-8 text-4xl">Bingo</h1>
@@ -78,26 +85,27 @@ export default function Bingo() {
             }))}
           />
         </div>
-        <div className="bg-curious-blue-300 flex-auto  p-2">
-          <input
-            className="bg-curious-blue-200 m-2 h-8 rounded p-1 text-indigo-950 shadow"
-            onChange={(e) => {
-              e.preventDefault();
-              setEntryInput(e.target.value);
-            }}
-            value={entryInput}
-            onKeyDown={handleKeyDown}
-          />
-          <Button
-            buttonText="add"
-            buttonType="prim"
-            onClick={addEntry}
-          ></Button>
-          <Button
-            buttonText="fill playfield"
-            buttonType="sec"
-            onClick={handleFillPlayfield}
-          ></Button>
+        <div>
+          <div className="bg-curious-blue-300 flex-auto  p-2">
+            <Input
+              label="your task"
+              type="text"
+              placeholder="your task"
+              onChange={handleInputChange}
+              value={entryInput}
+              onKeyDown={handleKeyDown}
+            ></Input>
+            <Button
+              buttonText="add"
+              buttonType="prim"
+              onClick={addEntry}
+            ></Button>
+            <Button
+              buttonText="fill playfield"
+              buttonType="sec"
+              onClick={handleFillPlayfield}
+            ></Button>
+          </div>
           <ul>
             {bingoEntries.map((entry) => (
               <li
