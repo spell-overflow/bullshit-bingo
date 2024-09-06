@@ -113,13 +113,11 @@ export default function Bingo() {
                   className=" flex items-center justify-between py-1"
                 >
                   <span>{entry}</span>
-                  <button
-                    type="button"
-                    className="bg-curious-blue-950 text-curious-blue-200 m-2 h-8 rounded p-1 shadow"
+                  <Button
+                    buttonText="remove"
+                    buttonType="prim"
                     onClick={() => handleRemoveItem(entry)}
-                  >
-                    remove item
-                  </button>
+                  ></Button>
                 </li>
               ))}
             </ul>
