@@ -86,7 +86,7 @@ export default function Bingo() {
           />
         </div>
         <div>
-          <div className="bg-curious-blue-300 flex-auto  p-2">
+          <div className="bg-curious-blue-300 flex-auto rounded-lg p-2">
             <Input
               label="your task"
               type="text"
@@ -105,24 +105,25 @@ export default function Bingo() {
               buttonType="sec"
               onClick={handleFillPlayfield}
             ></Button>
-          </div>
-          <ul>
-            {bingoEntries.map((entry) => (
-              <li
-                key={entry}
-                className="bg-curious-blue-500 flex items-center justify-between py-1"
-              >
-                <span>{entry}</span>
-                <button
-                  type="button"
-                  className="bg-curious-blue-950 text-curious-blue-200 m-2 h-8 rounded p-1 shadow"
-                  onClick={() => handleRemoveItem(entry)}
+
+            <ul>
+              {bingoEntries.map((entry) => (
+                <li
+                  key={entry}
+                  className=" flex items-center justify-between py-1"
                 >
-                  remove item
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <span>{entry}</span>
+                  <button
+                    type="button"
+                    className="bg-curious-blue-950 text-curious-blue-200 m-2 h-8 rounded p-1 shadow"
+                    onClick={() => handleRemoveItem(entry)}
+                  >
+                    remove item
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
