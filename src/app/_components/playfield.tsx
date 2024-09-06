@@ -126,7 +126,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="bg-curious-blue-300 relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl shadow-md"
+      className="bg-curious-blue-300 text-curious-blue-950 relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl shadow-md"
       onClick={() => {
         onChange(!entry.crossed);
       }}

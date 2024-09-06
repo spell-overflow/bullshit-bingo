@@ -27,8 +27,8 @@ export default function Bingo() {
       setError("Entry is too long. Try a shorter one!");
       setIsModalOpen(true);
       return;
-    } else if (trimmedEntryInput.length < 4) {
-      setError("Entry is too short. Try a shorter one!");
+    } else if (trimmedEntryInput.length < 3) {
+      setError("Entry is too short. Try a longer one!");
       setIsModalOpen(true);
       return;
     } else if (bingoEntries.length === 24) {
@@ -74,7 +74,7 @@ export default function Bingo() {
 
   return (
     <>
-      <h1 className="text-curious-blue-200 p-8 text-4xl">Bingo</h1>
+      <h1 className="text-curious-blue-950 p-8 text-4xl">Bingo</h1>
       <div className="flex space-x-5 text-center">
         <div className="text-curious-blue-200 flex-auto">
           <Playfield
@@ -85,8 +85,8 @@ export default function Bingo() {
             }))}
           />
         </div>
-        <div>
-          <div className="bg-curious-blue-300 flex-auto rounded-lg p-2">
+        <div className="bg-curious-blue-300  mb-4 flex-auto rounded-lg p-2">
+          <div className="flex items-center">
             <Input
               label="your task"
               type="text"
@@ -98,29 +98,36 @@ export default function Bingo() {
             <Button
               buttonText="add"
               buttonType="prim"
+              additionalClasses=""
               onClick={addEntry}
             ></Button>
-            <Button
-              buttonText="fill playfield"
-              buttonType="sec"
-              onClick={handleFillPlayfield}
-            ></Button>
+          </div>
+          <div>
+            <div>
+              <ul>
+                {bingoEntries.map((entry) => (
+                  <li
+                    key={entry}
+                    className=" flex items-center justify-between py-1"
+                  >
+                    <span>{entry}</span>
+                    <Button
+                      buttonText="remove"
+                      buttonType="prim"
+                      additionalClasses="content-end"
+                      onClick={() => handleRemoveItem(entry)}
+                    ></Button>
+                  </li>
+                ))}
 
-            <ul>
-              {bingoEntries.map((entry) => (
-                <li
-                  key={entry}
-                  className=" flex items-center justify-between py-1"
-                >
-                  <span>{entry}</span>
-                  <Button
-                    buttonText="remove"
-                    buttonType="prim"
-                    onClick={() => handleRemoveItem(entry)}
-                  ></Button>
-                </li>
-              ))}
-            </ul>
+                <Button
+                  buttonText="fill playfield"
+                  buttonType="sec"
+                  additionalClasses=""
+                  onClick={handleFillPlayfield}
+                ></Button>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
