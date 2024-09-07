@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ModalDialog from "./modalDialog";
+import ConfettiComponent from "./confetti";
+import React from "react";
 
 type FieldObject = { text: string; crossed: boolean };
 
@@ -16,6 +18,7 @@ export default function Playfield({
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
   const [open, setOpen] = useState(false);
+  const [celebrate, setCelebrate] = useState(false);
 
   const initializePlayfield = () => {
     const newPlayfield: FieldObject[] = [];
@@ -78,9 +81,13 @@ export default function Playfield({
 
       if (winInFirstColumn) {
         setOpen(true);
+        setCelebrate(true);
+        console.log("celebrate set to true");
       }
     } else {
       setOpen(true);
+      setCelebrate(true);
+      console.log("celebrate set to true");
     }
   }, [playfield, fieldSize, numberOfColumns]);
 
@@ -91,11 +98,18 @@ export default function Playfield({
         setOpen={(newState) => {
           initializePlayfield();
           setOpen(newState);
+          setCelebrate(false);
         }}
         title="Won Game!"
         text="Gratulation! You have won this game!"
         buttonText="Start a New Game"
       />
+      <ConfettiComponent
+        celebrate={celebrate}
+        setCelebrate={(newState) => {
+          setCelebrate(newState);
+        }}
+      ></ConfettiComponent>
       <div className="grid grid-cols-5 gap-5">
         {playfield.map((e, i) => (
           <PlayfieldElement
