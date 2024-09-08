@@ -47,7 +47,7 @@ export default function Bingo() {
     setEntryInput("");
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleAddEntry = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       addEntry();
     }
@@ -97,7 +97,7 @@ export default function Bingo() {
               placeholder="your task"
               onChange={handleInputChange}
               value={entryInput}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleAddEntry}
             ></Input>
             <Button
               buttonText="add"

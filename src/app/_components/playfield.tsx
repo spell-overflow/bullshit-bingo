@@ -105,12 +105,14 @@ export default function Playfield({
         buttonText="Start a New Game"
         icon="smile"
       />
+
       <ConfettiComponent
         celebrate={celebrate}
         setCelebrate={(newState) => {
           setCelebrate(newState);
         }}
       ></ConfettiComponent>
+
       <div className="grid grid-cols-5 gap-5">
         {playfield.map((e, i) => (
           <PlayfieldElement
