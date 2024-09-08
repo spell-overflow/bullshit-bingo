@@ -40,14 +40,14 @@ export default function ModalDialog({
         return (
           <CheckIcon
             aria-hidden="true"
-            className="h-12 w-12 rounded-full bg-green-300 text-green-600"
+            className="bg-pine-300 text-pine-600 h-12 w-12 rounded-full"
           />
         );
       case "smile":
         return (
           <FaceSmileIcon
             aria-hidden="true"
-            className="h-12 w-12 rounded-full bg-green-300 text-green-600"
+            className="bg-pine-300 text-pine-600 h-12 w-12 rounded-full"
           />
         );
       default:
