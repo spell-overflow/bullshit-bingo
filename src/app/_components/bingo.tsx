@@ -39,6 +39,12 @@ export default function Bingo() {
       setIcon("error");
       setIsModalOpen(true);
       return;
+    } else if (bingoEntries.find((entry) => entry === trimmedEntryInput)) {
+      setError("Entry already exists.");
+      setIcon("error");
+      setIsModalOpen(true);
+      setEntryInput("");
+      return;
     } else {
       setError(null);
     }
