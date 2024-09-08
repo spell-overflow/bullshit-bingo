@@ -14,6 +14,7 @@ export default function Bingo() {
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [icon, setIcon] = React.useState<string | null>(null);
 
   const inputValidationAndTrim = (entryInput: string): string => {
     const trimmedEntryInput = entryInput.trim();
@@ -25,14 +26,17 @@ export default function Bingo() {
 
     if (trimmedEntryInput.length > 24) {
       setError("Entry is too long. Try a shorter one!");
+      setIcon("error");
       setIsModalOpen(true);
       return;
     } else if (trimmedEntryInput.length < 3) {
       setError("Entry is too short. Try a longer one!");
+      setIcon("error");
       setIsModalOpen(true);
       return;
     } else if (bingoEntries.length === 24) {
       setError("List full! - You can start your game");
+      setIcon("error");
       setIsModalOpen(true);
       return;
     } else {
@@ -139,6 +143,7 @@ export default function Bingo() {
           title="Error"
           text={error ?? ""}
           buttonText="OKAY"
+          icon={icon}
         />
       )}
     </>

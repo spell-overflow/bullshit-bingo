@@ -6,21 +6,55 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  XMarkIcon,
+  CheckIcon,
+  FaceSmileIcon,
+} from "@heroicons/react/24/outline";
 
 export default function ModalDialog({
   open,
   setOpen,
   title,
   text,
+  icon,
   buttonText,
 }: {
   open: boolean;
   setOpen: (state: boolean) => void;
   title: string;
   text: string;
+  icon: string | null;
   buttonText: string;
 }) {
+  const chooseIcon = () => {
+    switch (icon) {
+      case "error":
+        return (
+          <XMarkIcon
+            aria-hidden="true"
+            className="h-12 w-12 rounded-full bg-red-300 text-red-600"
+          />
+        );
+      case "check":
+        return (
+          <CheckIcon
+            aria-hidden="true"
+            className="h-12 w-12 rounded-full bg-green-300 text-green-600"
+          />
+        );
+      case "smile":
+        return (
+          <FaceSmileIcon
+            aria-hidden="true"
+            className="h-12 w-12 rounded-full bg-green-300 text-green-600"
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
@@ -34,12 +68,9 @@ export default function ModalDialog({
             transition
             className="relative transform overflow-hidden rounded-lg bg-red-50 px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-sm sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <div>
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-                <XMarkIcon
-                  aria-hidden="true"
-                  className="h-6 w-6 text-red-600"
-                />
+            <div className="flex flex-col items-center justify-center">
+              <div className="mx-auto flex items-center justify-center">
+                {chooseIcon()}
               </div>
               <div className="mt-3 text-center sm:mt-5">
                 <DialogTitle

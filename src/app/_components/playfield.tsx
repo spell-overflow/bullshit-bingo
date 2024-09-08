@@ -103,6 +103,7 @@ export default function Playfield({
         title="Won Game!"
         text="Gratulation! You have won this game!"
         buttonText="Start a New Game"
+        icon="smile"
       />
       <ConfettiComponent
         celebrate={celebrate}
