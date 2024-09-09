@@ -5,6 +5,8 @@ import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
 import Button from "./button";
 import Input from "./input";
+import Bubble from "./bubble";
+import Lettering from "./lettering";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -84,9 +86,12 @@ export default function Bingo() {
 
   return (
     <>
-      <h1 className="text-curious-blue-950 p-8 text-4xl">Bingo</h1>
+      <div className="m-0 flex flex-row pt-0">
+        <Lettering></Lettering>
+        <Bubble></Bubble>
+      </div>
       <div className="flex space-x-5 text-center">
-        <div className="text-curious-blue-200 flex-auto">
+        <div className="flex-auto text-curious-blue-200">
           <Playfield
             numberOfColumns={numberOfColumns}
             entries={playfieldEntries.map((entry) => ({
@@ -95,7 +100,7 @@ export default function Bingo() {
             }))}
           />
         </div>
-        <div className="bg-curious-blue-300  mb-4 flex-auto rounded-lg p-2">
+        <div className="mb-4  flex-auto rounded-lg bg-curious-blue-300 p-2">
           <div className="flex items-center">
             <Input
               label="your task"
