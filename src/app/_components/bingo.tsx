@@ -11,7 +11,18 @@ import Lettering from "./lettering";
 export default function Bingo() {
   const numberOfColumns = 5;
 
-  const [bingoEntries, setBingoEntries] = React.useState<string[]>([]);
+  const [bingoEntries, setBingoEntries] = React.useState<string[]>([
+    "Wand",
+    "Cauldron",
+    "Curse",
+    "Transformation",
+    "Witch Hat",
+    "Broomstick",
+    "Spell",
+    "Potion",
+    "Sorcery",
+    "Coven",
+  ]);
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string | null>(null);
@@ -90,8 +101,8 @@ export default function Bingo() {
         <Lettering></Lettering>
         <Bubble></Bubble>
       </div>
-      <div className="flex space-x-5 text-center">
-        <div className="flex-auto text-curious-blue-200">
+      <div className="flex h-[561px] items-stretch space-x-5 text-center">
+        <div className="h-full flex-auto text-curious-blue-200">
           <Playfield
             numberOfColumns={numberOfColumns}
             entries={playfieldEntries.map((entry) => ({
@@ -100,8 +111,9 @@ export default function Bingo() {
             }))}
           />
         </div>
-        <div className="mb-4  flex-auto rounded-lg bg-curious-blue-300 p-2">
-          <div className="flex items-center">
+
+        <div className="mb-4 flex h-full flex-auto flex-col overflow-y-auto rounded-lg bg-curious-blue-300 p-2 shadow-md">
+          <div className="mb-2 flex items-center">
             <Input
               label="your task"
               type="text"
@@ -117,32 +129,31 @@ export default function Bingo() {
               onClick={addEntry}
             ></Button>
           </div>
-          <div>
-            <div>
-              <ul>
-                {bingoEntries.map((entry) => (
-                  <li
-                    key={entry}
-                    className=" flex items-center justify-between py-1"
-                  >
-                    <span>{entry}</span>
-                    <Button
-                      buttonText="remove"
-                      buttonType="prim"
-                      additionalClasses="content-end"
-                      onClick={() => handleRemoveItem(entry)}
-                    ></Button>
-                  </li>
-                ))}
 
-                <Button
-                  buttonText="fill playfield"
-                  buttonType="sec"
-                  additionalClasses=""
-                  onClick={handleFillPlayfield}
-                ></Button>
-              </ul>
-            </div>
+          <div className=" scrollbar-thumb-rounded-full scrollbar-thumb-rounded scrollbar-track-rounded-full flex-1 overflow-y-auto scrollbar-thin scrollbar-track-curious-blue-500 scrollbar-thumb-curious-blue-800">
+            <ul>
+              {bingoEntries.map((entry) => (
+                <li
+                  key={entry}
+                  className=" mb-2 flex items-center justify-between"
+                >
+                  <span>{entry}</span>
+                  <Button
+                    buttonText="remove"
+                    buttonType="prim"
+                    additionalClasses=""
+                    onClick={() => handleRemoveItem(entry)}
+                  ></Button>
+                </li>
+              ))}
+
+              <Button
+                buttonText="fill playfield"
+                buttonType="sec"
+                additionalClasses=""
+                onClick={handleFillPlayfield}
+              ></Button>
+            </ul>
           </div>
         </div>
       </div>
