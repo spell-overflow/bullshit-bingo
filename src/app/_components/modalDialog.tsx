@@ -12,6 +12,8 @@ import {
   FaceSmileIcon,
 } from "@heroicons/react/24/outline";
 
+export type iconType = "error" | "check" | "smile" | null;
+
 export default function ModalDialog({
   open,
   setOpen,
@@ -24,7 +26,7 @@ export default function ModalDialog({
   setOpen: (state: boolean) => void;
   title: string;
   text: string;
-  icon: string | null;
+  icon: iconType;
   buttonText: string;
 }) {
   const chooseIcon = () => {
@@ -40,14 +42,14 @@ export default function ModalDialog({
         return (
           <CheckIcon
             aria-hidden="true"
-            className="bg-pine-300 text-pine-600 h-12 w-12 rounded-full"
+            className="h-12 w-12 rounded-full bg-pine-300 text-pine-600"
           />
         );
       case "smile":
         return (
           <FaceSmileIcon
             aria-hidden="true"
-            className="bg-pine-300 text-pine-600 h-12 w-12 rounded-full"
+            className="h-12 w-12 rounded-full bg-pine-300 text-pine-600"
           />
         );
       default:
@@ -59,7 +61,7 @@ export default function ModalDialog({
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
         transition
-        className="bg-curious-blue-100 fixed inset-0 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-curious-blue-100 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -88,7 +90,7 @@ export default function ModalDialog({
               <button
                 type="submit"
                 onClick={() => setOpen(false)}
-                className="bg-curious-blue-700 hover:bg-curious-blue-800 focus-visible:outline-curious-blue-800 text-curious-blue-100 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex w-full justify-center rounded-md bg-curious-blue-700 px-3 py-2 text-sm font-semibold text-curious-blue-100 shadow-sm hover:bg-curious-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-curious-blue-800"
               >
                 {buttonText}
               </button>

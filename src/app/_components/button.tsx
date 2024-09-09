@@ -1,29 +1,33 @@
+import React from "react";
+import classNames from "~/helper/classnames";
+
 type ButtonProperties = {
-  buttonText: string;
-  buttonType: "prim" | "sec";
-  additionalClasses: string;
+  buttonType?: "prim" | "sec";
+  className?: string;
   onClick: () => void;
+  children?: React.ReactNode;
 };
 
 export default function Button({
-  buttonText,
-  buttonType,
-  additionalClasses,
+  buttonType = "prim",
+  className,
   onClick,
+  children,
 }: ButtonProperties) {
-  const btnClass =
-    buttonType === "prim"
-      ? "bg-curious-blue-500 hover:bg-curious-blue-600 text-curious-blue-950"
-      : "bg-curious-blue-700 hover:bg-curious-blue-800 text-curious-blue-100";
-
   return (
     <>
       <button
         type="button"
-        className={`m-2 h-8 rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-md ${additionalClasses} ${btnClass}`}
+        className={classNames(
+          buttonType === "prim"
+            ? "bg-curious-blue-500 text-curious-blue-950 hover:bg-curious-blue-600"
+            : "bg-curious-blue-700 text-curious-blue-100 hover:bg-curious-blue-800",
+          `h-8 rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-md`,
+          className,
+        )}
         onClick={onClick}
       >
-        {buttonText}
+        {children}
       </button>
     </>
   );

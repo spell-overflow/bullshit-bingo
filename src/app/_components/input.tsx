@@ -1,38 +1,38 @@
 import React from "react";
+import classNames from "~/helper/classnames";
 
 type inputProperties = {
-  label: string;
-  type: string;
-  placeholder: string;
+  type?: React.HTMLInputTypeAttribute;
+  placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  className?: string;
 };
 
 const Input: React.FC<inputProperties> = ({
-  label = "Input",
   type = "text",
-  placeholder = "placeholder",
+  placeholder,
   value,
   onChange,
   onKeyDown,
+  className,
 }) => {
   return (
-    <div>
-      <label htmlFor={type} className="sr-only">
-        {label}
-      </label>
-      <input
-        id={type}
-        name={type}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        className="ring-curious-blue-50-300 focus:ring-curious-blue-500 block h-8 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-    </div>
+    <input
+      id={type}
+      name={type}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      className={classNames(
+        "ring-curious-blue-50-300 ring-inset focus:ring-2 focus:ring-inset focus:ring-curious-blue-500",
+        "h-8 rounded-md border-0 py-1.5 text-gray-900 shadow-md ring-1 placeholder:text-gray-400 sm:text-sm sm:leading-6",
+        className,
+      )}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+    />
   );
 };
 

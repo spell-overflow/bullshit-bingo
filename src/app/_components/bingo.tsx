@@ -3,10 +3,9 @@
 import React from "react";
 import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
+import type { iconType } from "./modalDialog";
 import Button from "./button";
 import Input from "./input";
-import Bubble from "./bubble";
-import Lettering from "./lettering";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -25,17 +24,12 @@ export default function Bingo() {
   ]);
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string>("");
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-  const [icon, setIcon] = React.useState<string | null>(null);
-
-  const inputValidationAndTrim = (entryInput: string): string => {
-    const trimmedEntryInput = entryInput.trim();
-    return trimmedEntryInput;
-  };
+  const [icon, setIcon] = React.useState<iconType>(null);
 
   const addEntry = () => {
-    const trimmedEntryInput = inputValidationAndTrim(entryInput);
+    const trimmedEntryInput = entryInput.trim();
 
     if (trimmedEntryInput.length > 24) {
       setError("Entry is too long. Try a shorter one!");
@@ -58,24 +52,10 @@ export default function Bingo() {
       setIsModalOpen(true);
       setEntryInput("");
       return;
-    } else {
-      setError(null);
     }
 
     setBingoEntries([...bingoEntries, trimmedEntryInput]);
     setEntryInput("");
-  };
-
-  const handleAddEntry = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      addEntry();
-    }
-  };
-
-  const handleRemoveItem = (entry: string) => {
-    // remove item
-    setBingoEntries(bingoEntries.filter((item) => item !== entry));
-    console.log(`remove item`);
   };
 
   const handleFillPlayfield = () => {
@@ -97,77 +77,92 @@ export default function Bingo() {
 
   return (
     <>
-      <div className="m-0 flex flex-row pt-0">
-        <Lettering></Lettering>
-        <Bubble></Bubble>
-      </div>
-      <div className="flex h-[561px] items-stretch space-x-5 text-center">
-        <div className="h-full flex-auto text-curious-blue-200">
-          <Playfield
-            numberOfColumns={numberOfColumns}
-            entries={playfieldEntries.map((entry) => ({
-              text: entry,
-              crossed: false,
-            }))}
-          />
-        </div>
+      <div className="min-h-full">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-5xl lg:px-8">
+          {/* Main 3 column grid */}
+          <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+            {/* Left column */}
+            <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+              <div className="overflow-visible">
+                <Playfield
+                  numberOfColumns={numberOfColumns}
+                  entries={playfieldEntries.map((entry) => ({
+                    text: entry,
+                    crossed: false,
+                  }))}
+                />
+              </div>
+            </div>
 
-        <div className="mb-4 flex h-full flex-auto flex-col overflow-y-auto rounded-lg bg-curious-blue-300 p-2 shadow-md">
-          <div className="mb-2 flex items-center">
-            <Input
-              label="your task"
-              type="text"
-              placeholder="your task"
-              onChange={handleInputChange}
-              value={entryInput}
-              onKeyDown={handleAddEntry}
-            ></Input>
-            <Button
-              buttonText="add"
-              buttonType="prim"
-              additionalClasses=""
-              onClick={addEntry}
-            ></Button>
-          </div>
+            {/* Right column */}
+            <div className="grid grid-cols-1 gap-4">
+              <div className="h-[35rem] overflow-hidden rounded-lg bg-curious-blue-300 shadow">
+                <div className="p-6">
+                  <div className="mb-2 flex gap-2">
+                    <div className="col-span-2 flex-1 basis-3/4">
+                      <Input
+                        type="text"
+                        placeholder="your task"
+                        onChange={handleInputChange}
+                        value={entryInput}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            addEntry();
+                          }
+                        }}
+                        className="w-full"
+                      />
+                    </div>
 
-          <div className=" scrollbar-thumb-rounded-full scrollbar-thumb-rounded scrollbar-track-rounded-full flex-1 overflow-y-auto scrollbar-thin scrollbar-track-curious-blue-500 scrollbar-thumb-curious-blue-800">
-            <ul>
-              {bingoEntries.map((entry) => (
-                <li
-                  key={entry}
-                  className=" mb-2 flex items-center justify-between"
-                >
-                  <span>{entry}</span>
+                    <Button onClick={addEntry} className="flex-1 basis-1/4">
+                      add
+                    </Button>
+                  </div>
+
+                  <div className="mb-2 box-content h-[27rem] overflow-y-scroll">
+                    {/*scrollbar-thumb-rounded-full scrollbar-thumb-rounded scrollbar-track-rounded-full scrollbar-thin scrollbar-track-curious-blue-500 scrollbar-thumb-curious-blue-800*/}
+                    <ul>
+                      {bingoEntries.map((entry) => (
+                        <li key={entry} className="mb-2 flex items-center">
+                          <div className="flex-grow">{entry}</div>
+                          <div>
+                            <Button
+                              onClick={() =>
+                                setBingoEntries(
+                                  bingoEntries.filter((item) => item !== entry),
+                                )
+                              }
+                            >
+                              X
+                            </Button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
                   <Button
-                    buttonText="remove"
-                    buttonType="prim"
-                    additionalClasses=""
-                    onClick={() => handleRemoveItem(entry)}
-                  ></Button>
-                </li>
-              ))}
-
-              <Button
-                buttonText="fill playfield"
-                buttonType="sec"
-                additionalClasses=""
-                onClick={handleFillPlayfield}
-              ></Button>
-            </ul>
+                    buttonType="sec"
+                    onClick={handleFillPlayfield}
+                    className="w-full"
+                  >
+                    fill playfield
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {isModalOpen && (
-        <ModalDialog
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          title="Error"
-          text={error ?? ""}
-          buttonText="OKAY"
-          icon={icon}
-        />
-      )}
+      <ModalDialog
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        title="Error"
+        text={error}
+        buttonText="OKAY"
+        icon={icon}
+      />
     </>
   );
 }

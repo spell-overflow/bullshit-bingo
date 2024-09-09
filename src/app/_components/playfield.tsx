@@ -82,17 +82,15 @@ export default function Playfield({
       if (winInFirstColumn) {
         setOpen(true);
         setCelebrate(true);
-        console.log("celebrate set to true");
       }
     } else {
       setOpen(true);
       setCelebrate(true);
-      console.log("celebrate set to true");
     }
   }, [playfield, fieldSize, numberOfColumns]);
 
   return (
-    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div className="max-w-7xl sm:px-6 lg:px-8">
       <ModalDialog
         open={open}
         setOpen={(newState) => {
@@ -113,7 +111,7 @@ export default function Playfield({
         }}
       ></ConfettiComponent>
 
-      <div className="grid grid-cols-5 gap-5">
+      <div className="mx-auto grid w-fit grid-cols-5 justify-items-center gap-5">
         {playfield.map((e, i) => (
           <PlayfieldElement
             key={i}
@@ -123,7 +121,7 @@ export default function Playfield({
               const oldPlayfieldEntry = playfield[i];
               if (oldPlayfieldEntry) {
                 newPlayfield[i] = { ...oldPlayfieldEntry };
-                newPlayfield[i]!.crossed = state;
+                newPlayfield[i].crossed = state;
                 setPlayfield(newPlayfield);
               }
             }}
@@ -143,7 +141,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="bg-curious-blue-300 text-curious-blue-950 relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl shadow-md"
+      className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-curious-blue-300 text-curious-blue-950 shadow-md"
       onClick={() => {
         onChange(!entry.crossed);
       }}
@@ -151,8 +149,8 @@ function PlayfieldElement({
       {entry.text}
       {entry.crossed ? (
         <>
-          <div className="bg-curious-blue-900/50 absolute -left-12 top-12 h-1 w-48 rotate-45"></div>
-          <div className="bg-curious-blue-900/50 absolute -left-12 top-12 h-1 w-48 -rotate-45"></div>
+          <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-curious-blue-900/50"></div>
+          <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-curious-blue-900/50"></div>
         </>
       ) : (
         <></>

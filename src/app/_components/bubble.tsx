@@ -1,11 +1,7 @@
 import Image from "next/image";
 
 const Bubble = () => {
-  return (
-    <div className="flex flex-row items-center">
-      <Image src="/speechbubble.png" alt="Logo" width={300} height={50} />
-    </div>
-  );
+  return <Image src="/speechbubble.png" alt="Logo" width={179} height={184} />;
 };
 
 export default Bubble;
