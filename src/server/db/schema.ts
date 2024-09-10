@@ -18,24 +18,119 @@ export const createTable = sqliteTableCreator(
   (name) => `avoidance-bingo_${name}`,
 );
 
-export const posts = createTable(
-  "post",
+export const tasklists = createTable("tasklist", {
+  id: text("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name", { length: 255 }),
+  shareId: text("share_id", { length: 255 }),
+  userId: text("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const tasks = createTable("task", {
+  id: text("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  text: text("text", { length: 255 }),
+  tasklistId: text("tasklist_id", { length: 255 })
+    .notNull()
+    .references(() => tasklists.id),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const playfields = createTable("playfield", {
+  id: text("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const playfieldsRelations = relations(playfields, ({ one }) => ({
+  user: one(users, { fields: [playfields.userId], references: [users.id] }),
+}));
+
+export const playfieldEntries = createTable("playfieldentry", {
+  id: text("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  text: text("text", { length: 255 }),
+  isCrossed: int("is_crossed", { mode: "boolean" }),
+  playfieldId: text("playfield_id", { length: 255 })
+    .notNull()
+    .references(() => playfields.id),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const games = createTable("game", {
+  id: text("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name", { length: 255 }),
+  isActive: int("is_active", { mode: "boolean" }),
+  userId: text("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  winner: text("winner_id", { length: 255 }).references(() => users.id),
+  createdAt: int("created_at", { mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const gameToPlayfield = createTable(
+  "game_to_playfield",
   {
-    id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    name: text("name", { length: 256 }),
-    createdById: text("created_by", { length: 255 })
+    gameId: text("game_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => games.id),
+    playfieldId: text("playfield_id")
+      .notNull()
+      .references(() => playfields.id),
+    isApproved: int("is_approved", { mode: "boolean" }),
     createdAt: int("created_at", { mode: "timestamp" })
       .default(sql`(unixepoch())`)
       .notNull(),
-    updatedAt: int("updatedAt", { mode: "timestamp" }).$onUpdate(
+    updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
       () => new Date(),
     ),
   },
-  (example) => ({
-    createdByIdIdx: index("created_by_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
+  (t) => ({
+    pk: primaryKey({
+      columns: [t.gameId, t.playfieldId],
+    }),
   }),
 );
 
