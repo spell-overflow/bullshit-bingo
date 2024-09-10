@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { TRPCReactProvider } from "~/trpc/react";
 import Lettering from "./_components/lettering";
 import Bubble from "./_components/bubble";
+import SessionContext from "./_components/sessionContext";
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -28,7 +29,9 @@ export default function RootLayout({
             <Bubble />
           </div>
         </div>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <SessionContext>{children}</SessionContext>
+        </TRPCReactProvider>
       </body>
     </html>
   );

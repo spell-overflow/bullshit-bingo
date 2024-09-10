@@ -7,22 +7,22 @@ import type { iconType } from "./modalDialog";
 import { Button } from "~/components/ui/button";
 import Input from "./input";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import { signOut, useSession } from "next-auth/react";
+import { api } from "~/trpc/react";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/pro-regular-svg-icons/faArrowRightFromBracket";
 
 export default function Bingo() {
   const numberOfColumns = 5;
 
-  const [bingoEntries, setBingoEntries] = React.useState<string[]>([
-    "Wand",
-    "Cauldron",
-    "Curse",
-    "Transformation",
-    "Witch Hat",
-    "Broomstick",
-    "Spell",
-    "Potion",
-    "Sorcery",
-    "Coven",
-  ]);
+  const { data: session, status } = useSession();
+  const tasks = api.bingo.getTasks.useQuery();
+  const addTask = api.bingo.addTask.useMutation();
+  const deleteTask = api.bingo.deleteTask.useMutation();
+
+  const bingoEntries = tasks.status === "success" ? tasks.data : [];
+
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string>("");
@@ -47,7 +47,7 @@ export default function Bingo() {
       setIcon("error");
       setIsModalOpen(true);
       return;
-    } else if (bingoEntries.find((entry) => entry === trimmedEntryInput)) {
+    } else if (bingoEntries.find((entry) => entry.text === trimmedEntryInput)) {
       setError("Entry already exists.");
       setIcon("error");
       setIsModalOpen(true);
@@ -55,8 +55,17 @@ export default function Bingo() {
       return;
     }
 
-    setBingoEntries([...bingoEntries, trimmedEntryInput]);
-    setEntryInput("");
+    addTask
+      .mutateAsync(trimmedEntryInput)
+      .then(() => {
+        tasks
+          .refetch()
+          .then(() => {
+            setEntryInput("");
+          })
+          .catch((e) => console.error(e)); //TODO: improve error handling
+      })
+      .catch((e) => console.error(e)); //TODO: improve error handling
   };
 
   const handleFillPlayfield = () => {
@@ -66,7 +75,7 @@ export default function Bingo() {
       const randomNumber = Math.round(
         Math.random() * (bingoEntries.length - 1),
       );
-      entries.push(bingoEntries[randomNumber] ?? "");
+      entries.push(bingoEntries[randomNumber]?.text ?? "");
     }
     setPlayfieldEntries(entries);
   };
@@ -82,6 +91,28 @@ export default function Bingo() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-5xl lg:px-8">
           {/* Main 3 column grid */}
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+            <div className="grid grid-cols-1 gap-4 lg:col-span-2"></div>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex justify-between rounded-lg bg-curious-blue-300 p-4 text-right align-middle text-xl font-bold shadow">
+                <span className="mr-4 block">{session?.user.name}</span>
+                <Avatar className="block">
+                  <AvatarImage
+                    src={session?.user.image ?? undefined}
+                    alt="user avatar"
+                  />
+                  <AvatarFallback>{session?.user.name}</AvatarFallback>
+                </Avatar>
+                <Button
+                  className="block"
+                  variant="ghost"
+                  onClick={async () => {
+                    await signOut();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faArrowRightFromBracket} size="2xl" />
+                </Button>
+              </div>
+            </div>
             {/* Left column */}
             <div className="grid grid-cols-1 gap-4 lg:col-span-2">
               <div className="overflow-visible">
@@ -122,17 +153,24 @@ export default function Bingo() {
                   <ScrollArea className="mb-2 box-content h-[27rem]">
                     <ul>
                       {bingoEntries.map((entry) => (
-                        <li key={entry} className="mb-2 flex items-center">
-                          <div className="flex-grow">{entry}</div>
+                        <li key={entry.id} className="mb-2 flex items-center">
+                          <div className="flex-grow">{entry.text}</div>
                           <div>
                             <Button
                               variant={"ghost"}
-                              onClick={() =>
-                                setBingoEntries(
-                                  bingoEntries.filter((item) => item !== entry),
-                                )
-                              }
-                              // TODO
+                              onClick={() => {
+                                deleteTask
+                                  .mutateAsync(entry.id)
+                                  .then(() => {
+                                    tasks.refetch().catch((e) => {
+                                      console.error(e); //TODO: improve error handling
+                                    });
+                                  })
+                                  .catch((e) => {
+                                    console.error(e); //TODO: improve error handling
+                                  });
+                              }}
+                              // TODO add icon
                               // size={icon}
                             >
                               X
