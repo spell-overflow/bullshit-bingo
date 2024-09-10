@@ -4,8 +4,9 @@ import React from "react";
 import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
 import type { iconType } from "./modalDialog";
-import Button from "./button";
+import { Button } from "~/components/ui/button";
 import Input from "./input";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -113,25 +114,26 @@ export default function Bingo() {
                         className="w-full"
                       />
                     </div>
-
                     <Button onClick={addEntry} className="flex-1 basis-1/4">
                       add
                     </Button>
                   </div>
 
-                  <div className="mb-2 box-content h-[27rem] overflow-y-scroll">
-                    {/*scrollbar-thumb-rounded-full scrollbar-thumb-rounded scrollbar-track-rounded-full scrollbar-thin scrollbar-track-curious-blue-500 scrollbar-thumb-curious-blue-800*/}
+                  <ScrollArea className="mb-2 box-content h-[27rem]">
                     <ul>
                       {bingoEntries.map((entry) => (
                         <li key={entry} className="mb-2 flex items-center">
                           <div className="flex-grow">{entry}</div>
                           <div>
                             <Button
+                              variant={"ghost"}
                               onClick={() =>
                                 setBingoEntries(
                                   bingoEntries.filter((item) => item !== entry),
                                 )
                               }
+                              // TODO
+                              // size={icon}
                             >
                               X
                             </Button>
@@ -139,10 +141,11 @@ export default function Bingo() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                    <ScrollBar orientation="vertical" />
+                  </ScrollArea>
 
                   <Button
-                    buttonType="sec"
+                    variant="secondary"
                     onClick={handleFillPlayfield}
                     className="w-full"
                   >
