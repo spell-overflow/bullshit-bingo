@@ -5,18 +5,21 @@ import Playfield from "./playfield";
 import ModalDialog from "./modalDialog";
 import type { iconType } from "./modalDialog";
 import { Button } from "~/components/ui/button";
-import Input from "./input";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { signOut, useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/pro-regular-svg-icons/faArrowRightFromBracket";
+import { faCircleXmark } from "@fortawesome/pro-regular-svg-icons/faCircleXmark";
+import Lettering from "./lettering";
+import Bubble from "./bubble";
+import { Input } from "~/components/ui/input";
 
 export default function Bingo() {
   const numberOfColumns = 5;
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const tasks = api.bingo.getTasks.useQuery();
   const addTask = api.bingo.addTask.useMutation();
   const deleteTask = api.bingo.deleteTask.useMutation();
@@ -91,11 +94,22 @@ export default function Bingo() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-5xl lg:px-8">
           {/* Main 3 column grid */}
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-            <div className="grid grid-cols-1 gap-4 lg:col-span-2"></div>
             {/* Avatar & User */}
+            <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+              <div className="w-full text-center">
+                <div className="inline-block align-middle">
+                  <Lettering />
+                </div>
+                <div className="inline-block align-middle">
+                  <Bubble />
+                </div>
+              </div>
+            </div>
             <div className="grid grid-cols-1 gap-4">
-              <div className="flex justify-between rounded-lg bg-curious-blue-300 p-4 text-right align-middle text-xl font-bold shadow">
-                <span className="mr-4 block">{session?.user.name}</span>
+              <div className="flex items-center justify-between rounded-bl-lg rounded-br-lg bg-curious-blue-300 p-4 text-right align-middle text-lg shadow">
+                <span className="block max-w-40 overflow-hidden text-ellipsis">
+                  {session?.user.name}
+                </span>
                 <Avatar className="block">
                   <AvatarImage
                     src={session?.user.image ?? undefined}
@@ -106,17 +120,19 @@ export default function Bingo() {
                 <Button
                   className="block"
                   variant="ghost"
+                  size={"icon"}
                   onClick={async () => {
                     await signOut();
                   }}
                 >
-                  <FontAwesomeIcon icon={faArrowRightFromBracket} size="2xl" />
+                  <FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" />
                 </Button>
               </div>
             </div>
+
             {/* Playfield - Left column */}
             <div className="grid grid-cols-1 gap-4 lg:col-span-2">
-              <div className="overflow-visible">
+              <div className="text-center">
                 <Playfield
                   numberOfColumns={numberOfColumns}
                   entries={playfieldEntries.map((entry) => ({
@@ -128,8 +144,8 @@ export default function Bingo() {
             </div>
 
             {/* Right column */}
-            <div className="grid grid-cols-1 gap-4">
-              <div className="h-[35rem] overflow-hidden rounded-lg bg-curious-blue-300 shadow">
+            <div className="grid grid-cols-4 gap-4">
+              <div className="col-span-4 grid h-[35rem] overflow-hidden rounded-lg bg-curious-blue-300 shadow">
                 <div className="p-6">
                   <div className="mb-2 flex gap-2">
                     <div className="col-span-2 flex-1 basis-3/4">
@@ -143,13 +159,13 @@ export default function Bingo() {
                             addEntry();
                           }
                         }}
-                        className="w-full"
+                        className="col-span-3 grid w-full bg-curious-blue-200"
                       />
                     </div>
                     <Button
                       onClick={addEntry}
                       className="flex-1 basis-1/4"
-                      size={"sm"}
+                      size={"default"}
                     >
                       add
                     </Button>
@@ -159,10 +175,13 @@ export default function Bingo() {
                     <ul>
                       {bingoEntries.map((entry) => (
                         <li key={entry.id} className="mb-2 flex items-center">
-                          <div className="flex-grow">{entry.text}</div>
+                          <div className="col-span-3 flex-grow ">
+                            {entry.text}
+                          </div>
                           <div>
                             <Button
                               variant={"ghost"}
+                              size={"icon"}
                               onClick={() => {
                                 deleteTask
                                   .mutateAsync(entry.id)
@@ -175,10 +194,8 @@ export default function Bingo() {
                                     console.error(e); //TODO: improve error handling
                                   });
                               }}
-                              // TODO add icon
-                              // size={icon}
                             >
-                              X
+                              <FontAwesomeIcon icon={faCircleXmark} size="lg" />
                             </Button>
                           </div>
                         </li>
@@ -186,7 +203,6 @@ export default function Bingo() {
                     </ul>
                     <ScrollBar orientation="vertical" />
                   </ScrollArea>
-
                   <Button
                     variant="secondary"
                     onClick={handleFillPlayfield}
