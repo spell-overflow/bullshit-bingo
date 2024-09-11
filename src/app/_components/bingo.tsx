@@ -92,6 +92,7 @@ export default function Bingo() {
           {/* Main 3 column grid */}
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
             <div className="grid grid-cols-1 gap-4 lg:col-span-2"></div>
+            {/* Avatar & User */}
             <div className="grid grid-cols-1 gap-4">
               <div className="flex justify-between rounded-lg bg-curious-blue-300 p-4 text-right align-middle text-xl font-bold shadow">
                 <span className="mr-4 block">{session?.user.name}</span>
@@ -113,7 +114,7 @@ export default function Bingo() {
                 </Button>
               </div>
             </div>
-            {/* Left column */}
+            {/* Playfield - Left column */}
             <div className="grid grid-cols-1 gap-4 lg:col-span-2">
               <div className="overflow-visible">
                 <Playfield
@@ -145,7 +146,11 @@ export default function Bingo() {
                         className="w-full"
                       />
                     </div>
-                    <Button onClick={addEntry} className="flex-1 basis-1/4">
+                    <Button
+                      onClick={addEntry}
+                      className="flex-1 basis-1/4"
+                      size={"sm"}
+                    >
                       add
                     </Button>
                   </div>

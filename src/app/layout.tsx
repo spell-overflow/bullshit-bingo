@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="bg-curious-blue-200">
+      <body>
         <div className="w-full text-center">
           <div className="inline-block align-middle">
             <Lettering />

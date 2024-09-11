@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
+    --background: 196 68% 88% /* DONE curious-blue-200*/;
+    --foreground: 218 72% 21%; /* DONE curious-blue-900 */
+    --card: 197 64% 83% /* DONE curious-blue-300 */;
+    --card-foreground: 218 72% 21%; /* DONE curious-blue-900 */
+    --popover: 197 64% 83% /* DONE curious-blue-300 */;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+    --primary: 208 58% 55%; /* DONE curious-blue-500 */
+    --primary-foreground: 193 64% 95%; /* DONE curious-blue-100 */
+    --secondary: 215 65% 30%; /* DONE curious-blue-800 */
+    --secondary-foreground: 193 64% 95%; /* DONE curious-blue-100 */
+    --muted: 215 65% 30%; /* DONE curious-blue-800 */
+    --muted-foreground: 212 60% 38%; /* DONE curious-blue-700 */
+    --accent: 215 65% 30%; /* DONE curious-blue-800 */
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --destructive-foreground: 193 64% 95%; /* DONE curious-blue-100 */
+    --border: 204° 57% 67%; /* DONE curious-blue-400 */
+    --input: 204 57% 67%; /* DONE curious-blue-400 */
+    --ring: 208 58% 55%; /* DONE curious-blue-500 */
     --radius: 0.75rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;

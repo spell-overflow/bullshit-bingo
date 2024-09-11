@@ -26,8 +26,8 @@ const Input: React.FC<inputProperties> = ({
       value={value}
       placeholder={placeholder}
       className={classNames(
-        "ring-curious-blue-50-300 ring-inset focus:ring-2 focus:ring-inset focus:ring-curious-blue-500",
-        "h-8 rounded-md border-0 py-1.5 text-gray-900 shadow-md ring-1 placeholder:text-gray-400 sm:text-sm sm:leading-6",
+        "focus:ring-inset focus:ring-curious-blue-500",
+        "h-8 rounded-md border-0 py-1.5 text-gray-900 shadow-lg placeholder:text-gray-400 sm:text-sm sm:leading-6",
         className,
       )}
       onChange={onChange}

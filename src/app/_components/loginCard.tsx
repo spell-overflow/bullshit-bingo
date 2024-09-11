@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
@@ -14,15 +13,16 @@ import {
 export default function LoginCard() {
   return (
     <Card className="mx-auto my-8 max-w-96">
-      <CardHeader>
-        <CardTitle>Login</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+      <CardHeader className="text-xl">
+        <CardTitle>Welcome to my Bullshit Bingo Game</CardTitle>
+        <CardDescription>Login to play</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex justify-center gap-4">
         <Button
           onClick={async () => {
             await signIn("github");
           }}
+          variant={"secondary"}
         >
           Github
         </Button>
@@ -30,13 +30,11 @@ export default function LoginCard() {
           onClick={async () => {
             await signIn("google");
           }}
+          variant={"secondary"}
         >
           Google
         </Button>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }
