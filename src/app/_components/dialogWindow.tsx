@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHatWitch, IconDefinition } from "@fortawesome/pro-regular-svg-icons";
+import {
+  faHatWitch,
+  type IconDefinition,
+} from "@fortawesome/pro-regular-svg-icons";
 
 import {
   Dialog,

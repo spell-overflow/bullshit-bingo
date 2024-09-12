@@ -104,11 +104,11 @@ export default function Playfield({
         }}
         title="Won Game!"
         windowIcon={faTrophyStar}
+        description="won game"
       >
         <div className="text-7xl text-curious-blue-500">Gratulation!</div>
         <div className="text-4xl text-curious-blue-500">You won this game!</div>
       </DialogWindow>
-
       <ConfettiComponent
         celebrate={celebrate}
         setCelebrate={(newState) => {

@@ -1,7 +1,7 @@
 import React from "react";
-import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import { useEffect } from "react";
+import useWindowSize from "~/helper/useWindowSize";
 
 interface ConfettiComponentProperties {
   celebrate: boolean;
@@ -24,7 +24,9 @@ const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
     }
   }, [celebrate, setCelebrate]);
 
-  return celebrate ? <Confetti width={width} height={height} /> : null;
+  return celebrate ? (
+    <Confetti width={width} height={height} numberOfPieces={800} />
+  ) : null;
 };
 
 export default ConfettiComponent;
