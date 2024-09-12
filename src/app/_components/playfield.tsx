@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ModalDialog from "./modalDialog";
+// import ModalDialog from "./modalDialog";
 import ConfettiComponent from "./confetti";
 import React from "react";
+import DialogWindow from "./dialogWindow";
+import { faTrophyStar } from "@fortawesome/pro-regular-svg-icons";
 
 type FieldObject = { text: string; crossed: boolean };
 
@@ -91,18 +93,21 @@ export default function Playfield({
 
   return (
     <div className="max-w-7xl sm:px-6 lg:px-8">
-      <ModalDialog
+      <DialogWindow
         open={open}
         setOpen={(newState) => {
-          initializePlayfield();
-          setOpen(newState);
-          setCelebrate(false);
+          if (newState === false) {
+            initializePlayfield();
+            setOpen(newState);
+            setCelebrate(false);
+          }
         }}
         title="Won Game!"
-        text="Gratulation! You have won this game!"
-        buttonText="Start a New Game"
-        icon="smile"
-      />
+        windowIcon={faTrophyStar}
+      >
+        <div className="text-7xl text-curious-blue-500">Gratulation!</div>
+        <div className="text-4xl text-curious-blue-500">You won this game!</div>
+      </DialogWindow>
 
       <ConfettiComponent
         celebrate={celebrate}

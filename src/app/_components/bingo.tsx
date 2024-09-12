@@ -2,8 +2,6 @@
 
 import React from "react";
 import Playfield from "./playfield";
-import ModalDialog from "./modalDialog";
-import type { iconType } from "./modalDialog";
 import { Button } from "~/components/ui/button";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { signOut, useSession } from "next-auth/react";
@@ -15,6 +13,8 @@ import { faCircleXmark } from "@fortawesome/pro-regular-svg-icons/faCircleXmark"
 import Lettering from "./lettering";
 import Bubble from "./bubble";
 import { Input } from "~/components/ui/input";
+import DialogWindow from "./dialogWindow";
+import { faBomb } from "@fortawesome/pro-regular-svg-icons";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -29,31 +29,26 @@ export default function Bingo() {
   const [entryInput, setEntryInput] = React.useState("");
   const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string>("");
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-  const [icon, setIcon] = React.useState<iconType>(null);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
 
     if (trimmedEntryInput.length > 24) {
       setError("Entry is too long. Try a shorter one!");
-      setIcon("error");
-      setIsModalOpen(true);
+      setOpen(true);
       return;
     } else if (trimmedEntryInput.length < 3) {
       setError("Entry is too short. Try a longer one!");
-      setIcon("error");
-      setIsModalOpen(true);
+      setOpen(true);
       return;
     } else if (bingoEntries.length === 24) {
       setError("List full! - You can start your game");
-      setIcon("error");
-      setIsModalOpen(true);
+      setOpen(true);
       return;
     } else if (bingoEntries.find((entry) => entry.text === trimmedEntryInput)) {
       setError("Entry already exists.");
-      setIcon("error");
-      setIsModalOpen(true);
+      setOpen(true);
       setEntryInput("");
       return;
     }
@@ -217,14 +212,14 @@ export default function Bingo() {
         </div>
       </div>
 
-      <ModalDialog
-        open={isModalOpen}
-        setOpen={setIsModalOpen}
+      <DialogWindow
+        open={open}
+        setOpen={setOpen}
         title="Error"
-        text={error}
-        buttonText="OKAY"
-        icon={icon}
-      />
+        windowIcon={faBomb}
+      >
+        <div>{error}</div>
+      </DialogWindow>
     </>
   );
 }
