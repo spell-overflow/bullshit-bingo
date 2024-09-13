@@ -1,4 +1,3 @@
-import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { bingoRouter } from "./routers/bingo";
 
@@ -9,7 +8,6 @@ import { bingoRouter } from "./routers/bingo";
  */
 export const appRouter = createTRPCRouter({
   bingo: bingoRouter,
-  post: postRouter,
 });
 
 // export type definition of API
