@@ -1,29 +1,22 @@
-# Create T3 App
+# Bullshit-Bingo App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+**Beschreibung:**
 
-## What's next? How do I make an app with this?
+Dies ist meine erste selbst programmierte App, inspiriert von den kleinen, nervigen Dingen, die man bei der Arbeit oder im Alltag nicht ganz vermeiden kann. Anstatt uns über diese Dinge zu ärgern, spielen wir jetzt "Bullshit-Bingo"! Die Idee wurde zusätzlich durch das Konzept des "Avoidance Bingo" aus dem Buch _The Anti-Planner_ ergänzt, bei dem man Aufgaben, die man gerne aufschiebt, in Bingofelder einträgt und abkreuzt, wenn sie erledigt sind. Der Gamification-Ansatz sorgt für mehr Spaß und Motivation bei unliebsamen Aufgaben!
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Funktionen
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Eigenes Bingo erstellen:** Füge deine eigenen Begriffe und Aufgaben über das Input-Feld hinzu.
+- **Spielfeld füllen:** Fülle das Spielfeld mit dem 'Fill Playfield'-Button. Falls weniger als 25 Einträge in deiner Liste vorhanden sind, werden Einträge mehrfach hinzugefügt.
+- **Spielstand verfolgen:** Kreuze erledigte Aufgaben oder erlebte Ereignisse auf dem Spielfeld ab, um das Spiel zu gewinnen.
+- **Speichern der Liste:** Beim Schließen der App wird deine Liste von Einträgen gespeichert (aktuell jedoch noch nicht das Spielfeld oder der Spielstand).
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Zukünftige Funktionen
 
-## Learn More
+- **Speichern von Spielfeld und Spielstand:** In zukünftigen Versionen soll der aktuelle Spielstand sowie das Spielfeld beim Schließen der App gespeichert werden.
+- **Kooperativer und kompetitiver Modus:** Möglichkeit, gemeinsam mit Freunden zu spielen, entweder kooperativ oder gegeneinander.
+- **Verschiedene Spielstände** Möglichkeit verschiedene Spielstände/Listen zu Speichern. Zum Beispiel einen mit deiner WG und einen nur für dich.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Technologien
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [T3 Stack](https://create.t3.gg/)
