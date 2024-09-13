@@ -1,10 +1,11 @@
 FROM node:20.17.0 as dependencies
 
-ARG FONTAWESOME_PACKAGE_TOKEN
+ARG FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN}
+ENV FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN}
 
 WORKDIR /app
 COPY package.json yarn.lock .npmrc /app/
-RUN FONTAWESOME_PACKAGE_TOKEN=${FONTAWESOME_PACKAGE_TOKEN} yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 FROM dependencies as build
 
