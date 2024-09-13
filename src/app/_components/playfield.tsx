@@ -106,8 +106,8 @@ export default function Playfield({
         windowIcon={faTrophyStar}
         description="won game"
       >
-        <div className="text-7xl text-curious-blue-500">Gratulation!</div>
-        <div className="text-4xl text-curious-blue-500">You won this game!</div>
+        <div className="text-7xl">Gratulation!</div>
+        <div className="text-4xl">You won this game!</div>
       </DialogWindow>
       <ConfettiComponent
         celebrate={celebrate}
@@ -146,7 +146,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-curious-blue-300 text-curious-blue-950 shadow-md"
+      className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-accent text-primary-foreground shadow-md"
       onClick={() => {
         onChange(!entry.crossed);
       }}
@@ -154,8 +154,8 @@ function PlayfieldElement({
       {entry.text}
       {entry.crossed ? (
         <>
-          <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-curious-blue-900/50"></div>
-          <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-curious-blue-900/50"></div>
+          <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-primary"></div>
+          <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-primary"></div>
         </>
       ) : (
         <></>

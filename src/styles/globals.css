@@ -11,17 +11,17 @@
     --popover: 197 64% 83% /* DONE curious-blue-300 */;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 208 58% 55%; /* DONE curious-blue-500 */
-    --primary-foreground: 193 64% 95%; /* DONE curious-blue-100 */
+    --primary-foreground: 218 72% 21%; /* DONE curious-blue-900 */
     --secondary: 215 65% 30%; /* DONE curious-blue-800 */
     --secondary-foreground: 193 64% 95%; /* DONE curious-blue-100 */
     --muted: 215 65% 30%; /* DONE curious-blue-800 */
     --muted-foreground: 212 60% 38%; /* DONE curious-blue-700 */
-    --accent: 215 65% 30%; /* DONE curious-blue-800 */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 204 57% 67%; /* DONE curious-blue-400 */
+    --accent-foreground: 218 72% 21%; /* DONE curious-blue-900 */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 193 64% 95%; /* DONE curious-blue-100 */
-    --border: 204° 57% 67%; /* DONE curious-blue-400 */
-    --input: 204 57% 67%; /* DONE curious-blue-400 */
+    --border: 208 58% 55%; /* DONE curious-blue-500 */
+    --input: 208 58% 55%; /* DONE curious-blue-500 */
     --ring: 208 58% 55%; /* DONE curious-blue-500 */
     --radius: 0.75rem;
     --chart-1: 12 76% 61%;
@@ -32,25 +32,25 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --background: 218 72% 21%; /* DONE curious-blue-900 */
+    --foreground: 197 64% 83%; /* DONE curious-blue-200*/
+    --card: 218 72% 21%; /* DONE curious-blue-900 */
+    --card-foreground: 196 68% 88%; /* DONE curious-blue-200*/
+    --popover: 218 72% 21%; /* DONE curious-blue-900 */
+    --popover-foreground: 196 68% 88%; /* DONE curious-blue-200*/
+    --primary: 212 60% 38%; /* DONE curious-blue-700 */
+    --primary-foreground: 197 64% 83%; /* DONE curious-blue-300 */
+    --secondary: 218 72% 21%; /* DONE curious-blue-900 */
+    --secondary-foreground: 197 64% 83%; /* DONE curious-blue-300 */
+    --muted: 215 65% 30%; /* DONE curious-blue-800 */
+    --muted-foreground: 210 54% 48%; /* DONE curious-blue-600 */
+    --accent: 215 65% 30%; /* DONE curious-blue-800 */
+    --accent-foreground: 197 64% 83%; /* DONE curious-blue-300*/
+    --destructive: 193 64% 95%; /* DONE curious-blue-100 */
+    --destructive-foreground: 196 68% 88%; /* DONE curious-blue-200*/
+    --border: 212 60% 38%; /* DONE curious-blue-700 */
+    --input: 212 60% 38%; /* DONE curious-blue-700 */
+    --ring: 212 60% 38%; /* DONE curious-blue-700 */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

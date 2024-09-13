@@ -15,6 +15,7 @@ import Bubble from "./bubble";
 import { Input } from "~/components/ui/input";
 import DialogWindow from "./dialogWindow";
 import { faBomb } from "@fortawesome/pro-regular-svg-icons";
+import DarkMode from "./darkmode";
 
 export default function Bingo() {
   const numberOfColumns = 5;
@@ -89,7 +90,7 @@ export default function Bingo() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-5xl lg:px-8">
           {/* Main 3 column grid */}
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-            {/* Avatar & User */}
+            {/* Header with Logo */}
             <div className="grid grid-cols-1 gap-4 lg:col-span-2">
               <div className="w-full text-center">
                 <div className="inline-block align-middle">
@@ -100,8 +101,10 @@ export default function Bingo() {
                 </div>
               </div>
             </div>
+
+            {/* Avatar  */}
             <div className="grid grid-cols-1 gap-4">
-              <div className="flex items-center justify-between rounded-bl-lg rounded-br-lg bg-curious-blue-300 p-4 text-right align-middle text-lg shadow">
+              <div className="flex items-center justify-between rounded-bl-lg rounded-br-lg bg-accent p-4 text-right align-middle text-lg shadow">
                 <span className="block max-w-40 overflow-hidden text-ellipsis">
                   {session?.user.name}
                 </span>
@@ -112,6 +115,9 @@ export default function Bingo() {
                   />
                   <AvatarFallback>{session?.user.name}</AvatarFallback>
                 </Avatar>
+                <div>
+                  <DarkMode></DarkMode>
+                </div>
                 <Button
                   className="block"
                   variant="ghost"
@@ -140,7 +146,7 @@ export default function Bingo() {
 
             {/* Right column */}
             <div className="grid grid-cols-4 gap-4">
-              <div className="col-span-4 grid h-[35rem] overflow-hidden rounded-lg bg-curious-blue-300 shadow">
+              <div className="col-span-4 grid h-[35rem] overflow-hidden rounded-lg bg-accent text-accent-foreground shadow">
                 <div className="p-6">
                   <div className="mb-2 flex gap-2">
                     <div className="col-span-2 flex-1 basis-3/4">
@@ -154,13 +160,14 @@ export default function Bingo() {
                             addEntry();
                           }
                         }}
-                        className="col-span-3 grid w-full bg-curious-blue-200"
+                        className="col-span-3 grid w-full"
                       />
                     </div>
                     <Button
                       onClick={addEntry}
                       className="flex-1 basis-1/4"
                       size={"default"}
+                      variant={"default"}
                     >
                       add
                     </Button>

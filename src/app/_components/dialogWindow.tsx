@@ -45,7 +45,7 @@ const DialogWindow: React.FC<dialogProperties> = ({
             size="2xl"
             className="pt-10"
           ></FontAwesomeIcon>
-          {description && <DialogDescription>{description}</DialogDescription>}
+          {description && <div />}
         </DialogHeader>
         <div className="mt-4">{children}</div>
         <DialogFooter className="mt-4">{footer}</DialogFooter>
