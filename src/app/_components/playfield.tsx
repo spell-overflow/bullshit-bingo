@@ -114,7 +114,7 @@ export default function Playfield({
         setCelebrate={(newState) => {
           setCelebrate(newState);
         }}
-      ></ConfettiComponent>
+      />
 
       <div className="mx-auto grid w-fit grid-cols-5 justify-items-center gap-5">
         {playfield.map((e, i) => (

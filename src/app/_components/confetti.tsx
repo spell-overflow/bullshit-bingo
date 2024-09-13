@@ -13,19 +13,41 @@ const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
   setCelebrate,
 }) => {
   const { width, height } = useWindowSize();
+  const [recycle, setRecycle] = React.useState(true);
+
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (celebrate) {
+      setRecycle(true);
+      const currentRef = canvasRef.current;
+      if (currentRef) {
+        currentRef.style.zIndex = "100";
+      }
+
+      const recycleTime = setTimeout(() => {
+        setRecycle(false);
+      }, 5000);
+
       const partytime = setTimeout(() => {
         setCelebrate(false);
       }, 10000);
 
-      return () => clearTimeout(partytime);
+      return () => {
+        clearTimeout(recycleTime);
+        clearTimeout(partytime);
+      };
     }
   }, [celebrate, setCelebrate]);
 
   return celebrate ? (
-    <Confetti width={width} height={height} numberOfPieces={800} />
+    <Confetti
+      width={width}
+      height={height}
+      numberOfPieces={800}
+      ref={canvasRef}
+      recycle={recycle}
+    />
   ) : null;
 };
 

@@ -25,10 +25,12 @@ export default function LoginCard() {
           </div>
         </div>
       </div>
-      <Card className="mx-auto my-8 max-w-96">
+      <Card className="mx-auto my-8 max-w-96 bg-primary">
         <CardHeader className="text-xl">
           <CardTitle>Welcome to my Bullshit Bingo Game</CardTitle>
-          <CardDescription>Login to play</CardDescription>
+          <CardDescription className="flex justify-center text-primary-foreground">
+            Login to play
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex justify-center gap-4">
           <Button

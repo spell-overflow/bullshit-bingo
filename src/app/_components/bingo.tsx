@@ -210,7 +210,7 @@ export default function Bingo() {
                     onClick={handleFillPlayfield}
                     className="w-full"
                   >
-                    fill playfield
+                    Fill playfield
                   </Button>
                 </div>
               </div>

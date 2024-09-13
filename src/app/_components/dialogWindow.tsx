@@ -12,6 +12,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
 
 interface dialogProperties {
   open: boolean;
@@ -48,6 +49,13 @@ const DialogWindow: React.FC<dialogProperties> = ({
           {description && <div />}
         </DialogHeader>
         <div className="mt-4">{children}</div>
+        <Button
+          variant="default"
+          onClick={() => setOpen(false)}
+          className="w-full"
+        >
+          Restart game
+        </Button>
         <DialogFooter className="mt-4">{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
