@@ -57,21 +57,6 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-  h1 {
-    @apply mt-6 text-4xl font-bold;
-  }
-  h2 {
-    @apply mt-6 text-3xl font-bold;
-  }
-  h3 {
-    @apply mt-6 text-2xl font-bold;
-  }
-  h4 {
-    @apply text-lg font-bold;
-  }
-  p {
-    @apply mt-3;
-  }
 }
 
 @layer base {
