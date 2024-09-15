@@ -15,7 +15,6 @@ import {
 const DarkMode: React.FC = () => {
   const { setTheme } = useTheme();
 
-  [];
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
