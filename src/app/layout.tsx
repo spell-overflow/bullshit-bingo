@@ -31,7 +31,7 @@ export default function RootLayout({
             <SessionContext>{children}</SessionContext>
           </TRPCReactProvider>
         </ThemeProvider>
-        <Footer></Footer>
+        <Footer />
       </body>
     </html>
   );
