@@ -27,13 +27,13 @@ export default function Home() {
           Am Tannenkamp 15 <br />
           49088 Osnabrück <br />
         </p>
+        <h4>Vertreten durch: </h4>
         <p>
-          <h4>Vertreten durch: </h4>
           Anneke Hugenberg
           <br />
         </p>
+        <h4>Kontakt:</h4>
         <p>
-          <h4>Kontakt:</h4>
           Telefon: 0541-97332405 <br />
           E-Mail:{" "}
           <a
@@ -43,9 +43,9 @@ export default function Home() {
             Annekehugenberg@proton.me
           </a>
         </p>
+        <h2>Haftungsausschluss: </h2>
+        <h3>Haftung für Inhalte</h3>
         <p>
-          <h2>Haftungsausschluss: </h2>
-          <h3>Haftung für Inhalte</h3>
           Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für
           die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir
           jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7
@@ -59,8 +59,10 @@ export default function Home() {
           Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der
           Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden
           von entsprechenden Rechtsverletzungen werden wir diese Inhalte
-          umgehend entfernen. <br />
-          <h3>Haftung für Links</h3>
+          umgehend entfernen.
+        </p>
+        <h3>Haftung für Links</h3>
+        <p>
           Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren
           Inhalte wir keinen Einfluss haben. Deshalb können wir für diese
           fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
@@ -72,7 +74,9 @@ export default function Home() {
           konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei
           Bekanntwerden von Rechtsverletzungen werden wir derartige Links
           umgehend entfernen.
-          <h3>Urheberrecht</h3>
+        </p>
+        <h3>Urheberrecht</h3>
+        <p>
           Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
           Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung,
           Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
@@ -85,14 +89,15 @@ export default function Home() {
           eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
           entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
           werden wir derartige Inhalte umgehend entfernen.
-          <h3>Datenschutz</h3>
+        </p>
+        <h3>Datenschutz</h3>
+        <p>
           Die Nutzung unserer Webseite ist in der Regel ohne Angabe
           personenbezogener Daten möglich. Soweit auf unseren Seiten
           personenbezogene Daten (beispielsweise Name, Anschrift oder
           eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets
           auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche
-          Zustimmung nicht an Dritte weitergegeben.
-          <br />
+          Zustimmung nicht an Dritte weitergegeben. <br />
           Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei
           der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein
           lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht
