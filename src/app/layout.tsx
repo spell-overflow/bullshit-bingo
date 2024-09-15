@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionContext from "./_components/sessionContext";
 import { ThemeProvider } from "./_components/theme-provider";
+import Footer from "./_components/footer";
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+      <body className="flex min-h-screen flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -30,6 +31,7 @@ export default function RootLayout({
             <SessionContext>{children}</SessionContext>
           </TRPCReactProvider>
         </ThemeProvider>
+        <Footer></Footer>
       </body>
     </html>
   );

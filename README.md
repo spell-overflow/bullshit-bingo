@@ -2,7 +2,7 @@
 
 **Beschreibung:**
 
-Dies ist meine erste selbst programmierte App, inspiriert von den kleinen, nervigen Dingen, die man bei der Arbeit oder im Alltag nicht ganz vermeiden kann. Anstatt uns über diese Dinge zu ärgern, spielen wir jetzt "Bullshit-Bingo"! Die Idee wurde zusätzlich durch das Konzept des "Avoidance Bingo" aus dem Buch _The Anti-Planner_ ergänzt, bei dem man Aufgaben, die man gerne aufschiebt, in Bingofelder einträgt und abkreuzt, wenn sie erledigt sind. Der Gamification-Ansatz sorgt für mehr Spaß und Motivation bei unliebsamen Aufgaben!
+Dies ist meine erste selbst programmierte App, inspiriert von den kleinen, nervigen Dingen, die man bei der Arbeit oder im Alltag nicht ganz vermeiden kann. Anstatt uns über diese Dinge zu ärgern, spielen wir jetzt "Bullshit-Bingo"! Die Idee wurde zusätzlich durch das Konzept des "Avoidance Bingo" aus dem Buch [The Anti-Planner](https://anti-planner.com/shop/the-anti-planner-how-to-get-sht-done-when-you-dont-feel-like-it/) ergänzt, bei dem man Aufgaben, die man gerne aufschiebt, in Bingofelder einträgt und abkreuzt, wenn sie erledigt sind. Der Gamification-Ansatz sorgt für mehr Spaß und Motivation bei unliebsamen Aufgaben!
 
 ## Funktionen
 
