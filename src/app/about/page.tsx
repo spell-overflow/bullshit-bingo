@@ -12,21 +12,20 @@ import {
 export default function Home() {
   return (
     <div>
-      <div className="gap-4">
-        <div className="w-full text-center">
-          <div className="inline-block align-middle">
-            <Lettering />
-          </div>
-          <div className="inline-block align-middle">
-            <Bubble />
-          </div>
+      <div className="w-full text-center">
+        <div className="inline-block align-middle">
+          <Lettering />
+        </div>
+        <div className="inline-block align-middle">
+          <Bubble />
         </div>
       </div>
       <Link href={"/"} className="flex justify-center">
         <Button>Return to Bingo</Button>
       </Link>
-      <div className="m-4 mx-auto max-w-3xl rounded-xl bg-accent p-4 text-accent-foreground sm:px-6 lg:max-w-5xl lg:px-8">
-        <Accordion type="single" collapsible className="w-full">
+      <div className="mx-auto my-4 max-w-3xl rounded-xl bg-accent p-4 pt-2 text-accent-foreground sm:px-6 lg:max-w-5xl lg:px-8">
+        <Accordion type="single" collapsible className="my-6 w-full">
+          <h2 className="mb-2 text-3xl font-bold">About</h2>
           <AccordionItem value="item-1">
             <AccordionTrigger>What is the Bullshit Bingo app?</AccordionTrigger>
             <AccordionContent>
