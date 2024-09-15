@@ -5,11 +5,13 @@ const useWindowSize = (_initialWidth = Infinity, _initialHeight = Infinity) => {
     width: number;
     height: number;
   }>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: typeof window !== "undefined" ? window.innerWidth : _initialWidth,
+    height: typeof window !== "undefined" ? window.innerHeight : _initialHeight,
   });
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     function handleSizeChange() {
       setWindowSize({
         width: window.innerWidth,
