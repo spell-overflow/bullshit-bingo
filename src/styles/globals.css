@@ -47,7 +47,7 @@
     --accent: 215 65% 30%; /* DONE curious-blue-800 */
     --accent-foreground: 197 64% 83%; /* DONE curious-blue-300*/
     --destructive: 193 64% 95%; /* DONE curious-blue-100 */
-    --destructive-foreground: 196 68% 88%; /* DONE curious-blue-200*/
+    --destructive-foreground: 218 72% 21%; /* DONE curious-blue-900 */
     --border: 212 60% 38%; /* DONE curious-blue-700 */
     --input: 212 60% 38%; /* DONE curious-blue-700 */
     --ring: 212 60% 38%; /* DONE curious-blue-700 */
@@ -56,6 +56,21 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+  h1 {
+    @apply mt-6 text-4xl font-bold;
+  }
+  h2 {
+    @apply mt-6 text-3xl font-bold;
+  }
+  h3 {
+    @apply mt-6 text-2xl font-bold;
+  }
+  h4 {
+    @apply text-lg font-bold;
+  }
+  p {
+    @apply mt-3;
   }
 }
 
