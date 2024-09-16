@@ -113,7 +113,7 @@ export default function Bingo() {
                     src={session?.user.image ?? undefined}
                     alt="user avatar"
                   />
-                  <AvatarFallback>{session?.user.name}</AvatarFallback>
+                  <AvatarFallback></AvatarFallback>
                 </Avatar>
                 <div>
                   <DarkMode></DarkMode>

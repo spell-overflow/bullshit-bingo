@@ -1,13 +1,8 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-import { type Adapter } from "next-auth/adapters";
-//import DiscordProvider from "next-auth/providers/discord";
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
+import { eq } from "drizzle-orm";
+import NextAuth from "next-auth";
+import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import KeycloakProvider from "next-auth/providers/keycloak";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
@@ -44,34 +39,110 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthConfig = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: ({ session, user }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      };
+    },
+  },
+  events: {
+    signIn: async ({ account }) => {
+      if (typeof account?.providerAccountId === "string") {
+        await db
+          .update(accounts)
+          .set({
+            access_token:
+              typeof account.access_token === "string"
+                ? account.access_token
+                : undefined,
+            refresh_token:
+              typeof account.refresh_token === "string"
+                ? account.refresh_token
+                : undefined,
+            expires_at:
+              typeof account.expires_at === "number"
+                ? account.expires_at
+                : undefined,
+            id_token:
+              typeof account.id_token === "string"
+                ? account.id_token
+                : undefined,
+            // refresh_expires_in:
+            //   typeof account.refresh_expires_in === "number"
+            //     ? account.refresh_expires_in
+            //     : undefined,
+          })
+          .where(eq(accounts.providerAccountId, account.providerAccountId));
+      }
+    },
+    signOut: async (message) => {
+      console.log("message", message);
+      if ("session" in message && message.session) {
+        const accountFromDB = await db
+          .select()
+          .from(accounts)
+          .where(eq(accounts.userId, message.session.userId))
+          .limit(1);
+
+        const account = accountFromDB[0];
+        if (account) {
+          if (account.provider === "keycloak") {
+            const client_id = env.KEYCLOAK_CLIENT_ID;
+            const client_secret = env.KEYCLOAK_CLIENT_SECRET;
+            const refresh_token = account.refresh_token;
+            const issuer = env.KEYCLOAK_ISSUER;
+
+            const params = new URLSearchParams();
+            if (refresh_token) params.append("refresh_token", refresh_token);
+            if (client_id) params.append("client_id", client_id);
+            if (client_secret) params.append("client_secret", client_secret);
+
+            try {
+              const result = await fetch(
+                `${issuer}/protocol/openid-connect/logout`,
+                {
+                  method: "POST",
+                  body: params.toString(),
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                },
+              );
+              if (!result.ok) {
+                console.error(
+                  `Keycloak logout failed: ${result.status} ${result.statusText}`,
+                );
+              }
+              console.log(await result.text());
+            } catch (error) {
+              console.error("Error during Keycloak logout:", error);
+            }
+          }
+        } else {
+          console.error(
+            `No account found for user ID during signout: ${message.session.userId}`,
+          );
+        }
+      }
+    },
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
-  }) as Adapter,
+  }),
   providers: [
-    /*DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),*/
-    GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    KeycloakProvider({
+      clientId: env.KEYCLOAK_CLIENT_ID,
+      clientSecret: env.KEYCLOAK_CLIENT_SECRET,
+      issuer: env.KEYCLOAK_ISSUER,
     }),
     /**
      * ...add more providers here.
@@ -85,9 +156,4 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);

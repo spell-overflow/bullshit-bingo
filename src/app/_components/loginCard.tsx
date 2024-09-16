@@ -12,7 +12,7 @@ import {
 import Lettering from "./lettering";
 import Bubble from "./bubble";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faArrowRightToBracket } from "@fortawesome/pro-regular-svg-icons";
 
 export default function LoginCard() {
   return (
@@ -37,12 +37,12 @@ export default function LoginCard() {
         <CardContent className="flex justify-center gap-4">
           <Button
             onClick={async () => {
-              await signIn("github");
+              await signIn("keycloak");
             }}
             variant={"secondary"}
           >
-            <FontAwesomeIcon icon={faGithub} />
-            &nbsp;Github
+            Login
+            <FontAwesomeIcon icon={faArrowRightToBracket} className="ml-2" />
           </Button>
         </CardContent>
       </Card>

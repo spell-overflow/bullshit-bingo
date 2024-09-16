@@ -1,11 +1,13 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
-  index,
-  int,
+  integer,
+  pgTable,
+  varchar,
+  timestamp,
+  boolean,
   primaryKey,
-  sqliteTableCreator,
-  text,
-} from "drizzle-orm/sqlite-core";
+  index,
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 /**
@@ -14,118 +16,91 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = sqliteTableCreator(
-  (name) => `avoidance-bingo_${name}`,
-);
 
-export const tasklists = createTable("tasklist", {
-  id: text("id", { length: 255 })
+export const tasklists = pgTable("tasklist", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name", { length: 255 }),
-  shareId: text("share_id", { length: 255 }),
-  userId: text("user_id", { length: 255 })
+  name: varchar("name", { length: 255 }),
+  shareId: varchar("share_id", { length: 255 }),
+  userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`(unixepoch())`)
-    .notNull(),
-  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date(),
-  ),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
-export const tasks = createTable("task", {
-  id: text("id", { length: 255 })
+export const tasks = pgTable("task", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  text: text("text", { length: 255 }),
-  tasklistId: text("tasklist_id", { length: 255 })
+  text: varchar("text", { length: 255 }),
+  tasklistId: varchar("tasklist_id", { length: 255 })
     .notNull()
     .references(() => tasklists.id),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`(unixepoch())`)
-    .notNull(),
-  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date(),
-  ),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
-export const playfields = createTable("playfield", {
-  id: text("id", { length: 255 })
+export const playfields = pgTable("playfield", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id", { length: 255 })
+  userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`(unixepoch())`)
-    .notNull(),
-  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date(),
-  ),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
 export const playfieldsRelations = relations(playfields, ({ one }) => ({
   user: one(users, { fields: [playfields.userId], references: [users.id] }),
 }));
 
-export const playfieldEntries = createTable("playfieldentry", {
-  id: text("id", { length: 255 })
+export const playfieldEntries = pgTable("playfieldentry", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  text: text("text", { length: 255 }),
-  isCrossed: int("is_crossed", { mode: "boolean" }),
-  playfieldId: text("playfield_id", { length: 255 })
+  text: varchar("text", { length: 255 }),
+  isCrossed: boolean("is_crossed"),
+  playfieldId: varchar("playfield_id", { length: 255 })
     .notNull()
     .references(() => playfields.id),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`(unixepoch())`)
-    .notNull(),
-  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date(),
-  ),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
-export const games = createTable("game", {
-  id: text("id", { length: 255 })
+export const games = pgTable("game", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name", { length: 255 }),
-  isActive: int("is_active", { mode: "boolean" }),
-  userId: text("user_id", { length: 255 })
+  name: varchar("name", { length: 255 }),
+  isActive: boolean("is_active"),
+  userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => users.id),
-  winner: text("winner_id", { length: 255 }).references(() => users.id),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`(unixepoch())`)
-    .notNull(),
-  updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date(),
-  ),
+  winner: varchar("winner_id", { length: 255 }).references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
-export const gameToPlayfield = createTable(
+export const gameToPlayfield = pgTable(
   "game_to_playfield",
   {
-    gameId: text("game_id")
+    gameId: varchar("game_id")
       .notNull()
       .references(() => games.id),
-    playfieldId: text("playfield_id")
+    playfieldId: varchar("playfield_id")
       .notNull()
       .references(() => playfields.id),
-    isApproved: int("is_approved", { mode: "boolean" }),
-    createdAt: int("created_at", { mode: "timestamp" })
-      .default(sql`(unixepoch())`)
-      .notNull(),
-    updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-      () => new Date(),
-    ),
+    isApproved: boolean("is_approved"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
   },
   (t) => ({
     pk: primaryKey({
@@ -134,41 +109,41 @@ export const gameToPlayfield = createTable(
   }),
 );
 
-export const users = createTable("user", {
-  id: text("id", { length: 255 })
+export const users = pgTable("user", {
+  id: varchar("id", { length: 255 })
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name", { length: 255 }),
-  email: text("email", { length: 255 }).notNull(),
-  emailVerified: int("email_verified", {
-    mode: "timestamp",
-  }).default(sql`(unixepoch())`),
-  image: text("image", { length: 255 }),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).notNull(),
+  emailVerified: timestamp("email_verified").defaultNow(),
+  image: varchar("image", { length: 255 }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
 }));
 
-export const accounts = createTable(
+export const accounts = pgTable(
   "account",
   {
-    userId: text("user_id", { length: 255 })
+    userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
-    type: text("type", { length: 255 })
+    type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
-    provider: text("provider", { length: 255 }).notNull(),
-    providerAccountId: text("provider_account_id", { length: 255 }).notNull(),
-    refresh_token: text("refresh_token"),
-    access_token: text("access_token"),
-    expires_at: int("expires_at"),
-    token_type: text("token_type", { length: 255 }),
-    scope: text("scope", { length: 255 }),
-    id_token: text("id_token"),
-    session_state: text("session_state", { length: 255 }),
+    provider: varchar("provider", { length: 255 }).notNull(),
+    providerAccountId: varchar("provider_account_id", {
+      length: 255,
+    }).notNull(),
+    refresh_token: varchar("refresh_token"),
+    access_token: varchar("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: varchar("token_type", { length: 255 }),
+    scope: varchar("scope", { length: 255 }),
+    id_token: varchar("id_token"),
+    session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
     compoundKey: primaryKey({
@@ -182,14 +157,16 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
 }));
 
-export const sessions = createTable(
+export const sessions = pgTable(
   "session",
   {
-    sessionToken: text("session_token", { length: 255 }).notNull().primaryKey(),
-    userId: text("userId", { length: 255 })
+    sessionToken: varchar("session_token", { length: 255 })
+      .notNull()
+      .primaryKey(),
+    userId: varchar("userId", { length: 255 })
       .notNull()
       .references(() => users.id),
-    expires: int("expires", { mode: "timestamp" }).notNull(),
+    expires: timestamp("expires").notNull(),
   },
   (session) => ({
     userIdIdx: index("session_userId_idx").on(session.userId),
@@ -200,12 +177,12 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
 
-export const verificationTokens = createTable(
+export const verificationTokens = pgTable(
   "verification_token",
   {
-    identifier: text("identifier", { length: 255 }).notNull(),
-    token: text("token", { length: 255 }).notNull(),
-    expires: int("expires", { mode: "timestamp" }).notNull(),
+    identifier: varchar("identifier", { length: 255 }).notNull(),
+    token: varchar("token", { length: 255 }).notNull(),
+    expires: timestamp("expires").notNull(),
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),

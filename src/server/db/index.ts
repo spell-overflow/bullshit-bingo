@@ -1,5 +1,5 @@
-import { createClient, type Client } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import { Client } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 
 import { env } from "~/env";
 import * as schema from "./schema";
@@ -13,7 +13,10 @@ const globalForDb = globalThis as unknown as {
 };
 
 export const client =
-  globalForDb.client ?? createClient({ url: env.DATABASE_URL });
+  globalForDb.client ?? new Client({ connectionString: env.DATABASE_URL });
+if (!globalForDb.client) {
+  await client.connect();
+}
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
 export const db = drizzle(client, { schema });
