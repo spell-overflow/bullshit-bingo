@@ -11,6 +11,8 @@ import {
 } from "~/components/ui/card";
 import Lettering from "./lettering";
 import Bubble from "./bubble";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export default function LoginCard() {
   return (
@@ -39,15 +41,8 @@ export default function LoginCard() {
             }}
             variant={"secondary"}
           >
-            Github
-          </Button>
-          <Button
-            onClick={async () => {
-              await signIn("google");
-            }}
-            variant={"secondary"}
-          >
-            Google
+            <FontAwesomeIcon icon={faGithub} />
+            &nbsp;Github
           </Button>
         </CardContent>
       </Card>
