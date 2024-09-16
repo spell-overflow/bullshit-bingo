@@ -3,7 +3,7 @@ import { Button } from "~/components/ui/button";
 import Lettering from "../_components/lettering";
 import Bubble from "../_components/bubble";
 
-export default function Home() {
+export default function Impressum() {
   return (
     <div className="mx-auto">
       <div className="w-full text-center">
