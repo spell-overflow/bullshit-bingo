@@ -1,7 +1,7 @@
-import Image from "next/image";
+import LetteringSvg from "@/public/lettering.svg";
 
 const Lettering = () => {
-  return <Image src="/appName.png" alt="Logo" width={291} height={184} />;
+  return <LetteringSvg />;
 };
 
 export default Lettering;
