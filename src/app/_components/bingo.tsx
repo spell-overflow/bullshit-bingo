@@ -235,6 +235,8 @@ export default function Bingo() {
         setOpen={setOpen}
         title="Error"
         windowIcon={faBomb}
+        buttontext="OKAY - bring me back"
+        description=""
       >
         <div>{error}</div>
       </DialogWindow>

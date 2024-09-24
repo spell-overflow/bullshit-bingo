@@ -104,6 +104,7 @@ export default function Playfield({
         title="Won Game!"
         windowIcon={faTrophyStar}
         description="won game"
+        buttontext="Start a New Game"
       >
         <div className="text-7xl">Gratulation!</div>
         <div className="text-4xl">You won this game!</div>

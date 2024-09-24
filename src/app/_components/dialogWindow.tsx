@@ -23,6 +23,7 @@ interface dialogProperties {
   windowIcon?: IconDefinition;
   footer?: React.ReactNode;
   trigger?: string;
+  buttontext: string;
 }
 
 const DialogWindow: React.FC<dialogProperties> = ({
@@ -33,6 +34,7 @@ const DialogWindow: React.FC<dialogProperties> = ({
   footer,
   open,
   setOpen,
+  buttontext,
 }) => {
   const icon: IconDefinition = windowIcon ? windowIcon : faHatWitch;
 
@@ -54,7 +56,7 @@ const DialogWindow: React.FC<dialogProperties> = ({
           onClick={() => setOpen(false)}
           className="w-full"
         >
-          Restart game
+          {buttontext}
         </Button>
         <DialogFooter className="mt-4">{footer}</DialogFooter>
       </DialogContent>
