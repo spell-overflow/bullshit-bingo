@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { tasks, tasklists } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import {
+  tasks,
+  tasklists,
+  playfields,
+  playfieldEntries,
+} from "~/server/db/schema";
+import { desc, eq } from "drizzle-orm";
 
 export const bingoRouter = createTRPCRouter({
   getTasks: protectedProcedure.query(async ({ ctx }) => {
@@ -57,4 +62,45 @@ export const bingoRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return ctx.db.delete(tasks).where(eq(tasks.id, input));
     }),
+
+  createPlayfield: protectedProcedure
+    .input(z.array(z.string()))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      try {
+        const playfield = await ctx.db
+          .insert(playfields)
+          .values({
+            userId,
+          })
+          .returning();
+
+        const playfieldId = playfield[0]?.id;
+        if (playfieldId) {
+          const entries = input.map((text) => ({
+            playfieldId,
+            text,
+            isCrossed: false,
+          }));
+
+          return ctx.db.insert(playfieldEntries).values(entries);
+        }
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
+    }),
+
+  getPlayfield: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select()
+      .from(playfields)
+      .leftJoin(
+        playfieldEntries,
+        eq(playfields.id, playfieldEntries.playfieldId),
+      )
+      .where(eq(playfields.userId, ctx.session.user.id))
+      .orderBy(desc(playfields.updatedAt));
+  }),
 });

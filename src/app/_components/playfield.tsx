@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import ModalDialog from "./modalDialog";
 import ConfettiComponent from "./confetti";
 import React from "react";
 import DialogWindow from "./dialogWindow";
 import { faTrophyStar } from "@fortawesome/pro-regular-svg-icons";
 
-type FieldObject = { text: string; crossed: boolean };
+export type FieldObject = { text: string; crossed: boolean };
 
 export default function Playfield({
   entries,

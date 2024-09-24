@@ -2,6 +2,7 @@
 
 import React from "react";
 import Playfield from "./playfield";
+import type { FieldObject } from "./playfield";
 import { Button } from "~/components/ui/button";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { signOut, useSession } from "next-auth/react";
@@ -24,11 +25,12 @@ export default function Bingo() {
   const tasks = api.bingo.getTasks.useQuery();
   const addTask = api.bingo.addTask.useMutation();
   const deleteTask = api.bingo.deleteTask.useMutation();
+  const playfield = api.bingo.getPlayfield.useQuery();
+  const createPlayfield = api.bingo.createPlayfield.useMutation();
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
 
   const [entryInput, setEntryInput] = React.useState("");
-  const [playfieldEntries, setPlayfieldEntries] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
 
@@ -76,7 +78,12 @@ export default function Bingo() {
       );
       entries.push(bingoEntries[randomNumber]?.text ?? "");
     }
-    setPlayfieldEntries(entries);
+    createPlayfield
+      .mutateAsync(entries)
+      .then(() => {
+        playfield.refetch().catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +125,7 @@ export default function Bingo() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <DarkMode></DarkMode>
+                  <DarkMode />
                 </div>
                 <Button
                   className="block"
@@ -138,10 +145,12 @@ export default function Bingo() {
               <div className="text-center">
                 <Playfield
                   numberOfColumns={numberOfColumns}
-                  entries={playfieldEntries.map((entry) => ({
-                    text: entry,
-                    crossed: false,
-                  }))}
+                  entries={
+                    playfield.data?.map((entry) => ({
+                      text: entry.playfieldentry?.text ?? "",
+                      crossed: entry.playfieldentry?.isCrossed ?? false,
+                    })) ?? ([] as FieldObject[])
+                  }
                 />
               </div>
             </div>
