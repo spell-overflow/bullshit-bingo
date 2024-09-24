@@ -45,7 +45,7 @@ export default function Bingo() {
       setError("Entry is too short. Try a longer one!");
       setOpen(true);
       return;
-    } else if (bingoEntries.length === 24) {
+    } else if (bingoEntries.length === 25) {
       setError("List full! - You can start your game");
       setOpen(true);
       return;
