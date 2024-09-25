@@ -63,6 +63,25 @@ export const bingoRouter = createTRPCRouter({
       return ctx.db.delete(tasks).where(eq(tasks.id, input));
     }),
 
+  deleteTasklist: protectedProcedure.mutation(async ({ ctx }) => {
+    const tasklist = await ctx.db
+      .select({ id: tasklists.id })
+      .from(tasklists)
+      .where(eq(tasklists.userId, ctx.session.user.id));
+
+    if (!tasklist) {
+      throw new Error("Tasklist not found");
+    }
+
+    const taskListId = tasklist[0]?.id;
+
+    if (taskListId) {
+      await ctx.db.delete(tasks).where(eq(tasks.tasklistId, taskListId));
+
+      return { success: true };
+    }
+  }),
+
   createPlayfield: protectedProcedure
     .input(z.array(z.string()))
     .mutation(async ({ ctx, input }) => {

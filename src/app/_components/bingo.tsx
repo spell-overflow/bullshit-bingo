@@ -27,6 +27,7 @@ export default function Bingo() {
   const deleteTask = api.bingo.deleteTask.useMutation();
   const playfield = api.bingo.getPlayfield.useQuery();
   const createPlayfield = api.bingo.createPlayfield.useMutation();
+  const deleteTasklist = api.bingo.deleteTasklist.useMutation();
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
 
@@ -89,6 +90,18 @@ export default function Bingo() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setEntryInput(event.target.value);
+  };
+
+  const handleDeleteTasklist = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+    try {
+      await deleteTasklist.mutateAsync();
+      console.log("Tasklist deleted");
+    } catch (e) {
+      console.error("Error deleting tasklist", e);
+    }
   };
 
   return (
@@ -216,13 +229,22 @@ export default function Bingo() {
                     </ul>
                     <ScrollBar orientation="vertical" />
                   </ScrollArea>
-                  <Button
-                    variant="secondary"
-                    onClick={handleFillPlayfield}
-                    className="w-full"
-                  >
-                    Fill playfield
-                  </Button>
+                  <div className="relative">
+                    <Button
+                      variant="default"
+                      onClick={handleDeleteTasklist}
+                      className="absolute bottom-8 my-4 w-full"
+                    >
+                      clear Tasklist
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleFillPlayfield}
+                      className="absolute bottom-0 w-full"
+                    >
+                      Fill playfield
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
