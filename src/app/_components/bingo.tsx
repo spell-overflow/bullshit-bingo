@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Playfield from "./playfield";
 import type { FieldObject } from "./playfield";
 import { Button } from "~/components/ui/button";
@@ -15,7 +15,11 @@ import Lettering from "./lettering";
 import Bubble from "./bubble";
 import { Input } from "~/components/ui/input";
 import DialogWindow from "./dialogWindow";
-import { faBomb } from "@fortawesome/pro-regular-svg-icons";
+import {
+  faBomb,
+  faIcons,
+  faQuestion,
+} from "@fortawesome/pro-regular-svg-icons";
 import DarkMode from "./darkmode";
 
 export default function Bingo() {
@@ -32,26 +36,46 @@ export default function Bingo() {
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
 
   const [entryInput, setEntryInput] = React.useState("");
-  const [error, setError] = React.useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
+  React.useState<boolean>(false);
+  const [dialogTitle, setDialogTitle] = React.useState("");
+  const [dialogText, setDialogText] = React.useState("");
+  const [windowIcon, setWindowIcon] = React.useState(faIcons);
+  const [primaryButtonText, setPrimaryButtonText] = React.useState("");
+  const [secondaryButtonText, setSecondaryButtonText] = React.useState("");
+  const [secondaryClick, setSecondaryClick] =
+    React.useState<MouseEventHandler<HTMLButtonElement>>();
+  const [rerenderMe, setRerenderMe] = React.useState<boolean>(false);
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
 
     if (trimmedEntryInput.length > 24) {
-      setError("Entry is too long. Try a shorter one!");
+      setDialogTitle("Error");
+      setDialogText("Entry is too long. Try a shorter one!");
+      setPrimaryButtonText("OK - bring me back");
+      setWindowIcon(faBomb);
       setOpen(true);
       return;
     } else if (trimmedEntryInput.length < 3) {
-      setError("Entry is too short. Try a longer one!");
+      setDialogTitle("Error");
+      setDialogText("Entry is too short. Try a longer one!");
+      setPrimaryButtonText("OK - bring me back");
+      setWindowIcon(faBomb);
       setOpen(true);
       return;
     } else if (bingoEntries.length === 25) {
-      setError("List full! - You can start your game");
+      setDialogTitle("Error");
+      setDialogText("List full! - You can start your game");
+      setPrimaryButtonText("OK - bring me back");
+      setWindowIcon(faBomb);
       setOpen(true);
       return;
     } else if (bingoEntries.find((entry) => entry.text === trimmedEntryInput)) {
-      setError("Entry already exists.");
+      setDialogTitle("Error");
+      setDialogText("Entry already exists");
+      setPrimaryButtonText("OK - bring me back");
+      setWindowIcon(faBomb);
       setOpen(true);
       setEntryInput("");
       return;
@@ -92,17 +116,28 @@ export default function Bingo() {
     setEntryInput(event.target.value);
   };
 
-  const handleDeleteTasklist = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    event.preventDefault();
-    try {
-      await deleteTasklist.mutateAsync();
-      console.log("Tasklist deleted");
-    } catch (e) {
-      console.error("Error deleting tasklist", e);
-    }
+  const confirmation = () => {
+    setDialogTitle("Really?");
+    setWindowIcon(faQuestion);
+    setDialogText("Do you really want to delete all tasks in Tasklist?");
+    setPrimaryButtonText("No. Bring me back.");
+    setSecondaryButtonText("Yes. Delete all Tasks.");
+    setSecondaryClick(handleDeleteTasklist);
+    setOpen(true);
   };
+
+  const handleDeleteTasklist =
+    () => (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      try {
+        deleteTasklist.mutate();
+        setRerenderMe(true);
+        setOpen(false);
+        console.log("Tasklist deleted");
+      } catch (e) {
+        console.error("Error deleting tasklist", e);
+      }
+    };
 
   return (
     <>
@@ -232,7 +267,7 @@ export default function Bingo() {
                   <div className="relative">
                     <Button
                       variant="default"
-                      onClick={handleDeleteTasklist}
+                      onClick={confirmation}
                       className="absolute bottom-8 my-4 w-full"
                     >
                       clear Tasklist
@@ -254,14 +289,15 @@ export default function Bingo() {
 
       <DialogWindow
         open={open}
-        setOpen={setOpen}
-        title="Error"
-        windowIcon={faBomb}
-        buttontext="OKAY - bring me back"
-        description=""
-      >
-        <div>{error}</div>
-      </DialogWindow>
+        onOpenChange={() => setOpen(false)}
+        title={dialogTitle}
+        description={dialogText}
+        windowIcon={windowIcon}
+        primaryButtonText={primaryButtonText}
+        onPrimaryClick={() => setOpen(false)}
+        secondaryButtonText={secondaryButtonText}
+        onSecondaryClick={secondaryClick}
+      />
     </>
   );
 }

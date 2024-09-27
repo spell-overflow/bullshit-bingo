@@ -18,8 +18,8 @@
     --muted-foreground: 212 60% 38%; /* DONE curious-blue-700 */
     --accent: 204 57% 67%; /* DONE curious-blue-400 */
     --accent-foreground: 218 72% 21%; /* DONE curious-blue-900 */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 193 64% 95%; /* DONE curious-blue-100 */
+    --destructive: 356 72% 65%; /* DONE fitting red */
+    --destructive-foreground: 218 72% 21%; /* DONE curious-blue-900 */
     --border: 208 58% 55%; /* DONE curious-blue-500 */
     --input: 208 58% 55%; /* DONE curious-blue-500 */
     --ring: 208 58% 55%; /* DONE curious-blue-500 */
@@ -51,7 +51,7 @@
     --muted-foreground: 210 54% 48%; /* DONE curious-blue-600 */
     --accent: 215 65% 30%; /* DONE curious-blue-800 */
     --accent-foreground: 197 64% 83%; /* DONE curious-blue-300*/
-    --destructive: 193 64% 95%; /* DONE curious-blue-100 */
+    --destructive: 356 72% 65%; /* DONE fitting red */
     --destructive-foreground: 218 72% 21%; /* DONE curious-blue-900 */
     --border: 212 60% 38%; /* DONE curious-blue-700 */
     --input: 212 60% 38%; /* DONE curious-blue-700 */

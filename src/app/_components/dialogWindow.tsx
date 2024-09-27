@@ -9,21 +9,24 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
+import type { MouseEventHandler } from "react";
 
 interface dialogProperties {
   open: boolean;
-  setOpen: (state: boolean) => void;
   title: string;
   description?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   windowIcon?: IconDefinition;
   footer?: React.ReactNode;
   trigger?: string;
-  buttontext: string;
+  primaryButtonText: string;
+  onPrimaryClick: MouseEventHandler<HTMLButtonElement>;
+  secondaryButtonText?: string;
+  onSecondaryClick?: MouseEventHandler<HTMLButtonElement>;
+  onOpenChange: (state: boolean) => void;
 }
 
 const DialogWindow: React.FC<dialogProperties> = ({
@@ -33,31 +36,47 @@ const DialogWindow: React.FC<dialogProperties> = ({
   windowIcon,
   footer,
   open,
-  setOpen,
-  buttontext,
+  primaryButtonText,
+  onPrimaryClick,
+  secondaryButtonText,
+  onSecondaryClick,
+  onOpenChange,
 }) => {
   const icon: IconDefinition = windowIcon ? windowIcon : faHatWitch;
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex flex-col items-center justify-center text-center">
-        <DialogHeader>
+        <DialogHeader className="items-center">
           <DialogTitle>{title}</DialogTitle>
           <FontAwesomeIcon
             icon={icon}
             size="2xl"
             className="pt-10"
           ></FontAwesomeIcon>
-          {description && <div />}
         </DialogHeader>
+        {description ? description : <div />}
         <div className="mt-4">{children}</div>
-        <Button
-          variant="default"
-          onClick={() => setOpen(false)}
-          className="w-full"
-        >
-          {buttontext}
-        </Button>
+        <div>
+          <Button
+            variant="default"
+            onClick={onPrimaryClick}
+            className="mx-4 w-fit"
+          >
+            {primaryButtonText}
+          </Button>
+          {secondaryButtonText ? (
+            <Button
+              variant="destructive"
+              onClick={onSecondaryClick}
+              className="mx-4 w-fit"
+            >
+              {secondaryButtonText}
+            </Button>
+          ) : (
+            ""
+          )}
+        </div>
         <DialogFooter className="mt-4">{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
