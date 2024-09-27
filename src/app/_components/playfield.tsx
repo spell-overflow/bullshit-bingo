@@ -94,17 +94,12 @@ export default function Playfield({
     <div className="max-w-7xl sm:px-6 lg:px-8">
       <DialogWindow
         open={open}
-        setOpen={(newState) => {
-          if (newState === false) {
-            initializePlayfield();
-            setOpen(newState);
-            setCelebrate(false);
-          }
-        }}
+        onOpenChange={() => setOpen(false)}
         title="Won Game!"
         windowIcon={faTrophyStar}
         description="won game"
-        buttontext="Start a New Game"
+        primaryButtonText="Start a New Game"
+        onPrimaryClick={() => setOpen(false)}
       >
         <div className="text-7xl">Gratulation!</div>
         <div className="text-4xl">You won this game!</div>
