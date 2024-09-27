@@ -1,25 +1,17 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import Lettering from "../_components/lettering";
-import Bubble from "../_components/bubble";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
+import LogoHeader from "../_components/logoHeader";
 
 export default function Home() {
   return (
     <div>
-      <div className="w-full text-center">
-        <div className="inline-block align-middle">
-          <Lettering />
-        </div>
-        <div className="inline-block align-middle">
-          <Bubble />
-        </div>
-      </div>
+      <LogoHeader />
       <Link href={"/"} className="flex justify-center">
         <Button>Return to Bingo</Button>
       </Link>

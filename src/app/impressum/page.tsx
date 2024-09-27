@@ -1,19 +1,11 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import Lettering from "../_components/lettering";
-import Bubble from "../_components/bubble";
+import LogoHeader from "../_components/logoHeader";
 
 export default function Impressum() {
   return (
     <div className="mx-auto">
-      <div className="w-full text-center">
-        <div className="inline-block align-middle">
-          <Lettering />
-        </div>
-        <div className="inline-block align-middle">
-          <Bubble />
-        </div>
-      </div>
+      <LogoHeader />
       <Link href={"/"} className="flex justify-center">
         <Button>Return to Bingo</Button>
       </Link>
