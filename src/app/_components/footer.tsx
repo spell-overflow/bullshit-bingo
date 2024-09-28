@@ -13,6 +13,9 @@ const Footer: React.FC = () => {
       <Link href="/datenschutz" className="hover:underline">
         Datenschutz
       </Link>
+      <Link href="/styleMe" className="hover:underline">
+        StyleMe
+      </Link>
     </footer>
   );
 };

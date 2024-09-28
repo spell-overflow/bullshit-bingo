@@ -20,7 +20,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="flex min-h-screen flex-col">
+      {/* <body className="flex min-h-screen flex-col"> */}
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -31,7 +32,7 @@ export default function RootLayout({
             <SessionContext>{children}</SessionContext>
           </TRPCReactProvider>
         </ThemeProvider>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
