@@ -1,9 +1,14 @@
 import BubbleSvg from "@/public/bubble.svg";
 
-const Bubble = () => {
+interface BubbleProperties {
+  width?: string;
+  className?: string;
+}
+
+const Bubble: React.FC<BubbleProperties> = ({ width = "3rem", className }) => {
   return (
     <>
-      <BubbleSvg className="mt-2" />
+      <BubbleSvg width={width} className={className} />
     </>
   );
 };

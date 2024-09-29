@@ -1,54 +1,47 @@
 import { faCauldron, faGameBoard } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BubbleSvg from "@/public/bubble.svg";
 import Lettering from "../_components/lettering";
+import Bubble from "../_components/bubble";
 
 export default function newRoot() {
   return (
-    <div>
-      {/* <div className="sm:grid sm:grid-cols-3">
-        <div className="m-2 flex justify-center bg-primary text-center sm:col-span-2">
-          <div className="m-2 bg-secondary">Lettering</div>
-          <div className="m-2 hidden  bg-secondary sm:visible">
-            Speechbubble
-          </div>
-        </div>
-        <div className="grid grid-cols-2">
-          <div />
-          <div className="flex items-center justify-center bg-primary">
-            <div className="">bubble</div>
-          </div>
-        </div>
-      </div> */}
+    <div className="flex min-h-screen flex-col justify-between bg-background">
+      {/*  logos */}
       <div>
-        <div className="block items-center bg-primary">
-          <div className="flex justify-center">
-            <Lettering />
-            <div className="absolute right-0 top-0 bg-secondary text-muted-foreground">
-              bubble
-            </div>
+        <div className="mt-5 flex items-center justify-center">
+          <Lettering width="10rem" className="-mt-4" />
+          <Bubble className="absolute -top-2 right-5" />
+        </div>
+      </div>
+
+      {/* playfield */}
+      <div className="flex items-center justify-center">
+        <div className="w-full max-w-screen-lg px-1">
+          <div className="mx-5 grid grid-cols-5 grid-rows-5 gap-2 text-sm">
+            {Array.from({ length: 25 }, (_, i) => (
+              <div
+                key={i}
+                className="flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
+              >
+                {i + 1}
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      {/* playfield */}
-      <div className="m-4 grid h-screen place-items-center">
-        <div className="grid grid-cols-5 grid-rows-5 gap-2 text-sm">
-          {Array.from({ length: 25 }, (_, i) => (
-            <div
-              key={i}
-              className="flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
-            >
-              {i + 1}
-            </div>
-          ))}
-        </div>
-      </div>
+
       {/* footer */}
-      <div className="absolute bottom-0 w-full">
-        <div className="flex rounded-t-md bg-primary text-center">
+      <div className="bottom-0 w-full rounded-t-md bg-primary py-2">
+        <div className="my-1 flex text-center">
           <FontAwesomeIcon icon={faGameBoard} className="h-10 flex-auto" />
-          <FontAwesomeIcon icon={faCauldron} className="h-10 flex-auto" />
-          <FontAwesomeIcon icon={faCauldron} className="h-10 flex-auto" />
+          <FontAwesomeIcon
+            icon={faCauldron}
+            className="h-10 flex-auto text-transparent/20"
+          />
+          <FontAwesomeIcon
+            icon={faCauldron}
+            className="h-10 flex-auto text-transparent/20"
+          />
         </div>
       </div>
     </div>
