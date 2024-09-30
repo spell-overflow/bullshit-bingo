@@ -13,7 +13,7 @@ export default function LogoHeader() {
   const { data: session } = useSession();
 
   return (
-    <>
+    <div className="hidden">
       <div className="mt-2 flex items-center justify-center gap-6 lg:col-span-2">
         <div className="inline-block align-middle">
           <Lettering />
@@ -51,6 +51,6 @@ export default function LogoHeader() {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

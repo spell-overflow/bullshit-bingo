@@ -1,3 +1,5 @@
+"use client";
+
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "~/components/ui/button";
@@ -22,7 +24,6 @@ const MobileNav: React.FC<NavItems> = ({ className, navItems }) => {
               key={index}
               variant="ghost"
               onClick={() => {
-                // setView;
                 console.log("me");
               }}
               className="h-10 flex-auto"

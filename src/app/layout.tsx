@@ -1,11 +1,22 @@
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
-
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionContext from "./_components/sessionContext";
 import { ThemeProvider } from "./_components/theme-provider";
+import Lettering from "@/src/app/_components/lettering";
+import Bubble from "@/src/app/_components/bubble";
+import NavBar from "./_components/navBar";
+import {
+  faGrid5,
+  type IconDefinition,
+} from "@fortawesome/pro-regular-svg-icons";
+import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
+
+interface NavItem {
+  name: string;
+  icon: IconDefinition;
+}
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -18,6 +29,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const navItems: NavItem[] = [{ name: "Game", icon: faGrid5 }];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       {/* <body className="flex min-h-screen flex-col"> */}
@@ -29,10 +41,28 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TRPCReactProvider>
-            <SessionContext>{children}</SessionContext>
+            <div className="flex min-h-screen w-full flex-col justify-between bg-background">
+              {/*  logos */}
+              <div className="mt-5 flex justify-between">
+                <div className="ml-7 w-16" />
+                <Lettering width="10rem" />
+                <Bubble className="mr-7 w-16" />
+              </div>
+
+              <NavBar
+                className="hidden w-2/3 sm:block sm:text-3xl"
+                navItems={navItems}
+              ></NavBar>
+
+              <SessionContext>{children}</SessionContext>
+
+              <Footer className="hidden sm:flex" />
+
+              <MobileNav navItems={navItems} className="sm:hidden" />
+            </div>
           </TRPCReactProvider>
         </ThemeProvider>
-        {/* <Footer /> */}
+        {/* <Footer className="" /> */}
       </body>
     </html>
   );
