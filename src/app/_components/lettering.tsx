@@ -11,7 +11,11 @@ const Lettering: React.FC<LetteringProperties> = ({
   className,
 }) => {
   return (
-    <LetteringSvg /* width={width} */ width={width} className={className} />
+    <LetteringSvg
+      /* width={width} */ width={width}
+      height=""
+      className={className}
+    />
   );
 };
 

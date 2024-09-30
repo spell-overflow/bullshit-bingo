@@ -8,7 +8,7 @@ interface BubbleProperties {
 const Bubble: React.FC<BubbleProperties> = ({ width = "3rem", className }) => {
   return (
     <>
-      <BubbleSvg width={width} className={className} />
+      <BubbleSvg width={width} height="" className={className} />
     </>
   );
 };
