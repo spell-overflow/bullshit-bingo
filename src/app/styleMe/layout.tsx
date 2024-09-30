@@ -1,11 +1,20 @@
-import { faCauldron, faGrid5 } from "@fortawesome/pro-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
+
+import { faGrid5 } from "@fortawesome/pro-regular-svg-icons";
+import type { IconDefinition } from "@fortawesome/pro-regular-svg-icons";
 import Lettering from "../_components/lettering";
 import Bubble from "../_components/bubble";
+import MobileNav from "../_components/mobileNav";
+import NavBar from "../_components/navBar";
 
-const navigation = [];
+interface NavItem {
+  name: string;
+  icon: IconDefinition;
+}
 
 export default function newRoot() {
+  const navItems: NavItem[] = [{ name: "Game", icon: faGrid5 }];
+
   return (
     <div className="flex min-h-screen w-full flex-col justify-between bg-background">
       {/*  logos */}
@@ -15,9 +24,11 @@ export default function newRoot() {
         <Bubble className="mr-7 w-16" />
       </div>
 
+      <NavBar className="hidden sm:block" navItems={navItems}></NavBar>
+
       {/* playfield */}
       <div className="flex items-center justify-center">
-        <div className="w-full max-w-screen-md px-2 sm:bg-red-500">
+        <div className="w-full max-w-screen-md px-2">
           <div className="mx-5 grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
             {Array.from({ length: 25 }, (_, i) => (
               <div
@@ -32,19 +43,7 @@ export default function newRoot() {
       </div>
 
       {/* footer */}
-      <div className="bottom-0 w-full rounded-t-md bg-primary py-2">
-        <div className="my-1 flex text-center">
-          <FontAwesomeIcon icon={faGrid5} className="h-10 flex-auto" />
-          <FontAwesomeIcon
-            icon={faCauldron}
-            className="h-10 flex-auto text-transparent/20"
-          />
-          <FontAwesomeIcon
-            icon={faCauldron}
-            className="h-10 flex-auto text-transparent/20"
-          />
-        </div>
-      </div>
+      <MobileNav navItems={navItems} className="sm:hidden" />
     </div>
   );
 }
