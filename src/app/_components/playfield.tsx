@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import ConfettiComponent from "./confetti";
 import React from "react";
 import DialogWindow from "./dialogWindow";
-import { faTrophyStar } from "@fortawesome/pro-regular-svg-icons";
+import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// TODO: delete logoHeader
 export type FieldObject = { text: string; crossed: boolean };
 
 export default function Playfield({
@@ -130,43 +130,9 @@ export default function Playfield({
                 }}
               />
             ))}
-            {/* playfield */}
-            {/* <div className="flex items-center justify-center">
-          <div className="w-full max-w-screen-md px-2">
-            <div className="mx-5 grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
-              {Array.from({ length: 25 }, (_, i) => (
-                <div
-                  key={i}
-                  className="flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary" DONE
-                >
-                  {i + 1}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
           </div>
         </div>
       </div>
-
-      {/* old playfield: */}
-      {/* <div className="mx-auto grid w-fit grid-cols-5 justify-items-center gap-5">
-        {playfield.map((e, i) => (
-          <PlayfieldElement
-            key={i}
-            entry={e}
-            onChange={(state) => {
-              const newPlayfield = [...playfield];
-              const oldPlayfieldEntry = playfield[i];
-              if (oldPlayfieldEntry) {
-                newPlayfield[i] = { ...oldPlayfieldEntry };
-                newPlayfield[i].crossed = state;
-                setPlayfield(newPlayfield);
-              }
-            }}
-          />
-        ))}
-      </div> */}
     </div>
   );
 }
@@ -181,7 +147,7 @@ function PlayfieldElement({
   return (
     <div
       // className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-accent text-primary-foreground shadow"
-      className="flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
+      className="relative flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
       onClick={() => {
         onChange(!entry.crossed);
       }}
@@ -189,8 +155,9 @@ function PlayfieldElement({
       {entry.text}
       {entry.crossed ? (
         <>
-          <div className="absolute -left-12 top-12 h-1 w-48 rotate-45 bg-primary"></div>
-          <div className="absolute -left-12 top-12 h-1 w-48 -rotate-45 bg-primary"></div>
+          <div className="absolute flex items-center justify-center text-transparent/50">
+            <FontAwesomeIcon icon={faX} size="5x" className="" />
+          </div>
         </>
       ) : (
         <></>

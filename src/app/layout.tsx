@@ -62,7 +62,6 @@ export default function RootLayout({
             </div>
           </TRPCReactProvider>
         </ThemeProvider>
-        {/* <Footer className="" /> */}
       </body>
     </html>
   );
