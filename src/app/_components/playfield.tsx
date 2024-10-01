@@ -123,26 +123,26 @@ export default function Playfield(): JSX.Element {
         }}
       />
       {/* Playfield */}
-      <div className="flex items-center justify-center">
-        <div className="w-full max-w-screen-md p-6">
-          <div className="mx-5 grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
-            {playfield.map((e, i) => (
-              <PlayfieldElement
-                key={i}
-                entry={e}
-                onChange={(state) => {
-                  const newPlayfield = [...playfield];
-                  const oldPlayfieldEntry = playfield[i];
-                  if (oldPlayfieldEntry) {
-                    newPlayfield[i] = { ...oldPlayfieldEntry };
-                    newPlayfield[i].crossed = state;
-                    setPlayfield(newPlayfield);
-                  }
-                }}
-              />
-            ))}
-          </div>
-        </div>
+      {/* <div className="flex items-center justify-center"> */}
+      {/* <div className="w-full max-w-screen-md"> */}
+      <div className="grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
+        {playfield.map((e, i) => (
+          <PlayfieldElement
+            key={i}
+            entry={e}
+            onChange={(state) => {
+              const newPlayfield = [...playfield];
+              const oldPlayfieldEntry = playfield[i];
+              if (oldPlayfieldEntry) {
+                newPlayfield[i] = { ...oldPlayfieldEntry };
+                newPlayfield[i].crossed = state;
+                setPlayfield(newPlayfield);
+              }
+            }}
+          />
+        ))}
+        {/* </div> */}
+        {/* </div> */}
       </div>
     </div>
   );

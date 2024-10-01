@@ -141,7 +141,9 @@ export default function Tasklist({
     };
 
   return (
-    <div className="m-6 flex h-[35rem] flex-col overflow-hidden rounded-lg bg-accent p-4 text-accent-foreground shadow">
+    // <div className="m-6 flex h-[35rem] flex-col overflow-hidden rounded-lg bg-accent p-4 text-accent-foreground shadow">
+    // <div className="m-6 rounded-lg bg-accent p-4">
+    <div>
       <div className="mb-2 flex gap-2">
         <div className="col-span-2 flex-1 basis-3/4">
           <Input
