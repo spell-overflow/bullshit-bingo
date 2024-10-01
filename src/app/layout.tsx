@@ -32,12 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const navItems: NavItem[] = [
-    { name: "Game", icon: faGrid5, link: "" },
-    { name: "Lists", icon: faListUl, link: "" },
+    { name: "Game", icon: faGrid5, link: "/" },
+    { name: "Lists", icon: faListUl, link: "/entrylist" },
   ];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      {/* <body className="flex min-h-screen flex-col"> */}
       <body>
         <ThemeProvider
           attribute="class"

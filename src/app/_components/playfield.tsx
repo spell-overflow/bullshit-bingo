@@ -11,15 +11,7 @@ import { api } from "~/trpc/react";
 
 export type FieldObject = { text: string; crossed: boolean };
 
-export default function Playfield(
-  {
-    // entries,
-    // numberOfColumns,
-  }: {
-    // entries: FieldObject[];
-    // numberOfColumns: number;
-  },
-): JSX.Element {
+export default function Playfield(): JSX.Element {
   React.useState<MouseEventHandler<HTMLButtonElement>>();
   React.useState<boolean>(false);
 

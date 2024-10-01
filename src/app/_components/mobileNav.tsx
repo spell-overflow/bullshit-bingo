@@ -2,11 +2,13 @@
 
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
 interface NavItem {
   name: string;
   icon: IconDefinition;
+  link: string;
 }
 
 interface NavItems {
@@ -20,17 +22,12 @@ const MobileNav: React.FC<NavItems> = ({ className, navItems }) => {
       <div className="bottom-0 w-full rounded-t-md bg-primary py-2">
         <div className="my-1 flex text-center">
           {navItems.map((item, index) => (
-            <Button
-              key={index}
-              variant="ghost"
-              onClick={() => {
-                console.log("me");
-              }}
-              className="h-10 flex-auto"
-            >
-              <FontAwesomeIcon icon={item.icon} className="h-10 flex-auto" />
-              {/* text-transparent/20 für inaktive Icons */}
-            </Button>
+            <Link key={index} href={item.link} className="h-10 flex-auto">
+              <FontAwesomeIcon
+                icon={item.icon}
+                className="h-10 flex-auto"
+              ></FontAwesomeIcon>
+            </Link>
           ))}
         </div>
       </div>

@@ -14,6 +14,7 @@ import type { IconDefinition } from "@fortawesome/pro-regular-svg-icons";
 interface NavItem {
   name: string;
   icon: IconDefinition;
+  link: string;
 }
 
 interface NavProperties {
@@ -28,7 +29,7 @@ const NavBar: React.FC<NavProperties> = ({ className, navItems }) => {
         <NavigationMenuList>
           {navItems.map((item, index) => (
             <NavigationMenuItem key={index}>
-              <Link href="" legacyBehavior passHref>
+              <Link href={item.link} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   {item.name}
                 </NavigationMenuLink>
