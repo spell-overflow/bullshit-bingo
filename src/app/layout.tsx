@@ -56,7 +56,11 @@ export default function RootLayout({
                 className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
                 navItems={navItems}
               ></NavBar>
-              <SessionContext>{children}</SessionContext>
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-screen-md px-2">
+                  <SessionContext>{children}</SessionContext>
+                </div>
+              </div>
               <Footer className="hidden sm:flex" />
               <MobileNav navItems={navItems} className="sm:hidden" />
             </div>
