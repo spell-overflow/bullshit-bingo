@@ -1,6 +1,6 @@
 import { auth } from "~/server/auth";
-import Bingo from "./_components/bingo";
 import LoginCard from "./_components/loginCard";
+import Playfield from "./_components/playfield";
 
 export default async function Home() {
   const session = await auth();
@@ -8,5 +8,5 @@ export default async function Home() {
     return <LoginCard />;
   }
 
-  return <Bingo />;
+  return <Playfield />;
 }

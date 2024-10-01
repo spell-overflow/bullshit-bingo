@@ -8,6 +8,7 @@ import Bubble from "@/src/app/_components/bubble";
 import NavBar from "./_components/navBar";
 import {
   faGrid5,
+  faListUl,
   type IconDefinition,
 } from "@fortawesome/pro-regular-svg-icons";
 import MobileNav from "./_components/mobileNav";
@@ -16,6 +17,7 @@ import Footer from "./_components/footer";
 interface NavItem {
   name: string;
   icon: IconDefinition;
+  link: string;
 }
 
 export const metadata = {
@@ -29,7 +31,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const navItems: NavItem[] = [{ name: "Game", icon: faGrid5 }];
+  const navItems: NavItem[] = [
+    { name: "Game", icon: faGrid5, link: "" },
+    { name: "Lists", icon: faListUl, link: "" },
+  ];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       {/* <body className="flex min-h-screen flex-col"> */}
@@ -48,16 +53,12 @@ export default function RootLayout({
                 <Lettering width="10rem" />
                 <Bubble className="mr-7 w-16" />
               </div>
-
               <NavBar
-                className="hidden w-2/3 sm:block sm:text-3xl"
+                className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
                 navItems={navItems}
               ></NavBar>
-
               <SessionContext>{children}</SessionContext>
-
               <Footer className="hidden sm:flex" />
-
               <MobileNav navItems={navItems} className="sm:hidden" />
             </div>
           </TRPCReactProvider>

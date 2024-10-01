@@ -1,21 +1,40 @@
 "use client";
 
+import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
 import ConfettiComponent from "./confetti";
 import React from "react";
 import DialogWindow from "./dialogWindow";
 import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { api } from "~/trpc/react";
 
 export type FieldObject = { text: string; crossed: boolean };
 
-export default function Playfield({
-  entries,
-  numberOfColumns,
-}: {
-  entries: FieldObject[];
-  numberOfColumns: number;
-}): JSX.Element {
+export default function Playfield(
+  {
+    // entries,
+    // numberOfColumns,
+  }: {
+    // entries: FieldObject[];
+    // numberOfColumns: number;
+  },
+): JSX.Element {
+  React.useState<MouseEventHandler<HTMLButtonElement>>();
+  React.useState<boolean>(false);
+
+  const playfield2 = api.bingo.getPlayfield.useQuery();
+
+  const entries = React.useMemo(
+    () =>
+      playfield2.data?.map((entry) => ({
+        text: entry.playfieldentry?.text ?? "",
+        crossed: entry.playfieldentry?.isCrossed ?? false,
+      })) ?? ([] as FieldObject[]),
+    [playfield2.data],
+  );
+
+  const numberOfColumns = 5;
   const fieldSize = numberOfColumns * numberOfColumns;
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
@@ -92,7 +111,7 @@ export default function Playfield({
   }, [playfield, fieldSize, numberOfColumns]);
 
   return (
-    <div className="max-w-7xl sm:px-6 lg:px-8">
+    <div className="">
       <DialogWindow
         open={open}
         onOpenChange={() => setOpen(false)}
@@ -111,7 +130,7 @@ export default function Playfield({
           setCelebrate(newState);
         }}
       />
-      {/* neues Playfield */}
+      {/* Playfield */}
       <div className="flex items-center justify-center">
         <div className="w-full max-w-screen-md px-2">
           <div className="mx-5 grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
