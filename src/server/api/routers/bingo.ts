@@ -28,7 +28,8 @@ export const bingoRouter = createTRPCRouter({
         text: tasks.text,
       })
       .from(tasks)
-      .where(eq(tasks.tasklistId, taskListId));
+      .where(eq(tasks.tasklistId, taskListId))
+      .orderBy(desc(tasks.createdAt));
   }),
 
   addTask: protectedProcedure

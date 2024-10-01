@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/pro-regular-svg-icons";
 import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 interface NavItem {
   name: string;
@@ -45,25 +46,27 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TRPCReactProvider>
-            <div className="flex min-h-screen w-full flex-col justify-between bg-background">
-              {/*  logos */}
-              <div className="mt-5 flex justify-between">
-                <div className="ml-7 w-16" />
-                <Lettering width="10rem" />
-                <Bubble className="mr-7 w-16" />
+            <SessionContext>
+              <div className="flex min-h-screen w-full flex-col justify-between bg-background">
+                {/*  logos */}
+                <div className="mt-5 flex justify-between">
+                  <div className="ml-7 w-16" />
+                  <Lettering width="10rem" />
+                  <Bubble className="mr-7 w-16" />
+                </div>
+                <NavBar
+                  className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
+                  navItems={navItems}
+                ></NavBar>
+                <div className="mx-auto rounded-lg bg-accent ">
+                  <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
+                    <div className="p-4">{children}</div>
+                  </ScrollArea>
+                </div>
+                <Footer className="hidden sm:flex" />
+                <MobileNav navItems={navItems} className="sm:hidden" />
               </div>
-              <NavBar
-                className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
-                navItems={navItems}
-              ></NavBar>
-              <div className="m-auto flex h-auto max-h-[calc(100vh-200px)] items-center justify-center overflow-y-auto rounded-lg bg-accent p-4">
-                {/* <div className="w-full max-w-screen-md px-2"> */}
-                <SessionContext>{children}</SessionContext>
-                {/* </div> */}
-              </div>
-              <Footer className="hidden sm:flex" />
-              <MobileNav navItems={navItems} className="sm:hidden" />
-            </div>
+            </SessionContext>
           </TRPCReactProvider>
         </ThemeProvider>
       </body>

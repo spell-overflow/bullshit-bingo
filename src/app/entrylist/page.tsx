@@ -141,62 +141,50 @@ export default function Tasklist({
     };
 
   return (
-    // <div className="m-6 flex h-[35rem] flex-col overflow-hidden rounded-lg bg-accent p-4 text-accent-foreground shadow">
-    // <div className="m-6 rounded-lg bg-accent p-4">
-    <div>
-      <div className="mb-2 flex gap-2">
-        <div className="col-span-2 flex-1 basis-3/4">
-          <Input
-            type="text"
-            placeholder="your task"
-            onChange={handleInputChange}
-            value={entryInput}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                addEntry();
-              }
-            }}
-            className="col-span-3 grid w-full"
-          />
-        </div>
-        <Button
-          onClick={addEntry}
-          className="flex-1 basis-1/4"
-          size={"default"}
-          variant={"default"}
-        >
+    <>
+      <div className="mb-4 flex items-center gap-2">
+        <Input
+          type="text"
+          placeholder="your task"
+          onChange={handleInputChange}
+          value={entryInput}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              addEntry();
+            }
+          }}
+        />
+        <Button onClick={addEntry} size={"default"} variant={"default"}>
           add
         </Button>
       </div>
 
-      <ScrollArea className="mb-2 h-full flex-grow">
-        <ul>
-          {bingoEntries.map((entry) => (
-            <li key={entry.id} className="mb-2 flex items-center">
-              <div className="col-span-3 flex-grow ">{entry.text}</div>
-              <Button
-                variant={"ghost"}
-                size={"icon"}
-                onClick={() => {
-                  deleteTask
-                    .mutateAsync(entry.id)
-                    .then(() => {
-                      tasks.refetch().catch((e) => {
-                        console.error(e); //TODO: improve error handling
-                      });
-                    })
-                    .catch((e) => {
+      <ul className="rounded-lg bg-primary/20 p-4">
+        {bingoEntries.map((entry) => (
+          <li key={entry.id} className="flex items-center justify-between">
+            <div className=" ">{entry.text}</div>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              onClick={() => {
+                deleteTask
+                  .mutateAsync(entry.id)
+                  .then(() => {
+                    tasks.refetch().catch((e) => {
                       console.error(e); //TODO: improve error handling
                     });
-                }}
-              >
-                <FontAwesomeIcon icon={faCircleXmark} size="lg" />
-              </Button>
-            </li>
-          ))}
-        </ul>
-        <ScrollBar orientation="vertical" />
-      </ScrollArea>
+                  })
+                  .catch((e) => {
+                    console.error(e); //TODO: improve error handling
+                  });
+              }}
+            >
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" />
+            </Button>
+          </li>
+        ))}
+      </ul>
+
       <div className="mt-4 space-y-4">
         <Button variant="default" onClick={confirmation} className="w-full">
           clear Tasklist
@@ -220,6 +208,6 @@ export default function Tasklist({
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
       />
-    </div>
+    </>
   );
 }
