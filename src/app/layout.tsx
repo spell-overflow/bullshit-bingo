@@ -14,6 +14,7 @@ import {
 import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import ConfettiComponent from "./_components/confetti";
 
 interface NavItem {
   name: string;
@@ -33,8 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const navItems: NavItem[] = [
-    { name: "Game", icon: faGrid5, link: "/" },
+    { name: "Play", icon: faGrid5, link: "/" },
     { name: "Lists", icon: faListUl, link: "/entrylist" },
+    { name: "My Games", icon: faGrid5, link: "" },
+    { name: "Social", icon: faGrid5, link: "" },
+    // { name: "My Ga", icon: faGrid5, link: "" },
   ];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
@@ -65,6 +69,7 @@ export default function RootLayout({
                 </div>
                 <Footer className="hidden sm:flex" />
                 <MobileNav navItems={navItems} className="sm:hidden" />
+                <ConfettiComponent />
               </div>
             </SessionContext>
           </TRPCReactProvider>

@@ -1,17 +1,12 @@
-import React from "react";
+"use client";
+
 import Confetti from "react-confetti";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import useWindowSize from "~/helper/useWindowSize";
+import { useCelebrateStore } from "../store";
 
-interface ConfettiComponentProperties {
-  celebrate: boolean;
-  setCelebrate: (celebrate: boolean) => void;
-}
-
-const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
-  celebrate,
-  setCelebrate,
-}) => {
+const ConfettiComponent: React.FC = () => {
+  const { celebrate, setCelebrate } = useCelebrateStore();
   const { width, height } = useWindowSize();
   const [recycle, setRecycle] = React.useState(true);
 
@@ -25,7 +20,7 @@ const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
         currentRef.style.zIndex = "100";
       }
 
-      const recycleTime = setTimeout(() => {
+      const recycletime = setTimeout(() => {
         setRecycle(false);
       }, 5000);
 
@@ -34,8 +29,8 @@ const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
       }, 10000);
 
       return () => {
-        clearTimeout(recycleTime);
         clearTimeout(partytime);
+        clearTimeout(recycletime);
       };
     }
   }, [celebrate, setCelebrate]);
@@ -44,7 +39,7 @@ const ConfettiComponent: React.FC<ConfettiComponentProperties> = ({
     <Confetti
       width={width}
       height={height}
-      numberOfPieces={800}
+      numberOfPieces={1500}
       ref={canvasRef}
       recycle={recycle}
     />

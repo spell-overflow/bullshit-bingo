@@ -2,12 +2,12 @@
 
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
-import ConfettiComponent from "./confetti";
 import React from "react";
 import DialogWindow from "./dialogWindow";
 import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "~/trpc/react";
+import { useCelebrateStore } from "../store";
 
 export type FieldObject = { text: string; crossed: boolean };
 
@@ -31,7 +31,7 @@ export default function Playfield(): JSX.Element {
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
   const [open, setOpen] = useState(false);
-  const [celebrate, setCelebrate] = useState(false);
+  const { setCelebrate } = useCelebrateStore();
 
   const initializePlayfield = () => {
     const newPlayfield: FieldObject[] = [];
@@ -100,7 +100,7 @@ export default function Playfield(): JSX.Element {
       setOpen(true);
       setCelebrate(true);
     }
-  }, [playfield, fieldSize, numberOfColumns]);
+  }, [playfield, fieldSize, numberOfColumns, setCelebrate]);
 
   return (
     <div className="">
@@ -111,20 +111,16 @@ export default function Playfield(): JSX.Element {
         windowIcon={faTrophyStar}
         description="won game"
         primaryButtonText="Start a New Game"
-        onPrimaryClick={() => setOpen(false)}
+        onPrimaryClick={() => {
+          setOpen(false);
+          setCelebrate(false);
+        }}
       >
         <div className="text-7xl">Gratulation!</div>
         <div className="text-4xl">You won this game!</div>
       </DialogWindow>
-      <ConfettiComponent
-        celebrate={celebrate}
-        setCelebrate={(newState) => {
-          setCelebrate(newState);
-        }}
-      />
+      {/* <ConfettiComponent /> */}
       {/* Playfield */}
-      {/* <div className="flex items-center justify-center"> */}
-      {/* <div className="w-full max-w-screen-md"> */}
       <div className="grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
         {playfield.map((e, i) => (
           <PlayfieldElement
@@ -141,8 +137,6 @@ export default function Playfield(): JSX.Element {
             }}
           />
         ))}
-        {/* </div> */}
-        {/* </div> */}
       </div>
     </div>
   );
@@ -157,7 +151,6 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      // className="relative flex h-24 w-24 items-center justify-center overflow-hidden text-ellipsis hyphens-auto rounded-xl bg-accent text-primary-foreground shadow"
       className="relative flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
       onClick={() => {
         onChange(!entry.crossed);
