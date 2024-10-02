@@ -10,10 +10,13 @@ const Lettering: React.FC<LetteringProperties> = ({
   width = "12rem",
   className,
 }) => {
+  const numerizedWidth = parseFloat(width);
+  const ratioFactor = 0.4295774647887324; // Ratio of original SVG
+  const calculatedHeight = numerizedWidth * ratioFactor;
   return (
     <LetteringSvg
-      /* width={width} */ width={width}
-      height=""
+      width={width}
+      height={`${calculatedHeight}rem`}
       className={className}
     />
   );
