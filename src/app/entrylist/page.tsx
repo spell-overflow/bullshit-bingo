@@ -11,7 +11,6 @@ import React from "react";
 import type { MouseEventHandler } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { api } from "~/trpc/react";
 import DialogWindow from "~/app/_components/dialogWindow";
 
@@ -42,6 +41,7 @@ export default function Tasklist({
   const [onSecondaryClick, setOnSecondaryClick] =
     React.useState<MouseEventHandler<HTMLButtonElement>>();
   const utils = api.useUtils();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
@@ -134,9 +134,15 @@ export default function Tasklist({
           .catch((e) => console.error(e));
         console.log("Tasklist deleted");
         setOpen(false);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
       } catch (e) {
         console.error("Error deleting tasklist", e);
         setOpen(false);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
       }
     };
 
@@ -150,9 +156,11 @@ export default function Tasklist({
           value={entryInput}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
+              event.preventDefault();
               addEntry();
             }
           }}
+          ref={inputRef}
         />
         <Button onClick={addEntry} size={"default"} variant={"default"}>
           add
@@ -199,12 +207,22 @@ export default function Tasklist({
       </div>
       <DialogWindow
         open={open}
-        onOpenChange={() => setOpen(false)}
+        onOpenChange={() => {
+          setOpen(false);
+          setTimeout(() => {
+            inputRef.current?.focus();
+          }, 100);
+        }}
         title={dialogTitle}
         windowIcon={windowIcon}
         description={dialogText}
         primaryButtonText={primaryButtonText}
-        onPrimaryClick={() => setOpen(false)}
+        onPrimaryClick={() => {
+          setOpen(false);
+          setTimeout(() => {
+            inputRef.current?.focus();
+          }, 100);
+        }}
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
       />
