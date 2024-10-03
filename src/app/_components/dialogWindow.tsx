@@ -46,30 +46,26 @@ const DialogWindow: React.FC<dialogProperties> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex flex-col items-center justify-center text-center">
-        <DialogHeader className="items-center">
-          <DialogTitle>{title}</DialogTitle>
+      <DialogContent className="sm:max-w-s flex max-w-xs flex-col items-center justify-center rounded-lg">
+        <DialogHeader className="">
+          <DialogTitle className="mb-2">{title}</DialogTitle>
           <FontAwesomeIcon
             icon={icon}
             size="2xl"
-            className="pt-10"
+            className=""
           ></FontAwesomeIcon>
         </DialogHeader>
-        {description ? description : <div />}
-        <div className="mt-4">{children}</div>
+        {description ? <p>{description}</p> : <div />}
+        <div className="">{children}</div>
         <div>
-          <Button
-            variant="default"
-            onClick={onPrimaryClick}
-            className="mx-4 w-fit"
-          >
+          <Button variant="default" onClick={onPrimaryClick} className="">
             {primaryButtonText}
           </Button>
           {secondaryButtonText ? (
             <Button
               variant="destructive"
               onClick={onSecondaryClick}
-              className="mx-4 w-fit"
+              className=""
             >
               {secondaryButtonText}
             </Button>
@@ -77,7 +73,7 @@ const DialogWindow: React.FC<dialogProperties> = ({
             ""
           )}
         </div>
-        <DialogFooter className="mt-4">{footer}</DialogFooter>
+        <DialogFooter>{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
   );
