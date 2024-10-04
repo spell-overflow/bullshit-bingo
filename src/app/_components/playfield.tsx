@@ -109,17 +109,25 @@ export default function Playfield(): JSX.Element {
         onOpenChange={() => setOpen(false)}
         title="Won Game!"
         windowIcon={faTrophyStar}
-        description="won game"
-        primaryButtonText="Start a New Game"
+        primaryButtonText="New Game: Same Bingolist"
         onPrimaryClick={() => {
           setOpen(false);
           setCelebrate(false);
         }}
+        secondaryButtonText="New Game: New Bingolist"
+        onSecondaryClick={() => {
+          console.log("Create new Bingolist");
+        }}
       >
-        <div className="text-7xl">Gratulation!</div>
-        <div className="text-4xl">You won this game!</div>
+        <div>
+          <p>
+            Congratulation! <br /> Click{" "}
+            <span className="italic">same Bingolist</span> to play with the same
+            list or <span className="italic">new Bingolist</span> to create a
+            new bingolist.
+          </p>
+        </div>
       </DialogWindow>
-      {/* <ConfettiComponent /> */}
       {/* Playfield */}
       <div className="grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
         {playfield.map((e, i) => (

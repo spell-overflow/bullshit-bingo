@@ -46,26 +46,26 @@ const DialogWindow: React.FC<dialogProperties> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-s flex max-w-xs flex-col items-center justify-center rounded-lg">
-        <DialogHeader className="">
-          <DialogTitle className="mb-2">{title}</DialogTitle>
-          <FontAwesomeIcon
-            icon={icon}
-            size="2xl"
-            className=""
-          ></FontAwesomeIcon>
+      <DialogContent className="sm:max-w-s flex max-w-xs flex-col items-center justify-center rounded-lg text-center">
+        <DialogHeader className="text-2xl">
+          <DialogTitle className="mb-2 text-lg">{title}</DialogTitle>
+          <FontAwesomeIcon icon={icon} size="xl"></FontAwesomeIcon>
         </DialogHeader>
-        {description ? <p>{description}</p> : <div />}
-        <div className="">{children}</div>
+        {description ? <p className="text-center">{description}</p> : <div />}
+        <div>{children}</div>
         <div>
-          <Button variant="default" onClick={onPrimaryClick} className="">
+          <Button
+            variant="default"
+            onClick={onPrimaryClick}
+            className="m-1 w-full"
+          >
             {primaryButtonText}
           </Button>
           {secondaryButtonText ? (
             <Button
               variant="destructive"
               onClick={onSecondaryClick}
-              className=""
+              className="m-1 w-full"
             >
               {secondaryButtonText}
             </Button>
