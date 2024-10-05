@@ -65,9 +65,9 @@ export default function RootLayout({
                   className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
                   navItems={navItems}
                 ></NavBar>
-                <div className="mx-auto rounded-lg bg-card shadow-lg">
+                <div className="mx-2 rounded-lg bg-card shadow-lg sm:mx-auto">
                   <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
-                    <div className="p-4">{children}</div>
+                    <div className="p-2 sm:p-4">{children}</div>
                   </ScrollArea>
                 </div>
                 <Footer className="hidden sm:flex" />
