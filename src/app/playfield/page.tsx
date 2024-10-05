@@ -138,7 +138,7 @@ export default function Playfield(): JSX.Element {
         </div>
       </DialogWindow>
       {/* Playfield */}
-      <div className="grid grid-cols-5 grid-rows-5 gap-2 overflow-hidden text-sm">
+      <div className="grid grid-cols-5 grid-rows-5 items-center gap-2 overflow-hidden text-sm">
         {playfield.map((e, i) => (
           <PlayfieldElement
             key={i}
@@ -168,7 +168,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative flex aspect-square min-h-12 items-center justify-center rounded-sm bg-primary"
+      className="relative flex aspect-square min-h-12 items-center justify-center text-ellipsis rounded-sm bg-secondary text-center sm:max-h-24"
       onClick={() => {
         onChange(!entry.crossed);
       }}

@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProperties> = ({ className }) => {
   return (
     <footer
       className={clsx(
-        "mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-accent py-4",
+        "mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-primary py-4",
         className,
       )}
     >

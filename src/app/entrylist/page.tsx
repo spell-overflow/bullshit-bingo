@@ -102,7 +102,7 @@ export default function Tasklist({
 
   return (
     <>
-      <div className="mb-4 flex items-center gap-2">
+      <div className="mb-4 flex items-center gap-2 bg-primary">
         <Input
           type="text"
           placeholder="your task"
@@ -121,7 +121,7 @@ export default function Tasklist({
         </Button>
       </div>
 
-      <ul className="rounded-lg bg-primary/20 p-4">
+      <ul className="rounded-lg bg-secondary/20 p-4">
         {bingoEntries.map((entry) => (
           <li key={entry.id} className="flex items-center justify-between">
             <div className=" ">{entry.text}</div>
