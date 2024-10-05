@@ -1,18 +1,15 @@
 "use client";
 
-import {
-  faBomb,
-  faIcons,
-  faQuestion,
-} from "@fortawesome/pro-regular-svg-icons";
+import { faBomb, faIcons } from "@fortawesome/pro-regular-svg-icons";
 import { faCircleXmark } from "@fortawesome/pro-regular-svg-icons/faCircleXmark";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import type { MouseEventHandler } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import DialogWindow from "~/app/_components/dialogWindow";
+import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
+import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
 
 interface TasklistProperties {
   numberOfColumns: number;
@@ -24,11 +21,9 @@ export default function Tasklist({
   const tasks = api.bingo.getTasks.useQuery();
   const addTask = api.bingo.addTask.useMutation();
   const deleteTask = api.bingo.deleteTask.useMutation();
-  const createPlayfield = api.bingo.createPlayfield.useMutation();
-  const deleteTasklist = api.bingo.deleteTasklist.useMutation();
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
-  numberOfColumns = numberOfColumns;
+  numberOfColumns = 5;
 
   const [entryInput, setEntryInput] = React.useState("");
   const [open, setOpen] = React.useState<boolean>(false);
@@ -37,11 +32,11 @@ export default function Tasklist({
   const [dialogText, setDialogText] = React.useState("");
   const [windowIcon, setWindowIcon] = React.useState(faIcons);
   const [primaryButtonText, setPrimaryButtonText] = React.useState("");
-  const [secondaryButtonText, setSecondaryButtonText] = React.useState("");
-  const [onSecondaryClick, setOnSecondaryClick] =
-    React.useState<MouseEventHandler<HTMLButtonElement>>();
-  const utils = api.useUtils();
+  const [secondaryButtonText] = React.useState("");
+  const [onSecondaryClick] = React.useState<(() => void) | undefined>();
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const { handleFillPlayfield } = useFillPlayfield();
+  const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
@@ -90,61 +85,20 @@ export default function Tasklist({
       .catch((e) => console.error(e)); //TODO: improve error handling
   };
 
-  const handleFillPlayfield = () => {
-    const playfieldSize = numberOfColumns * numberOfColumns;
-    const entries: string[] = [];
-    for (let i = 0; i < playfieldSize; i++) {
-      const randomNumber = Math.round(
-        Math.random() * (bingoEntries.length - 1),
-      );
-      entries.push(bingoEntries[randomNumber]?.text ?? "");
-    }
-    createPlayfield
-      .mutateAsync(entries)
-      .then(() => {
-        utils.bingo.invalidate().catch((e) => console.error(e));
-      })
-      .catch((e) => console.error(e));
-  };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setEntryInput(event.target.value);
   };
 
-  const confirmation = () => {
-    setDialogTitle("Really?");
-    setWindowIcon(faQuestion);
-    setDialogText("Do you really want to delete all tasks in Tasklist?");
-    setPrimaryButtonText("No. Bring me back.");
-    setSecondaryButtonText("Yes. Delete all Tasks.");
-    setOnSecondaryClick(handleDeleteTasklist);
-    setOpen(true);
-  };
-
-  const handleDeleteTasklist =
-    () => (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      try {
-        deleteTasklist
-          .mutateAsync()
-          .then(() => {
-            utils.bingo.invalidate().catch((e) => console.error(e));
-          })
-          .catch((e) => console.error(e));
-        console.log("Tasklist deleted");
-        setOpen(false);
-        setTimeout(() => {
-          inputRef.current?.focus();
-        }, 100);
-      } catch (e) {
-        console.error("Error deleting tasklist", e);
-        setOpen(false);
-        setTimeout(() => {
-          inputRef.current?.focus();
-        }, 100);
-      }
-    };
+  // const confirmation = async () => {
+  //   setDialogTitle("Really?");
+  //   setWindowIcon(faQuestion);
+  //   setDialogText("Do you really want to delete all tasks in Tasklist?");
+  //   setPrimaryButtonText("No. Bring me back.");
+  //   setSecondaryButtonText("Yes. Delete all Tasks.");
+  //   setOnSecondaryClick(() => asyncHandler);
+  //   setOpen(true);
+  // };
 
   return (
     <>
@@ -194,12 +148,18 @@ export default function Tasklist({
       </ul>
 
       <div className="mt-4 space-y-4">
-        <Button variant="default" onClick={confirmation} className="w-full">
+        <Button
+          variant="default"
+          onClick={handleDeleteTasklist}
+          className="w-full"
+        >
           clear Tasklist
         </Button>
         <Button
           variant="secondary"
-          onClick={handleFillPlayfield}
+          onClick={async () => {
+            await handleFillPlayfield(numberOfColumns);
+          }}
           className="w-full"
         >
           Fill playfield

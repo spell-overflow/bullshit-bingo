@@ -8,6 +8,8 @@ import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "~/trpc/react";
 import { useCelebrateStore } from "../store";
+import { useFillPlayfield } from "./hooks/useFillPlayfield";
+import { useDeleteTasklist } from "./hooks/useDeleteTasklist";
 
 export type FieldObject = { text: string; crossed: boolean };
 
@@ -32,6 +34,9 @@ export default function Playfield(): JSX.Element {
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
   const [open, setOpen] = useState(false);
   const { setCelebrate } = useCelebrateStore();
+  const { handleFillPlayfield } = useFillPlayfield();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
 
   const initializePlayfield = () => {
     const newPlayfield: FieldObject[] = [];
@@ -110,13 +115,17 @@ export default function Playfield(): JSX.Element {
         title="Won Game!"
         windowIcon={faTrophyStar}
         primaryButtonText="New Game: Same Bingolist"
-        onPrimaryClick={() => {
+        onPrimaryClick={async () => {
+          await handleFillPlayfield(numberOfColumns);
           setOpen(false);
           setCelebrate(false);
         }}
         secondaryButtonText="New Game: New Bingolist"
-        onSecondaryClick={() => {
-          console.log("Create new Bingolist");
+        onSecondaryClick={async () => {
+          // await deletePlayfield();
+          await handleDeleteTasklist();
+          setOpen(false);
+          setCelebrate(false);
         }}
       >
         <div>
