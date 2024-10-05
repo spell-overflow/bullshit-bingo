@@ -3,13 +3,13 @@
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
 import React from "react";
-import DialogWindow from "./dialogWindow";
+import DialogWindow from "../_components/dialogWindow";
 import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "~/trpc/react";
 import { useCelebrateStore } from "../store";
-import { useFillPlayfield } from "./hooks/useFillPlayfield";
-import { useDeleteTasklist } from "./hooks/useDeleteTasklist";
+import { useFillPlayfield } from "../_components/hooks/useFillPlayfield";
+import { useDeleteTasklist } from "../_components/hooks/useDeleteTasklist";
 
 export type FieldObject = { text: string; crossed: boolean };
 

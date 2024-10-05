@@ -3,7 +3,6 @@
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
 
 interface NavItem {
   name: string;
