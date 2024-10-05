@@ -27,10 +27,10 @@ export default function LoginCard() {
           </div>
         </div>
       </div>
-      <Card className="mx-auto my-8 max-w-96 bg-primary">
+      <Card className="mx-auto my-8 max-w-96 bg-card">
         <CardHeader className="text-xl">
           <CardTitle>Welcome to my Bullshit Bingo Game</CardTitle>
-          <CardDescription className="flex justify-center text-primary-foreground">
+          <CardDescription className="flex justify-center text-card-foreground">
             Login to play
           </CardDescription>
         </CardHeader>

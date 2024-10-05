@@ -9,6 +9,9 @@ import NavBar from "./_components/navBar";
 import {
   faGrid5,
   faListUl,
+  faUser,
+  faUsers,
+  faWandSparkles,
   type IconDefinition,
 } from "@fortawesome/pro-regular-svg-icons";
 import MobileNav from "./_components/mobileNav";
@@ -36,9 +39,9 @@ export default function RootLayout({
   const navItems: NavItem[] = [
     { name: "Play", icon: faGrid5, link: "/" },
     { name: "Lists", icon: faListUl, link: "/entrylist" },
-    { name: "My Games", icon: faGrid5, link: "" },
-    { name: "Social", icon: faGrid5, link: "" },
-    // { name: "My Ga", icon: faGrid5, link: "" },
+    { name: "My Games", icon: faWandSparkles, link: "" },
+    { name: "Social", icon: faUsers, link: "" },
+    { name: "User", icon: faUser, link: "/user" },
   ];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
@@ -62,7 +65,7 @@ export default function RootLayout({
                   className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
                   navItems={navItems}
                 ></NavBar>
-                <div className="mx-auto rounded-lg bg-primary">
+                <div className="mx-auto rounded-lg bg-card shadow-lg">
                   <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
                     <div className="p-4">{children}</div>
                   </ScrollArea>

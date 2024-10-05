@@ -37,25 +37,25 @@
   }
 
   .dark {
-    --background: 218 72% 21%; /* DONE curious-blue-900 */
+    --background: 220 77% 12%; /* DONE curious-blue-950 */
     --foreground: 197 64% 83%; /* DONE curious-blue-200*/
-    --card: 218 72% 21%; /* DONE curious-blue-900 */
-    --card-foreground: 196 68% 88%; /* DONE curious-blue-200*/
-    --popover: 218 72% 21%; /* DONE curious-blue-900 */
+    --card: 215 65% 25%; /* DONE curious-blue-800 -5%Helligkeit*/
+    --card-foreground: 208 58% 55%; /* DONE curious-blue-200*/
+    --popover: 220 77% 12%; /* DONE curious-blue-950 */
     --popover-foreground: 196 68% 88%; /* DONE curious-blue-200*/
-    --primary: 212 60% 38%; /* DONE curious-blue-700 */
+    --primary: 218 72% 21%; /* DONE curious-blue-900 */
     --primary-foreground: 197 64% 83%; /* DONE curious-blue-300 */
-    --secondary: 218 72% 21%; /* DONE curious-blue-900 */
-    --secondary-foreground: 197 64% 83%; /* DONE curious-blue-300 */
+    --secondary: 212 60% 38%; /* DONE curious-blue-700 */
+    --secondary-foreground: 220 77% 12%; /* DONE curious-blue-950 */
     --muted: 215 65% 30%; /* DONE curious-blue-800 */
-    --muted-foreground: 210 54% 48%; /* DONE curious-blue-600 */
-    --accent: 215 65% 30%; /* DONE curious-blue-800 */
-    --accent-foreground: 197 64% 83%; /* DONE curious-blue-300*/
-    --destructive: 331 38% 51%; /* DONE fitting red */
-    --destructive-foreground: 218 72% 21%; /* DONE curious-blue-900 */
-    --border: 212 60% 38%; /* DONE curious-blue-700 */
-    --input: 212 60% 38%; /* DONE curious-blue-700 */
-    --ring: 212 60% 38%; /* DONE curious-blue-700 */
+    --muted-foreground: 212 60% 38%; /* DONE curious-blue-700 */
+    --accent: 208 58% 55%; /* DONE curious-blue-500 */
+    --accent-foreground: 220 77% 12%; /* DONE curious-blue-950 */
+    --destructive: 0 62% 30%; /* DONE fitting red */
+    --destructive-foreground: 220 77% 12%; /* DONE curious-blue-950 */
+    --border: 218 72% 21%; /* DONE curious-blue-900 */
+    --input: 218 72% 21%; /* DONE curious-blue-900 */
+    --ring: 218 72% 21%; /* DONE curious-blue-900 */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

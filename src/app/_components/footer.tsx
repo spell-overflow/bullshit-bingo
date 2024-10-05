@@ -10,11 +10,11 @@ const Footer: React.FC<FooterProperties> = ({ className }) => {
   return (
     <footer
       className={clsx(
-        "mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-primary py-4",
+        "mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-card py-4 text-card-foreground",
         className,
       )}
     >
-      <Link href="/about" className="hover:underline">
+      <Link href="/about" className="text-card-foreground hover:underline">
         About Bullshit-Bingo
       </Link>
       <Link href="/impressum" className="hover:underline">

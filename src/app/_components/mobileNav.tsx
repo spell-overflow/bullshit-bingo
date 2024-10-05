@@ -18,7 +18,7 @@ interface NavItems {
 const MobileNav: React.FC<NavItems> = ({ className, navItems }) => {
   return (
     <div className={className}>
-      <div className="bottom-0 w-full rounded-t-md bg-primary py-2">
+      <div className="bottom-0 w-full rounded-t-md bg-card py-2">
         <div className="my-1 flex text-center">
           {navItems.map((item, index) => (
             <Link key={index} href={item.link} className="h-10 flex-auto">

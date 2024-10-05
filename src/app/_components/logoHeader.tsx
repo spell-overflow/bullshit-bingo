@@ -32,7 +32,7 @@ export default function LogoHeader() {
               src={session?.user.image ?? undefined}
               alt="user avatar"
             />
-            <AvatarFallback className="bg-primary">
+            <AvatarFallback className="bg-card">
               {session?.user.name?.[0]}
             </AvatarFallback>
           </Avatar>
