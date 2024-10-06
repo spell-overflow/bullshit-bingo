@@ -9,25 +9,18 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import type { IconDefinition } from "@fortawesome/pro-regular-svg-icons";
-
-interface NavItem {
-  name: string;
-  icon: IconDefinition;
-  link: string;
-}
+import { navItems } from "./navItems";
 
 interface NavProperties {
   className?: string;
-  navItems: NavItem[];
 }
 
-const NavBar: React.FC<NavProperties> = ({ className, navItems }) => {
+const NavBar: React.FC<NavProperties> = ({ className }) => {
   return (
     <div className={className}>
       <NavigationMenu>
         <NavigationMenuList>
-          {navItems.map((item, index) => (
+          {navItems.navBar.map((item, index) => (
             <NavigationMenuItem key={index}>
               <Link href={item.link} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>

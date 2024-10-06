@@ -6,26 +6,11 @@ import { ThemeProvider } from "./_components/theme-provider";
 import Lettering from "@/src/app/_components/lettering";
 import Bubble from "@/src/app/_components/bubble";
 import NavBar from "./_components/navBar";
-import {
-  faGrid5,
-  faListUl,
-  faUser,
-  faUsers,
-  faWandSparkles,
-  type IconDefinition,
-} from "@fortawesome/pro-regular-svg-icons";
 import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import ConfettiComponent from "./_components/confetti";
 import SheetState from "./_components/sheetState";
-import AboutSheet from "./_components/aboutSheet";
-
-interface NavItem {
-  name: string;
-  icon: IconDefinition;
-  link: string;
-}
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -38,13 +23,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const navItems: NavItem[] = [
-    { name: "Play", icon: faGrid5, link: "/" },
-    { name: "Lists", icon: faListUl, link: "/entrylist" },
-    { name: "My Games", icon: faWandSparkles, link: "" },
-    { name: "Social", icon: faUsers, link: "" },
-    { name: "User", icon: faUser, link: "/user" },
-  ];
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
@@ -66,17 +44,14 @@ export default function RootLayout({
                     <SheetState className="mr-7 w-16 sm:hidden" />
                   </div>
                 </div>
-                <NavBar
-                  className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
-                  navItems={navItems}
-                ></NavBar>
+                <NavBar className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"></NavBar>
                 <div className="mx-2 rounded-lg bg-card shadow-lg sm:mx-auto">
                   <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
                     <div className="p-2 sm:p-4">{children}</div>
                   </ScrollArea>
                 </div>
                 <Footer className="hidden sm:flex" />
-                <MobileNav navItems={navItems} className="sm:hidden" />
+                <MobileNav className="sm:hidden" />
                 <ConfettiComponent />
               </div>
             </SessionContext>
