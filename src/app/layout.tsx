@@ -3,14 +3,12 @@ import { GeistSans } from "geist/font/sans";
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionContext from "./_components/sessionContext";
 import { ThemeProvider } from "./_components/theme-provider";
-import Lettering from "@/src/app/_components/lettering";
-import Bubble from "@/src/app/_components/bubble";
 import NavBar from "./_components/navBar";
 import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import ConfettiComponent from "./_components/confetti";
-import SheetState from "./_components/sheetState";
+import AppHeader from "./_components/appHeader";
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -35,15 +33,7 @@ export default function RootLayout({
           <TRPCReactProvider>
             <SessionContext>
               <div className="flex min-h-screen w-full flex-col justify-between bg-background">
-                {/*  logos */}
-                <div className="mt-5 flex justify-between">
-                  <div className="ml-7 w-16" />
-                  <Lettering width="10rem" />
-                  <div>
-                    <Bubble className="mr-7 hidden w-16 sm:flex" />
-                    <SheetState className="mr-7 w-16 sm:hidden" />
-                  </div>
-                </div>
+                <AppHeader />
                 <NavBar className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"></NavBar>
                 <div className="mx-2 rounded-lg bg-card shadow-lg sm:mx-auto">
                   <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">

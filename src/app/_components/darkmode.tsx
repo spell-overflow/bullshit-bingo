@@ -12,19 +12,26 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
-const DarkMode: React.FC = () => {
+interface DarkModeProperties {
+  className: string;
+}
+
+const DarkMode: React.FC<DarkModeProperties> = ({ className }) => {
   const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className="block"
+          className={`${className}`}
           variant="ghost"
           size="icon"
           onClick={() => setTheme("dark")}
         >
-          <FontAwesomeIcon icon={faLightbulbOn} size="xl"></FontAwesomeIcon>
+          <FontAwesomeIcon
+            icon={faLightbulbOn}
+            className="text-4xl text-foreground"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
