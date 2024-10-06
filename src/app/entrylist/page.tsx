@@ -90,16 +90,6 @@ export default function Tasklist({
     setEntryInput(event.target.value);
   };
 
-  // const confirmation = async () => {
-  //   setDialogTitle("Really?");
-  //   setWindowIcon(faQuestion);
-  //   setDialogText("Do you really want to delete all tasks in Tasklist?");
-  //   setPrimaryButtonText("No. Bring me back.");
-  //   setSecondaryButtonText("Yes. Delete all Tasks.");
-  //   setOnSecondaryClick(() => asyncHandler);
-  //   setOpen(true);
-  // };
-
   return (
     <>
       <div className="mb-4 flex items-center gap-2 bg-card">
@@ -121,7 +111,7 @@ export default function Tasklist({
         </Button>
       </div>
 
-      <ul className="rounded-lg bg-primary p-4">
+      <ul className="rounded-lg bg-primary p-4 shadow">
         {bingoEntries.map((entry) => (
           <li key={entry.id} className="flex items-center justify-between">
             <div className=" ">{entry.text}</div>
