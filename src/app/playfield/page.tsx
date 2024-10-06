@@ -168,7 +168,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative flex aspect-square min-h-12 items-center justify-center text-ellipsis rounded-sm bg-primary text-center shadow sm:max-h-24"
+      className="relative flex aspect-square min-h-12 items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow sm:max-h-24"
       onClick={() => {
         onChange(!entry.crossed);
       }}
@@ -176,7 +176,7 @@ function PlayfieldElement({
       {entry.text}
       {entry.crossed ? (
         <>
-          <div className="absolute flex items-center justify-center text-transparent/50">
+          <div className="absolute flex items-center justify-center text-primary-foreground/70">
             <FontAwesomeIcon icon={faX} size="5x" className="" />
           </div>
         </>

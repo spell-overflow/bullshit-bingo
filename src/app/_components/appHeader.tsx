@@ -7,7 +7,7 @@ export default function AppHeader() {
   return (
     //
     <div className="mt-5 flex items-center justify-between ">
-      <DarkMode className="ml-7" />
+      <DarkMode className="ml-7 hover:bg-background" />
       <Lettering width="10rem" />
       <div>
         <Bubble className="mr-7 hidden w-16 sm:flex" />
