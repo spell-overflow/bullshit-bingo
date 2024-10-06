@@ -18,6 +18,8 @@ import MobileNav from "./_components/mobileNav";
 import Footer from "./_components/footer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import ConfettiComponent from "./_components/confetti";
+import SheetState from "./_components/sheetState";
+import AboutSheet from "./_components/aboutSheet";
 
 interface NavItem {
   name: string;
@@ -59,7 +61,10 @@ export default function RootLayout({
                 <div className="mt-5 flex justify-between">
                   <div className="ml-7 w-16" />
                   <Lettering width="10rem" />
-                  <Bubble className="mr-7 w-16" />
+                  <div>
+                    <Bubble className="mr-7 hidden w-16 sm:flex" />
+                    <SheetState className="mr-7 w-16 sm:hidden" />
+                  </div>
                 </div>
                 <NavBar
                   className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl"
