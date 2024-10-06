@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import clsx from "clsx";
+import { navItems } from "./navItems";
 
 interface FooterProperties {
   className: string;
@@ -9,20 +9,13 @@ interface FooterProperties {
 const Footer: React.FC<FooterProperties> = ({ className }) => {
   return (
     <footer
-      className={clsx(
-        "mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-card py-4 text-card-foreground",
-        className,
-      )}
+      className={`mx-4 mt-auto flex h-fit justify-center gap-5 rounded-t-lg bg-card py-4 text-card-foreground ${className}`}
     >
-      <Link href="/about" className="text-card-foreground hover:underline">
-        About Bullshit-Bingo
-      </Link>
-      <Link href="/impressum" className="hover:underline">
-        Impressum
-      </Link>
-      <Link href="/datenschutz" className="hover:underline">
-        Datenschutz
-      </Link>
+      {navItems.footer.map((item, index) => (
+        <Link key={index} href={item.link} className="hover:underline">
+          {item.name}
+        </Link>
+      ))}
     </footer>
   );
 };
