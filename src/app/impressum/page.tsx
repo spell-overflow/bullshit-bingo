@@ -1,15 +1,7 @@
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import LogoHeader from "../_components/logoHeader";
-
 export default function Impressum() {
   return (
-    <div className="mx-auto">
-      <LogoHeader />
-      <Link href={"/"} className="flex justify-center">
-        <Button>Return to Bingo</Button>
-      </Link>
-      <div className="my-4 rounded-lg bg-accent p-4 text-card-foreground shadow">
+    <div className="shadow-none">
+      <div className="m-2 rounded-lg p-4">
         <div className="prose dark:prose-invert">
           <h1>Impressum</h1>
           <p>Angaben gemäß § 5 DDG</p>
@@ -114,9 +106,6 @@ export default function Impressum() {
           </a>{" "}
         </div>
       </div>
-      <Link href={"/"} className="mb-4 flex justify-center">
-        <Button>Return to Bingo</Button>
-      </Link>
     </div>
   );
 }

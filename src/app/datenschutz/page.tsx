@@ -1,15 +1,7 @@
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import LogoHeader from "../_components/logoHeader";
-
 export default function Datenschutz() {
   return (
-    <div className="mx-auto">
-      <LogoHeader />
-      <Link href={"/"} className="flex justify-center">
-        <Button>Return to Bingo</Button>
-      </Link>
-      <div className="my-4 rounded-lg bg-accent p-4 text-card-foreground shadow">
+    <div className="mx-2 my-1 flex shadow-none">
+      <div className="w-full max-w-full flex-auto rounded-lg p-4">
         <div className="prose dark:prose-invert">
           <h1>Datenschutz&shy;erkl&auml;rung</h1>
           <h2>1. Datenschutz auf einen Blick</h2>

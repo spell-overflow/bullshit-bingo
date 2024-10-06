@@ -1,21 +1,14 @@
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import LogoHeader from "../_components/logoHeader";
 
 export default function Home() {
   return (
     <div>
-      <LogoHeader />
-      <Link href={"/"} className="flex justify-center">
-        <Button>Return to Bingo</Button>
-      </Link>
-      <div className="mx-auto my-4 max-w-3xl rounded-xl bg-accent p-4 pt-2 text-accent-foreground sm:px-6 lg:max-w-5xl lg:px-8">
+      <div className="min-w-3xl m-3 rounded-xl bg-primary p-4 pt-2 text-primary-foreground sm:max-w-md">
         <Accordion type="single" collapsible className="my-6 w-full">
           <h2 className="mb-2 text-3xl font-bold">About</h2>
           <AccordionItem value="item-1">
