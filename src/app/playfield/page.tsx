@@ -168,7 +168,7 @@ function PlayfieldElement({
 }): JSX.Element {
   return (
     <div
-      className="relative flex aspect-square min-h-12 justify-center text-ellipsis rounded-sm bg-primary text-center sm:max-h-24 sm:items-center"
+      className="relative flex aspect-square min-h-12 items-center justify-center text-ellipsis rounded-sm bg-primary text-center sm:max-h-24"
       onClick={() => {
         onChange(!entry.crossed);
       }}
