@@ -25,9 +25,6 @@ interface dialogProperties {
   primaryButtonText: string;
   onPrimaryClick: MouseEventHandler<HTMLButtonElement>;
   secondaryButtonText?: string;
-  // onSecondaryClick?: (
-  //   event: MouseEventHandler<HTMLButtonElement>,
-  // ) => void | Promise<void>;
   onSecondaryClick?: MouseEventHandler<HTMLButtonElement>;
   onOpenChange: (state: boolean) => void;
 }

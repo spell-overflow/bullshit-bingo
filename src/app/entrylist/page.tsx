@@ -1,6 +1,10 @@
 "use client";
 
-import { faBomb, faIcons } from "@fortawesome/pro-regular-svg-icons";
+import {
+  faBomb,
+  faDiamondExclamation,
+  faIcons,
+} from "@fortawesome/pro-regular-svg-icons";
 import { faCircleXmark } from "@fortawesome/pro-regular-svg-icons/faCircleXmark";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -146,7 +150,25 @@ export default function Tasklist({
       <div className="mt-4 space-y-4">
         <Button
           variant="default"
-          onClick={handleDeleteTasklist}
+          onClick={() => {
+            setDialogTitle("Delete Tasklist?");
+            setDialogText(
+              "Are you sure you want to delete the whole tasklist? This can't be undone!",
+            );
+            setWindowIcon(faDiamondExclamation);
+            setPrimaryButtonText("No. Bring me back");
+            setOnPrimaryClick(() => () => {
+              setOpen(false);
+            });
+            setSecondaryButtonText("Yes, delete it");
+            setOnSecondaryClick(() => () => {
+              handleDeleteTasklist().catch((e) => {
+                console.error(e);
+              });
+              setOpen(false);
+            });
+            setOpen(true);
+          }}
           className="w-full"
         >
           clear Tasklist
@@ -174,12 +196,15 @@ export default function Tasklist({
         windowIcon={windowIcon}
         description={dialogText}
         primaryButtonText={primaryButtonText}
-        onPrimaryClick={() => {
-          setOpen(false);
-          setTimeout(() => {
-            inputRef.current?.focus();
-          }, 100);
-        }}
+        onPrimaryClick={
+          onPrimaryClick ??
+          (() => {
+            setOpen(false);
+            setTimeout(() => {
+              inputRef.current?.focus();
+            }, 100);
+          })
+        }
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
       />
