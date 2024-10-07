@@ -10,6 +10,7 @@ import { api } from "~/trpc/react";
 import DialogWindow from "~/app/_components/dialogWindow";
 import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
+import { useRouter } from "next/navigation";
 
 interface TasklistProperties {
   numberOfColumns: number;
@@ -32,11 +33,17 @@ export default function Tasklist({
   const [dialogText, setDialogText] = React.useState("");
   const [windowIcon, setWindowIcon] = React.useState(faIcons);
   const [primaryButtonText, setPrimaryButtonText] = React.useState("");
-  const [secondaryButtonText] = React.useState("");
-  const [onSecondaryClick] = React.useState<(() => void) | undefined>();
+  const [onPrimaryClick, setOnPrimaryClick] = React.useState<
+    (() => void) | undefined
+  >();
+  const [secondaryButtonText, setSecondaryButtonText] = React.useState("");
+  const [onSecondaryClick, setOnSecondaryClick] = React.useState<
+    (() => void) | undefined
+  >();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { handleFillPlayfield } = useFillPlayfield();
   const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
+  const router = useRouter();
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
@@ -89,7 +96,6 @@ export default function Tasklist({
     event.preventDefault();
     setEntryInput(event.target.value);
   };
-
   return (
     <>
       <div className="mb-4 flex items-center gap-2 bg-card">
@@ -149,6 +155,7 @@ export default function Tasklist({
           variant="secondary"
           onClick={async () => {
             await handleFillPlayfield(numberOfColumns);
+            router.push("/playfield");
           }}
           className="w-full"
         >
