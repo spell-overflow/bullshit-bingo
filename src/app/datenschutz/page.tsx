@@ -76,8 +76,9 @@ export default function Datenschutz() {
               href="https://www.hetzner.com/de/legal/privacy-policy/"
               target="_blank"
               rel="noopener noreferrer"
+              className="break-all"
             >
-              https://www.hetzner.com/de/legal/privacy-policy/https://www.hetzner.com/de/legal/privacy-policy/
+              https://www.hetzner.com/de/legal/privacy-policy/
             </a>
             .
           </p>{" "}
@@ -471,6 +472,7 @@ export default function Datenschutz() {
               href="https://www.dataprivacyframework.gov/participant/4709"
               target="_blank"
               rel="noopener noreferrer"
+              className="break-all"
             >
               https://www.dataprivacyframework.gov/participant/4709
             </a>
