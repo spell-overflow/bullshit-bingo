@@ -12,15 +12,14 @@ export function useFillPlayfield() {
   const handleFillPlayfield = useCallback(
     async (numberOfColumns: number) => {
       const playfieldSize = numberOfColumns * numberOfColumns;
-      const entries: string[] = [];
-      for (let i = 0; i < playfieldSize; i++) {
-        const randomNumber = Math.round(
-          Math.random() * (bingoEntries.length - 1),
-        );
-        entries.push(bingoEntries[randomNumber]?.text ?? "");
-      }
+      const shuffledEntries = [...bingoEntries].sort(() => Math.random() - 0.5);
+      const repeatedEntries = Array.from(
+        { length: playfieldSize },
+        (_, i) => shuffledEntries[i % shuffledEntries.length]?.text ?? "",
+      );
+      const playfieldEntries = repeatedEntries.sort(() => Math.random() - 0.5);
       try {
-        await createPlayfield.mutateAsync(entries);
+        await createPlayfield.mutateAsync(playfieldEntries);
         await utils.bingo.invalidate();
       } catch (e) {
         console.error("Error creating playfield:", e);
