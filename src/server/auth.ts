@@ -82,7 +82,6 @@ const authOptions: NextAuthConfig = {
       }
     },
     signOut: async (message) => {
-      console.log("message", message);
       if ("session" in message && message.session) {
         const accountFromDB = await db
           .select()
@@ -119,7 +118,6 @@ const authOptions: NextAuthConfig = {
                   `Keycloak logout failed: ${result.status} ${result.statusText}`,
                 );
               }
-              console.log(await result.text());
             } catch (error) {
               console.error("Error during Keycloak logout:", error);
             }
