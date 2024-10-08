@@ -18,6 +18,7 @@ interface dialogProperties {
   open: boolean;
   title: string;
   description?: string;
+  dialogText?: string;
   children?: React.ReactNode;
   windowIcon?: IconDefinition;
   footer?: React.ReactNode;
@@ -32,6 +33,7 @@ interface dialogProperties {
 const DialogWindow: React.FC<dialogProperties> = ({
   title,
   description,
+  dialogText,
   children,
   windowIcon,
   footer,
@@ -44,6 +46,8 @@ const DialogWindow: React.FC<dialogProperties> = ({
 }) => {
   const icon: IconDefinition = windowIcon ? windowIcon : faHatWitch;
 
+  if (!description) description = dialogText;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-s flex max-w-xs flex-col items-center justify-center rounded-lg text-center">
@@ -51,7 +55,7 @@ const DialogWindow: React.FC<dialogProperties> = ({
           <DialogTitle className="mb-2 text-lg">{title}</DialogTitle>
           <FontAwesomeIcon icon={icon} size="xl"></FontAwesomeIcon>
         </DialogHeader>
-        {description ? <p className="text-center">{description}</p> : <div />}
+        <div className="text-center">{dialogText}</div>
         <div>{children}</div>
         <div>
           <Button

@@ -59,7 +59,7 @@ export default function Games() {
         }}
         title={dialogTitle}
         windowIcon={windowIcon}
-        description={dialogText}
+        dialogText={dialogText}
         primaryButtonText={primaryButtonText}
         onPrimaryClick={
           onPrimaryClick ??

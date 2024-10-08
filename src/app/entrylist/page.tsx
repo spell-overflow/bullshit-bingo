@@ -194,7 +194,7 @@ export default function Tasklist({
         }}
         title={dialogTitle}
         windowIcon={windowIcon}
-        description={dialogText}
+        dialogText={dialogText}
         primaryButtonText={primaryButtonText}
         onPrimaryClick={
           onPrimaryClick ??

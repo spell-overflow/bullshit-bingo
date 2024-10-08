@@ -113,6 +113,7 @@ export default function Playfield(): JSX.Element {
         open={open}
         onOpenChange={() => setOpen(false)}
         title="Won Game!"
+        description='Congratulation! Click "same Bingolist" to play with the same list or "new Bingolist" to create a new bingolist.'
         windowIcon={faTrophyStar}
         primaryButtonText="New Game: Same Bingolist"
         onPrimaryClick={async () => {
@@ -122,7 +123,6 @@ export default function Playfield(): JSX.Element {
         }}
         secondaryButtonText="New Game: New Bingolist"
         onSecondaryClick={async () => {
-          // await deletePlayfield();
           await handleDeleteTasklist();
           setOpen(false);
           setCelebrate(false);
