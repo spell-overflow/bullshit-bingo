@@ -15,7 +15,6 @@ import DialogWindow from "~/app/_components/dialogWindow";
 import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
 import { useDeletePlayfield } from "~/app/_components/hooks/useDeletePlayfield";
-import { useRouter } from "next/navigation";
 
 interface TasklistProperties {
   numberOfColumns: number;
@@ -54,38 +53,36 @@ export default function Tasklist({
   const { handleFillPlayfield } = useFillPlayfield();
   const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
   const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
-  const router = useRouter();
 
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
 
-    if (trimmedEntryInput.length > 24) {
+    const errorMessages = {
+      tooLong: "Entry is too long. Try a shorter one!",
+      tooShort: "Entry is too short. Try a longer one!",
+      listFull: "List full! - You can start your game",
+      entryExists: "Entry already exists",
+    };
+
+    const showErrorDialog = (message: string) => {
       setDialogTitle("Error");
-      setDialogText("Entry is too long. Try a shorter one!");
+      setDialogText(message);
       setPrimaryButtonText("OK - bring me back");
       setWindowIcon(faBomb);
       setOpen(true);
+    };
+
+    if (trimmedEntryInput.length > 24) {
+      showErrorDialog(errorMessages.tooLong);
       return;
     } else if (trimmedEntryInput.length < 3) {
-      setDialogTitle("Error");
-      setDialogText("Entry is too short. Try a longer one!");
-      setPrimaryButtonText("OK - bring me back");
-      setWindowIcon(faBomb);
-      setOpen(true);
+      showErrorDialog(errorMessages.tooShort);
       return;
     } else if (bingoEntries.length === 25) {
-      setDialogTitle("Error");
-      setDialogText("List full! - You can start your game");
-      setPrimaryButtonText("OK - bring me back");
-      setWindowIcon(faBomb);
-      setOpen(true);
+      showErrorDialog(errorMessages.listFull);
       return;
     } else if (bingoEntries.find((entry) => entry.text === trimmedEntryInput)) {
-      setDialogTitle("Error");
-      setDialogText("Entry already exists");
-      setPrimaryButtonText("OK - bring me back");
-      setWindowIcon(faBomb);
-      setOpen(true);
+      showErrorDialog(errorMessages.entryExists);
       setEntryInput("");
       return;
     }
