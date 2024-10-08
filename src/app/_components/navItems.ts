@@ -3,7 +3,7 @@ import {
   faListUl,
   faUser,
   // faUsers,
-  // faWandSparkles,
+  faWandSparkles,
 } from "@fortawesome/pro-regular-svg-icons";
 
 export const navItems = {
@@ -15,7 +15,7 @@ export const navItems = {
   navBar: [
     { name: "Play", icon: faGrid5, link: "/" },
     { name: "Lists", icon: faListUl, link: "/entrylist" },
-    // { name: "My Games", icon: faWandSparkles, link: "" },
+    { name: "My Game", icon: faWandSparkles, link: "/game" },
     // { name: "Social", icon: faUsers, link: "" },
     { name: "User", icon: faUser, link: "/user" },
   ],

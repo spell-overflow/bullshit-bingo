@@ -123,4 +123,26 @@ export const bingoRouter = createTRPCRouter({
       .where(eq(playfields.userId, ctx.session.user.id))
       .orderBy(desc(playfields.updatedAt));
   }),
+
+  deletePlayfield: protectedProcedure.mutation(async ({ ctx }) => {
+    const playfield = await ctx.db
+      .select({ id: playfields.id })
+      .from(playfields)
+      .where(eq(playfields.userId, ctx.session.user.id));
+
+    if (!playfield) {
+      throw new Error("Playfield not found");
+    }
+
+    const playfieldId = playfield[0]?.id;
+
+    if (playfieldId) {
+      await ctx.db
+        .delete(playfieldEntries)
+        .where(eq(playfieldEntries.playfieldId, playfieldId));
+      console.log(`Delet playfield with id: ${playfieldId}`);
+      await ctx.db.delete(playfields).where(eq(playfields.id, playfieldId));
+    }
+    return { success: true };
+  }),
 });
