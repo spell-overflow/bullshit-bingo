@@ -1,6 +1,7 @@
 import {
   faGrid5,
   faListUl,
+  faScaleBalanced,
   faUser,
   // faUsers,
   faWandSparkles,
@@ -18,5 +19,6 @@ export const navItems = {
     { name: "My Game", icon: faWandSparkles, link: "/game" },
     // { name: "Social", icon: faUsers, link: "" },
     { name: "User", icon: faUser, link: "/user" },
+    { name: "About", icon: faScaleBalanced, link: "/impressum" },
   ],
 };
