@@ -35,8 +35,8 @@ export default function Home() {
               Will my entries and the playing field be saved?
             </AccordionTrigger>
             <AccordionContent>
-              Currently, the app only saves the list of entries, but not the
-              field and the score.
+              Yes. You can easily logout and come back later. Your playfield and
+              entries will be saved.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
