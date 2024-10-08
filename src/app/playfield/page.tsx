@@ -12,6 +12,7 @@ import { useFillPlayfield } from "../_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "../_components/hooks/useDeleteTasklist";
 import { useDeletePlayfield } from "../_components/hooks/useDeletePlayfield";
 import { useRouter } from "next/navigation";
+import { toast } from "~/hooks/use-toast";
 
 export type FieldObject = { text: string; crossed: boolean };
 
@@ -179,7 +180,15 @@ function PlayfieldElement({
     <div
       className="relative flex aspect-square min-h-12 cursor-default items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow sm:max-h-24"
       onClick={() => {
-        onChange(!entry.crossed);
+        if (entry.text === "") {
+          toast({
+            title: "Empty Playfiels",
+            description: "Fill Playfield before crossing.",
+          });
+          return;
+        } else {
+          onChange(!entry.crossed);
+        }
       }}
     >
       {entry.text}

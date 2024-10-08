@@ -9,6 +9,7 @@ import Footer from "./_components/footer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import ConfettiComponent from "./_components/confetti";
 import AppHeader from "./_components/appHeader";
+import { Toaster } from "~/components/ui/toaster";
 
 export const metadata = {
   title: "Bullshit Bingo",
@@ -43,6 +44,7 @@ export default function RootLayout({
                 <Footer className="hidden sm:flex" />
                 <MobileNav className="sm:hidden" />
                 <ConfettiComponent />
+                <Toaster />
               </div>
             </SessionContext>
           </TRPCReactProvider>
