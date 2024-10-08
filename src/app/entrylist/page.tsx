@@ -16,13 +16,7 @@ import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
 import { useDeletePlayfield } from "~/app/_components/hooks/useDeletePlayfield";
 
-interface TasklistProperties {
-  numberOfColumns: number;
-}
-
-export default function Tasklist({
-  numberOfColumns,
-}: TasklistProperties): JSX.Element {
+export default function Tasklist(): JSX.Element {
   const tasks = api.bingo.getTasks.useQuery();
   const addTask = api.bingo.addTask.useMutation();
   const deleteTask = api.bingo.deleteTask.useMutation();
@@ -33,7 +27,7 @@ export default function Tasklist({
       : false;
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
-  numberOfColumns = 5;
+  const numberOfColumns = 5;
 
   const [entryInput, setEntryInput] = React.useState("");
   const [open, setOpen] = React.useState<boolean>(false);
