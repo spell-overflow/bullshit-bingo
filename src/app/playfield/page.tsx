@@ -10,6 +10,8 @@ import { api } from "~/trpc/react";
 import { useCelebrateStore } from "../store";
 import { useFillPlayfield } from "../_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "../_components/hooks/useDeleteTasklist";
+import { useDeletePlayfield } from "../_components/hooks/useDeletePlayfield";
+import { useRouter } from "next/navigation";
 
 export type FieldObject = { text: string; crossed: boolean };
 
@@ -37,6 +39,8 @@ export default function Playfield(): JSX.Element {
   const { handleFillPlayfield } = useFillPlayfield();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
+  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
+  const router = useRouter();
 
   const initializePlayfield = () => {
     const newPlayfield: FieldObject[] = [];
@@ -111,7 +115,10 @@ export default function Playfield(): JSX.Element {
     <div className="">
       <DialogWindow
         open={open}
-        onOpenChange={() => setOpen(false)}
+        onOpenChange={() => {
+          setOpen(false);
+          setCelebrate(false);
+        }}
         title="Won Game!"
         description='Congratulation! Click "same Bingolist" to play with the same list or "new Bingolist" to create a new bingolist.'
         windowIcon={faTrophyStar}
@@ -124,8 +131,10 @@ export default function Playfield(): JSX.Element {
         secondaryButtonText="New Game: New Bingolist"
         onSecondaryClick={async () => {
           await handleDeleteTasklist();
+          await handleDeletePlayfield();
           setOpen(false);
           setCelebrate(false);
+          router.push("/entrylist");
         }}
       >
         <div>

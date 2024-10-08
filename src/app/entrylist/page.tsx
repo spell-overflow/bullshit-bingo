@@ -14,6 +14,7 @@ import { api } from "~/trpc/react";
 import DialogWindow from "~/app/_components/dialogWindow";
 import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
+import { useDeletePlayfield } from "~/app/_components/hooks/useDeletePlayfield";
 import { useRouter } from "next/navigation";
 
 interface TasklistProperties {
@@ -26,6 +27,11 @@ export default function Tasklist({
   const tasks = api.bingo.getTasks.useQuery();
   const addTask = api.bingo.addTask.useMutation();
   const deleteTask = api.bingo.deleteTask.useMutation();
+  const playfield = api.bingo.getPlayfield.useQuery();
+  const isPlayfield =
+    playfield.status === "success" && playfield.data.some((p) => p.playfield.id)
+      ? true
+      : false;
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
   numberOfColumns = 5;
@@ -47,6 +53,7 @@ export default function Tasklist({
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { handleFillPlayfield } = useFillPlayfield();
   const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
+  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
   const router = useRouter();
 
   const addEntry = () => {
@@ -175,9 +182,33 @@ export default function Tasklist({
         </Button>
         <Button
           variant="secondary"
-          onClick={async () => {
-            await handleFillPlayfield(numberOfColumns);
-            router.push("/playfield");
+          onClick={() => {
+            if (isPlayfield === true) {
+              setDialogTitle("Delete Playfield?");
+              setDialogText(
+                "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
+              );
+              setWindowIcon(faDiamondExclamation);
+              setPrimaryButtonText("No. Bring me back");
+              setOnPrimaryClick(() => () => {
+                setOpen(false);
+              });
+              setSecondaryButtonText("Yes, delete it");
+              setOnSecondaryClick(() => () => {
+                handleDeletePlayfield().catch((e) => {
+                  console.error(e);
+                });
+                handleFillPlayfield(numberOfColumns).catch((e) => {
+                  console.error(e);
+                });
+                setOpen(false);
+              });
+              setOpen(true);
+            } else {
+              handleFillPlayfield(numberOfColumns).catch((e) => {
+                console.error(e);
+              });
+            }
           }}
           className="w-full"
         >

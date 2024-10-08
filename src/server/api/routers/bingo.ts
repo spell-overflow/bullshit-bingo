@@ -140,7 +140,6 @@ export const bingoRouter = createTRPCRouter({
       await ctx.db
         .delete(playfieldEntries)
         .where(eq(playfieldEntries.playfieldId, playfieldId));
-      console.log(`Delet playfield with id: ${playfieldId}`);
       await ctx.db.delete(playfields).where(eq(playfields.id, playfieldId));
     }
     return { success: true };

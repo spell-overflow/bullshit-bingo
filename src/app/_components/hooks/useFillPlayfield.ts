@@ -1,5 +1,6 @@
 import { api } from "~/trpc/react";
 import { useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 export function useFillPlayfield() {
   const createPlayfield = api.bingo.createPlayfield.useMutation();
@@ -8,10 +9,16 @@ export function useFillPlayfield() {
   const bingoEntries = useMemo(() => {
     return tasks.status === "success" ? tasks.data : [];
   }, [tasks]);
+  const router = useRouter();
 
   const handleFillPlayfield = useCallback(
     async (numberOfColumns: number) => {
       const playfieldSize = numberOfColumns * numberOfColumns;
+      if (!bingoEntries[0]) {
+        console.log("No bingo entries found");
+        return;
+      }
+
       const shuffledEntries = [...bingoEntries].sort(() => Math.random() - 0.5);
       const repeatedEntries = Array.from(
         { length: playfieldSize },
@@ -24,8 +31,9 @@ export function useFillPlayfield() {
       } catch (e) {
         console.error("Error creating playfield:", e);
       }
+      router.push("/playfield");
     },
-    [bingoEntries, createPlayfield, utils.bingo],
+    [bingoEntries, createPlayfield, utils.bingo, router],
   );
   return { handleFillPlayfield };
 }
