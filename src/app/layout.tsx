@@ -10,7 +10,6 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import ConfettiComponent from "./_components/confetti";
 import { Toaster } from "~/components/ui/toaster";
 import Bubble from "@/src/app/_components/bubble";
-import DarkMode from "@/src/app/_components/darkmode";
 import Lettering from "@/src/app/_components/lettering";
 
 export const metadata = {
@@ -37,9 +36,6 @@ export default function RootLayout({
             <SessionContext>
               <div className="flex min-h-screen w-full flex-col justify-between bg-background">
                 <div className="mt-5 flex items-center justify-center gap-4">
-                  {/* <div className="flex justify-start"> */}
-                  {/* <DarkMode className="hover:bg-background" /> */}
-                  {/* </div> */}
                   <Lettering width="10rem" />
                   <Bubble className="hidden sm:flex" />
                 </div>

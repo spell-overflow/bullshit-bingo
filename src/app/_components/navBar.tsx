@@ -11,6 +11,7 @@ import {
 } from "~/components/ui/navigation-menu";
 import { navItems } from "./navItems";
 import DarkMode from "./darkmode";
+import Export from "./export";
 
 interface NavProperties {
   className?: string;
@@ -19,7 +20,8 @@ interface NavProperties {
 const NavBar: React.FC<NavProperties> = ({ className }) => {
   return (
     <div className={className}>
-      <DarkMode className="absolute right-20 ml-24 hover:bg-background" />
+      <Export className="absolute right-40" />
+      <DarkMode className="absolute right-20 ml-24" />
       <NavigationMenu>
         <NavigationMenuList>
           {navItems.navBar.map((item, index) => (

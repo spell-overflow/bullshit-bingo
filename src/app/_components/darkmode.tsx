@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Button } from "~/components/ui/button";
 import { faLightbulbOn } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,17 +21,11 @@ const DarkMode: React.FC<DarkModeProperties> = ({ className }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          className={`${className}`}
-          variant="ghost"
-          size="icon"
+        <FontAwesomeIcon
+          icon={faLightbulbOn}
+          className={`${className} text-2xl text-foreground hover:cursor-pointer`}
           onClick={() => setTheme("dark")}
-        >
-          <FontAwesomeIcon
-            icon={faLightbulbOn}
-            className="text-4xl text-foreground"
-          />
-        </Button>
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
