@@ -7,8 +7,10 @@ import {
   Paragraph,
   Table,
   TableCell,
+  TableLayoutType,
   TableRow,
   TextRun,
+  WidthType,
 } from "docx";
 import { api } from "~/trpc/react";
 
@@ -28,13 +30,33 @@ export default function Export({ className }: ExportProperties) {
       return;
     }
 
-    const title = new Paragraph({
+    const headerLogos = new Paragraph({
       alignment: "center",
+      spacing: {
+        after: 500,
+      },
       children: [
         new ImageRun({
-          data: await fetch("/fulllogo.png").then((res) => res.arrayBuffer()),
-          transformation: { width: 100, height: 100 },
+          data: await fetch("/bothlogos.png").then((res) => res.arrayBuffer()),
+          transformation: { width: 320, height: 100 },
           type: "png",
+        }),
+      ],
+    });
+
+    const description = new Paragraph({
+      spacing: {
+        after: 200,
+      },
+      children: [
+        new TextRun({
+          text: `Bullshit Bingo Playfield: `,
+          font: "Calibri",
+          bold: true,
+        }),
+        new TextRun({
+          text: `${playfieldId}`,
+          font: "Calibri",
         }),
       ],
     });
@@ -43,14 +65,28 @@ export default function Export({ className }: ExportProperties) {
       return new TableCell({
         children: [
           new Paragraph({
-            children: [new TextRun(text)],
+            alignment: "center",
+            children: [
+              new TextRun({
+                text,
+                font: "Calibri",
+              }),
+            ],
           }),
         ],
+        verticalAlign: "center",
+        width: {
+          size: 150,
+          type: WidthType.AUTO,
+        },
       });
     }
 
     function createRow(cells: TableCell[]) {
-      return new TableRow({ children: cells });
+      return new TableRow({
+        children: cells,
+        height: { value: 1700, rule: "exact" },
+      });
     }
 
     const table = new Table({
@@ -63,16 +99,22 @@ export default function Export({ className }: ExportProperties) {
           ),
         ),
       ),
-    });
-
-    const description = new Paragraph({
-      children: [new TextRun(`Bullshit Bingo Playfield: ${playfieldId}`)],
+      width: {
+        size: 9000,
+        type: WidthType.DXA,
+      },
+      layout: TableLayoutType.FIXED,
     });
 
     const doc = new Document({
       sections: [
         {
-          children: [title, description, table],
+          children: [
+            headerLogos,
+            description,
+            new Paragraph({ text: "" }),
+            table,
+          ],
         },
       ],
     });
@@ -83,7 +125,7 @@ export default function Export({ className }: ExportProperties) {
     });
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = `BullshitBingo Playfield: ${playfieldId}.docx`;
+    link.download = `${new Date().toLocaleTimeString()}-BullshitBingo Playfield: ${playfieldId}.docx`;
     link.click();
   }
   return (
