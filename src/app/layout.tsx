@@ -39,7 +39,7 @@ export default function RootLayout({
                   <Lettering width="10rem" />
                   <Bubble className="hidden sm:flex" />
                 </div>
-                <NavBar className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl" />
+                <NavBar className="mb-auto hidden w-4/5 justify-center self-center sm:block" />
                 <div className="mx-2 rounded-lg bg-card shadow-lg sm:mx-auto">
                   <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
                     <div className="p-2 shadow sm:p-4">{children}</div>
