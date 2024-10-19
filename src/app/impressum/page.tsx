@@ -1,10 +1,7 @@
-import SheetState from "../_components/sheetState";
-
 export default function Impressum() {
   return (
     <div className="shadow-none">
       <div className="m-2 rounded-lg p-4">
-        <SheetState />
         <div className="prose dark:prose-invert">
           <h1>Impressum</h1>
           <p>Angaben gemäß § 5 DDG</p>

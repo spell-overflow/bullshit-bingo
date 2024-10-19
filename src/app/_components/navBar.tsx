@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,13 +44,11 @@ const NavBar: React.FC<NavProperties> = ({ className }) => {
                   </NavigationMenuContent>
                 </>
               ) : (
-                <NavigationMenuLink>
-                  <Link
-                    href={item.link}
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    {item.name}
-                  </Link>
+                <NavigationMenuLink
+                  href={item.link}
+                  className={navigationMenuTriggerStyle()}
+                >
+                  {item.name}
                 </NavigationMenuLink>
               )}
             </NavigationMenuItem>

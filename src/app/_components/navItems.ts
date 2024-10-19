@@ -22,10 +22,12 @@ export const navItems = {
         {
           name: "Game 1",
           link: "/",
+          description: "A game I played with my friends",
         },
         {
           name: "Game 2 a game I played with my friends",
           link: "/",
+          description: "A game I played with my friends",
         },
       ],
     },
