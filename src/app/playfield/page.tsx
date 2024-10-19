@@ -20,15 +20,15 @@ export default function Playfield(): JSX.Element {
   React.useState<MouseEventHandler<HTMLButtonElement>>();
   React.useState<boolean>(false);
 
-  const playfield2 = api.bingo.getPlayfield.useQuery();
+  const playfieldData = api.bingo.getPlayfield.useQuery();
 
   const entries = React.useMemo(
     () =>
-      playfield2.data?.map((entry) => ({
+      playfieldData.data?.map((entry) => ({
         text: entry.playfieldentry?.text ?? "",
         crossed: entry.playfieldentry?.isCrossed ?? false,
       })) ?? ([] as FieldObject[]),
-    [playfield2.data],
+    [playfieldData.data],
   );
 
   const numberOfColumns = 5;
