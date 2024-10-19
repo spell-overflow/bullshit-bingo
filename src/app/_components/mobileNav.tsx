@@ -19,6 +19,8 @@ interface MobileNavProperties {
 
 const MobileNav: React.FC<MobileNavProperties> = ({ className }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [openDrawerName, setOpenDrawerName] = useState<string | null>(null);
+
   return (
     <div className={className}>
       <div className="bottom-0 w-full rounded-t-md bg-card py-2">
@@ -27,8 +29,11 @@ const MobileNav: React.FC<MobileNavProperties> = ({ className }) => {
             item.subItems ? (
               <Drawer
                 key={index}
-                open={drawerOpen}
-                onOpenChange={setDrawerOpen}
+                open={drawerOpen && item.name === openDrawerName}
+                onOpenChange={(open) => {
+                  setDrawerOpen(open);
+                  setOpenDrawerName(open ? item.name : null);
+                }}
               >
                 <DrawerTrigger asChild>
                   <button className="h-10 flex-auto">
@@ -54,11 +59,6 @@ const MobileNav: React.FC<MobileNavProperties> = ({ className }) => {
                         <div className="text-sm font-medium leading-none">
                           {subItem.name}
                         </div>
-                        {"description" in subItem && (
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            {subItem.description}
-                          </p>
-                        )}
                       </Link>
                     ))}
                   </div>

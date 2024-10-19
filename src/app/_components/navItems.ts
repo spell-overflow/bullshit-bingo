@@ -19,19 +19,10 @@ export const navItems = {
       icon: faGrid5,
       link: "/",
       subItems: [
-        {
-          name: "Game 1",
-          link: "/",
-          description: "A game I played with my friends",
-        },
-        {
-          name: "Game 2 a game I played with my friends",
-          link: "/",
-          description: "A game I played with my friends",
-        },
+        { name: "Game 1", link: "/" },
+        { name: "Game 2 a game I played with my friends", link: "/" },
       ],
     },
-
     { name: "Lists", icon: faListUl, link: "/entrylist" },
     { name: "My Game", icon: faWandSparkles, link: "/game" },
     // { name: "Social", icon: faUsers, link: "" },
