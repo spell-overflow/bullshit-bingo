@@ -8,7 +8,7 @@ import {
   faIcons,
 } from "@fortawesome/pro-regular-svg-icons";
 import DialogWindow from "../_components/dialogWindow";
-
+import CreateGameDialog from "../_components/createGameDialog";
 export default function Games() {
   const [open, setOpen] = React.useState<boolean>(false);
   React.useState<boolean>(false);
@@ -23,10 +23,12 @@ export default function Games() {
   const [onSecondaryClick, setOnSecondaryClick] = React.useState<
     (() => void) | undefined
   >();
-  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
+  const handleDeletePlayfield = useDeletePlayfield(setOpen);
+  const [createGameDialogOpen, setCreateGameDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <Button
         variant="default"
         onClick={() => {
@@ -41,7 +43,7 @@ export default function Games() {
           });
           setSecondaryButtonText("Yes, delete it");
           setOnSecondaryClick(() => () => {
-            handleDeletePlayfield().catch((e) => {
+            handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
               console.error(e);
             });
             setOpen(false);
@@ -51,6 +53,14 @@ export default function Games() {
         className="w-full"
       >
         delete Playfield
+      </Button>
+      <Button
+        className="w-full"
+        onClick={() => {
+          setCreateGameDialogOpen(true);
+        }}
+      >
+        Create Game
       </Button>
       <DialogWindow
         open={open}
@@ -69,7 +79,11 @@ export default function Games() {
         }
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
+      ></DialogWindow>
+      <CreateGameDialog
+        open={createGameDialogOpen}
+        setOpen={setCreateGameDialogOpen}
       />
-    </>
+    </div>
   );
 }

@@ -15,6 +15,7 @@ import DialogWindow from "~/app/_components/dialogWindow";
 import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
 import { useDeletePlayfield } from "~/app/_components/hooks/useDeletePlayfield";
+import { useCreateGame } from "~/app/_components/hooks/useCreateGame";
 
 export default function Tasklist(): JSX.Element {
   const tasks = api.bingo.getTasks.useQuery();
@@ -170,40 +171,6 @@ export default function Tasklist(): JSX.Element {
           className="w-full"
         >
           clear Tasklist
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            if (isPlayfield === true) {
-              setDialogTitle("Delete Playfield?");
-              setDialogText(
-                "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
-              );
-              setWindowIcon(faDiamondExclamation);
-              setPrimaryButtonText("No. Bring me back");
-              setOnPrimaryClick(() => () => {
-                setOpen(false);
-              });
-              setSecondaryButtonText("Yes, delete it");
-              setOnSecondaryClick(() => () => {
-                handleDeletePlayfield().catch((e) => {
-                  console.error(e);
-                });
-                handleFillPlayfield(numberOfColumns).catch((e) => {
-                  console.error(e);
-                });
-                setOpen(false);
-              });
-              setOpen(true);
-            } else {
-              handleFillPlayfield(numberOfColumns).catch((e) => {
-                console.error(e);
-              });
-            }
-          }}
-          className="w-full"
-        >
-          Fill playfield
         </Button>
       </div>
       <DialogWindow
