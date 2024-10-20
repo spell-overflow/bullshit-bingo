@@ -8,11 +8,9 @@ import { faTrophyStar, faX } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "~/trpc/react";
 import { useCelebrateStore } from "../store";
-import { useFillPlayfield } from "../_components/hooks/useFillPlayfield";
-import { useDeleteTasklist } from "../_components/hooks/useDeleteTasklist";
-import { useDeletePlayfield } from "../_components/hooks/useDeletePlayfield";
 import { useRouter } from "next/navigation";
 import { toast } from "~/hooks/use-toast";
+import CreateGameDialog from "~/app/_components/createGameDialog";
 
 export type FieldObject = { text: string; crossed: boolean };
 
@@ -36,11 +34,8 @@ export default function Playfield(): JSX.Element {
 
   const [playfield, setPlayfield] = useState<FieldObject[]>([]);
   const [open, setOpen] = useState(false);
+  const [createGameDialogOpen, setCreateGameDialogOpen] = useState(false);
   const { setCelebrate } = useCelebrateStore();
-  const { handleFillPlayfield } = useFillPlayfield();
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
-  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
   const router = useRouter();
 
   const initializePlayfield = () => {
@@ -121,29 +116,25 @@ export default function Playfield(): JSX.Element {
           setCelebrate(false);
         }}
         title="Won Game!"
-        description='Congratulation! Click "same Bingolist" to play with the same list or "new Bingolist" to create a new bingolist.'
+        description="Congratulation! You won this game!"
         windowIcon={faTrophyStar}
-        primaryButtonText="New Game: Same Bingolist"
+        primaryButtonText="New Game"
         onPrimaryClick={async () => {
-          await handleFillPlayfield(numberOfColumns);
-          setOpen(false);
-          setCelebrate(false);
-        }}
-        secondaryButtonText="New Game: New Bingolist"
-        onSecondaryClick={async () => {
-          await handleDeleteTasklist();
-          await handleDeletePlayfield();
           setOpen(false);
           setCelebrate(false);
           router.push("/entrylist");
         }}
+        secondaryButtonText="Same Bingolist"
+        onSecondaryClick={() => {
+          setCreateGameDialogOpen(true);
+          setOpen(false);
+          setCelebrate(false);
+        }}
       >
         <div>
           <p>
-            Congratulation! <br /> Click{" "}
-            <span className="italic">same Bingolist</span> to play with the same
-            list or <span className="italic">new Bingolist</span> to create a
-            new bingolist.
+            Congratulation! <br />
+            You won this game!
           </p>
         </div>
       </DialogWindow>
@@ -165,6 +156,10 @@ export default function Playfield(): JSX.Element {
           />
         ))}
       </div>
+      <CreateGameDialog
+        open={createGameDialogOpen}
+        setOpen={setCreateGameDialogOpen}
+      />
     </div>
   );
 }
@@ -183,7 +178,7 @@ function PlayfieldElement({
         if (entry.text === "") {
           toast({
             title: "Empty Playfiels",
-            description: "Fill Playfield before crossing.",
+            description: "Create a Game before crossing.",
           });
           return;
         } else {
