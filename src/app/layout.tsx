@@ -15,7 +15,7 @@ import Lettering from "@/src/app/_components/lettering";
 export const metadata = {
   title: "Bullshit Bingo",
   description: "A Bullshit Bingo game by Anneke Hugenberg",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/tabIcon.svg" }],
 };
 
 export default function RootLayout({
