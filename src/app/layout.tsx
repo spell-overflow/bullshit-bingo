@@ -34,16 +34,14 @@ export default function RootLayout({
         >
           <TRPCReactProvider>
             <SessionContext>
-              <div className="flex min-h-screen w-full flex-col justify-between bg-background">
+              <div className="flex min-h-screen w-full flex-col bg-background">
                 <div className="mt-5 flex items-center justify-center gap-4">
                   <Lettering width="10rem" />
                   <Bubble className="hidden sm:flex" />
                 </div>
-                <NavBar className="mb-auto hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl" />
-                <div className="mx-2 rounded-lg bg-card shadow-lg sm:mx-auto">
-                  <ScrollArea className="flex max-h-[calc(100vh-200px)] flex-col justify-center">
-                    <div className="p-2 shadow sm:p-4">{children}</div>
-                  </ScrollArea>
+                <NavBar className="hidden w-4/5 justify-center self-center text-right sm:block sm:text-3xl" />
+                <div className="flex flex-grow items-center justify-center">
+                  <div className="h-full w-full">{children}</div>
                 </div>
                 <Footer className="hidden sm:flex" />
                 <Toaster />

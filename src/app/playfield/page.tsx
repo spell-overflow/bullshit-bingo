@@ -13,7 +13,7 @@ import { useDeleteTasklist } from "../_components/hooks/useDeleteTasklist";
 import { useDeletePlayfield } from "../_components/hooks/useDeletePlayfield";
 import { useRouter } from "next/navigation";
 import { toast } from "~/hooks/use-toast";
-
+import Container from "../_components/container";
 export type FieldObject = { text: string; crossed: boolean };
 
 export default function Playfield(): JSX.Element {
@@ -113,7 +113,7 @@ export default function Playfield(): JSX.Element {
   }, [playfield, fieldSize, numberOfColumns, setCelebrate]);
 
   return (
-    <div className="">
+    <Container className="">
       <DialogWindow
         open={open}
         onOpenChange={() => {
@@ -148,7 +148,7 @@ export default function Playfield(): JSX.Element {
         </div>
       </DialogWindow>
       {/* Playfield */}
-      <div className="grid grid-cols-5 grid-rows-5 items-center gap-2 overflow-hidden text-sm">
+      <div className="grid flex-grow grid-cols-5 grid-rows-5 items-center gap-2 overflow-hidden text-sm">
         {playfield.map((e, i) => (
           <PlayfieldElement
             key={i}
@@ -165,7 +165,7 @@ export default function Playfield(): JSX.Element {
           />
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
 
@@ -177,8 +177,9 @@ function PlayfieldElement({
   onChange: (state: boolean) => void;
 }): JSX.Element {
   return (
+    // <div className="flex aspect-square items-center justify-center bg-primary">
     <div
-      className="relative flex aspect-square min-h-12 cursor-default items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow sm:max-h-24"
+      className="flex aspect-square h-full w-full cursor-default items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow"
       onClick={() => {
         if (entry.text === "") {
           toast({
@@ -191,16 +192,16 @@ function PlayfieldElement({
         }
       }}
     >
-      {entry.text}
-      {entry.crossed ? (
-        <>
-          <div className="absolute flex items-center justify-center text-primary-foreground/70">
-            <FontAwesomeIcon icon={faX} size="5x" className="" />
-          </div>
-        </>
-      ) : (
-        <></>
+      {/* <div className="overflow-hidden p-1 text-xs"> */}
+      <div className="overflow-hidden p-1 text-xs sm:text-sm md:text-base">
+        {entry.text}
+      </div>
+      {entry.crossed && (
+        <div className="absolute inset-0 flex items-center justify-center text-primary-foreground/70">
+          <FontAwesomeIcon icon={faX} className="h-1/2 w-1/2" />
+        </div>
       )}
     </div>
+    // </div>
   );
 }
