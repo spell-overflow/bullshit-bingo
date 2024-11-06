@@ -1,8 +1,9 @@
 import SheetState from "../_components/sheetState";
+import Container from "../_components/container";
 
 export default function Impressum() {
   return (
-    <div className="shadow-none">
+    <Container className="my-4 flex h-full flex-col bg-card md:w-3/5">
       <div className="m-2 rounded-lg p-4">
         <SheetState />
         <div className="prose dark:prose-invert">
@@ -109,6 +110,6 @@ export default function Impressum() {
           </a>{" "}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

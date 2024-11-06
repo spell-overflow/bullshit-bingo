@@ -9,7 +9,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default function Home() {
   return (
-    <Container className="flex h-full flex-col bg-card">
+    <Container className="flex h-full flex-col bg-card md:w-2/5">
       <ScrollArea className="max-h-full flex-grow">
         <div className="m-3 rounded-xl bg-primary p-4 pt-2 text-primary-foreground">
           <Accordion type="single" collapsible className="my-6 w-full">

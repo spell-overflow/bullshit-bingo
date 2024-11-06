@@ -1,6 +1,8 @@
+import Container from "../_components/container";
+
 export default function Datenschutz() {
   return (
-    <div className="mx-2 my-1 flex shadow-none">
+    <Container className="my-4 flex h-full flex-col bg-card md:w-3/5">
       <div className="w-full max-w-full flex-auto rounded-lg p-4">
         <div className="prose dark:prose-invert">
           <h1>Datenschutz&shy;erkl&auml;rung</h1>
@@ -484,6 +486,6 @@ export default function Datenschutz() {
           </p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
