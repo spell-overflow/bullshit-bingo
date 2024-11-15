@@ -177,9 +177,8 @@ function PlayfieldElement({
   onChange: (state: boolean) => void;
 }): JSX.Element {
   return (
-    // <div className="flex aspect-square items-center justify-center bg-primary">
     <div
-      className="flex aspect-square h-full w-full cursor-default items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow"
+      className="relative flex aspect-square h-full w-full cursor-default items-center justify-center text-ellipsis rounded-sm bg-primary text-center text-primary-foreground shadow"
       onClick={() => {
         if (entry.text === "") {
           toast({
@@ -192,16 +191,14 @@ function PlayfieldElement({
         }
       }}
     >
-      {/* <div className="overflow-hidden p-1 text-xs"> */}
       <div className="overflow-hidden p-1 text-xs sm:text-sm md:text-base">
         {entry.text}
       </div>
       {entry.crossed && (
         <div className="absolute inset-0 flex items-center justify-center text-primary-foreground/70">
-          <FontAwesomeIcon icon={faX} className="h-1/2 w-1/2" />
+          <FontAwesomeIcon icon={faX} size="5x" className="" />
         </div>
       )}
     </div>
-    // </div>
   );
 }
