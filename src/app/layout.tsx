@@ -34,7 +34,7 @@ export default function RootLayout({
         >
           <TRPCReactProvider>
             <SessionContext>
-              <div className="flex min-h-screen w-full flex-col justify-between bg-background">
+              <div className="flex min-h-screen w-full flex-col bg-background">
                 <div className="mt-5 flex items-center justify-center gap-4">
                   <Lettering width="10rem" />
                   <Bubble className="hidden sm:flex" />

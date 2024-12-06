@@ -9,6 +9,8 @@ import {
 } from "@fortawesome/pro-regular-svg-icons";
 import DialogWindow from "../_components/dialogWindow";
 import CreateGameDialog from "../_components/createGameDialog";
+import Container from "../_components/container";
+
 export default function Games() {
   const [open, setOpen] = React.useState<boolean>(false);
   React.useState<boolean>(false);
@@ -29,61 +31,63 @@ export default function Games() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Button
-        variant="default"
-        onClick={() => {
-          setDialogTitle("Delete Playfield?");
-          setDialogText(
-            "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
-          );
-          setWindowIcon(faDiamondExclamation);
-          setPrimaryButtonText("No. Bring me back");
-          setOnPrimaryClick(() => () => {
-            setOpen(false);
-          });
-          setSecondaryButtonText("Yes, delete it");
-          setOnSecondaryClick(() => () => {
-            handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
-              console.error(e);
+      <Container className="flex flex-col">
+        <Button
+          variant="default"
+          onClick={() => {
+            setDialogTitle("Delete Playfield?");
+            setDialogText(
+              "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
+            );
+            setWindowIcon(faDiamondExclamation);
+            setPrimaryButtonText("No. Bring me back");
+            setOnPrimaryClick(() => () => {
+              setOpen(false);
             });
+            setSecondaryButtonText("Yes, delete it");
+            setOnSecondaryClick(() => () => {
+              handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
+                console.error(e);
+              });
+              setOpen(false);
+            });
+            setOpen(true);
+          }}
+          className="w-full"
+        >
+          delete Playfield
+        </Button>
+        <Button
+          className="w-full"
+          onClick={() => {
+            setCreateGameDialogOpen(true);
+          }}
+        >
+          Create Game
+        </Button>
+        <DialogWindow
+          open={open}
+          onOpenChange={() => {
             setOpen(false);
-          });
-          setOpen(true);
-        }}
-        className="w-full"
-      >
-        delete Playfield
-      </Button>
-      <Button
-        className="w-full"
-        onClick={() => {
-          setCreateGameDialogOpen(true);
-        }}
-      >
-        Create Game
-      </Button>
-      <DialogWindow
-        open={open}
-        onOpenChange={() => {
-          setOpen(false);
-        }}
-        title={dialogTitle}
-        windowIcon={windowIcon}
-        dialogText={dialogText}
-        primaryButtonText={primaryButtonText}
-        onPrimaryClick={
-          onPrimaryClick ??
-          (() => {
-            setOpen(false);
-          })
-        }
-        secondaryButtonText={secondaryButtonText}
-        onSecondaryClick={onSecondaryClick}
-      ></DialogWindow>
-      <CreateGameDialog
-        open={createGameDialogOpen}
-        setOpen={setCreateGameDialogOpen}
-      />
+          }}
+          title={dialogTitle}
+          windowIcon={windowIcon}
+          dialogText={dialogText}
+          primaryButtonText={primaryButtonText}
+          onPrimaryClick={
+            onPrimaryClick ??
+            (() => {
+              setOpen(false);
+            })
+          }
+          secondaryButtonText={secondaryButtonText}
+          onSecondaryClick={onSecondaryClick}
+        ></DialogWindow>
+        <CreateGameDialog
+          open={createGameDialogOpen}
+          setOpen={setCreateGameDialogOpen}
+        />
+      </Container>
     </div>
   );
 }

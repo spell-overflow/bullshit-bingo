@@ -8,6 +8,7 @@ import {
 import { faCircleXmark } from "@fortawesome/pro-regular-svg-icons/faCircleXmark";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import Container from "~/app/_components/container";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
@@ -98,7 +99,7 @@ export default function Tasklist(): JSX.Element {
     setEntryInput(event.target.value);
   };
   return (
-    <>
+    <Container className="flex flex-col">
       <div className="mb-4 flex items-center gap-2 bg-card">
         <Input
           type="text"
@@ -207,6 +208,6 @@ export default function Tasklist(): JSX.Element {
         open={createGameDialogOpen}
         setOpen={setCreateGameDialogOpen}
       />
-    </>
+    </Container>
   );
 }
