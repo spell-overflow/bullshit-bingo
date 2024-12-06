@@ -8,6 +8,7 @@ import {
   faIcons,
 } from "@fortawesome/pro-regular-svg-icons";
 import DialogWindow from "../_components/dialogWindow";
+import Container from "../_components/container";
 
 export default function Games() {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -26,7 +27,7 @@ export default function Games() {
   const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
 
   return (
-    <>
+    <Container className="flex flex-col">
       <Button
         variant="default"
         onClick={() => {
@@ -70,6 +71,6 @@ export default function Games() {
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
       />
-    </>
+    </Container>
   );
 }
