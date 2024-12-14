@@ -13,9 +13,9 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import DialogWindow from "~/app/_components/dialogWindow";
-import { useFillPlayfield } from "~/app/_components/hooks/useFillPlayfield";
 import { useDeleteTasklist } from "~/app/_components/hooks/useDeleteTasklist";
-import { useDeletePlayfield } from "~/app/_components/hooks/useDeletePlayfield";
+import { useCreateGame } from "~/app/_components/hooks/useCreateGame";
+import CreateGameDialog from "~/app/_components/createGameDialog";
 
 export default function Tasklist(): JSX.Element {
   const tasks = api.bingo.getTasks.useQuery();
@@ -28,7 +28,6 @@ export default function Tasklist(): JSX.Element {
       : false;
 
   const bingoEntries = tasks.status === "success" ? tasks.data : [];
-  const numberOfColumns = 5;
 
   const [entryInput, setEntryInput] = React.useState("");
   const [open, setOpen] = React.useState<boolean>(false);
@@ -45,10 +44,10 @@ export default function Tasklist(): JSX.Element {
     (() => void) | undefined
   >();
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const { handleFillPlayfield } = useFillPlayfield();
   const { handleDeleteTasklist } = useDeleteTasklist(setOpen, inputRef);
-  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
-
+  const { handleCreateGame } = useCreateGame();
+  const [createGameDialogOpen, setCreateGameDialogOpen] =
+    React.useState<boolean>(false);
   const addEntry = () => {
     const trimmedEntryInput = entryInput.trim();
 
@@ -173,38 +172,12 @@ export default function Tasklist(): JSX.Element {
           clear Tasklist
         </Button>
         <Button
-          variant="secondary"
-          onClick={() => {
-            if (isPlayfield === true) {
-              setDialogTitle("Delete Playfield?");
-              setDialogText(
-                "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
-              );
-              setWindowIcon(faDiamondExclamation);
-              setPrimaryButtonText("No. Bring me back");
-              setOnPrimaryClick(() => () => {
-                setOpen(false);
-              });
-              setSecondaryButtonText("Yes, delete it");
-              setOnSecondaryClick(() => () => {
-                handleDeletePlayfield().catch((e) => {
-                  console.error(e);
-                });
-                handleFillPlayfield(numberOfColumns).catch((e) => {
-                  console.error(e);
-                });
-                setOpen(false);
-              });
-              setOpen(true);
-            } else {
-              handleFillPlayfield(numberOfColumns).catch((e) => {
-                console.error(e);
-              });
-            }
-          }}
           className="w-full"
+          onClick={() => {
+            setCreateGameDialogOpen(true);
+          }}
         >
-          Fill playfield
+          Create Game
         </Button>
       </div>
       <DialogWindow
@@ -230,6 +203,10 @@ export default function Tasklist(): JSX.Element {
         }
         secondaryButtonText={secondaryButtonText}
         onSecondaryClick={onSecondaryClick}
+      />
+      <CreateGameDialog
+        open={createGameDialogOpen}
+        setOpen={setCreateGameDialogOpen}
       />
     </Container>
   );

@@ -5,10 +5,16 @@ import {
   tasklists,
   playfields,
   playfieldEntries,
+  games,
+  gameToPlayfield,
 } from "~/server/db/schema";
 import { desc, eq } from "drizzle-orm";
 
 export const bingoRouter = createTRPCRouter({
+  getUserId: protectedProcedure.query(({ ctx }) => {
+    return ctx.session.user.id;
+  }),
+
   getTasks: protectedProcedure.query(async ({ ctx }) => {
     const taskListId = (
       await ctx.db
@@ -17,11 +23,9 @@ export const bingoRouter = createTRPCRouter({
         .where(eq(tasklists.userId, ctx.session.user.id))
         .limit(1)
     )[0]?.id;
-
     if (!taskListId) {
       return [];
     }
-
     return ctx.db
       .select({
         id: tasks.id,
@@ -42,7 +46,6 @@ export const bingoRouter = createTRPCRouter({
           .where(eq(tasklists.userId, ctx.session.user.id))
           .limit(1)
       )[0]?.id;
-
       if (!tasklistId) {
         tasklistId = (
           await ctx.db
@@ -54,7 +57,6 @@ export const bingoRouter = createTRPCRouter({
           throw "Inserting new tasklist into database failed unexpected";
         }
       }
-
       return ctx.db.insert(tasks).values({ tasklistId, text: input });
     }),
 
@@ -69,43 +71,50 @@ export const bingoRouter = createTRPCRouter({
       .select({ id: tasklists.id })
       .from(tasklists)
       .where(eq(tasklists.userId, ctx.session.user.id));
-
     if (!tasklist) {
       throw new Error("Tasklist not found");
     }
-
     const taskListId = tasklist[0]?.id;
-
     if (taskListId) {
       await ctx.db.delete(tasks).where(eq(tasks.tasklistId, taskListId));
-
       return { success: true };
     }
   }),
 
-  createPlayfield: protectedProcedure
-    .input(z.array(z.string()))
+  createGame: protectedProcedure
+    .input(z.object({ name: z.string(), entries: z.array(z.string()) }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-
       try {
-        const playfield = await ctx.db
-          .insert(playfields)
-          .values({
-            userId,
-          })
-          .returning();
+        return ctx.db.transaction(async (tx) => {
+          const playfield = await tx
+            .insert(playfields)
+            .values({
+              userId,
+            })
+            .returning();
+          const playfieldId = playfield[0]?.id;
+          if (playfieldId) {
+            const entries = input.entries.map((text) => ({
+              playfieldId,
+              text,
+              isCrossed: false,
+            }));
+            await tx.insert(playfieldEntries).values(entries);
+          }
 
-        const playfieldId = playfield[0]?.id;
-        if (playfieldId) {
-          const entries = input.map((text) => ({
-            playfieldId,
-            text,
-            isCrossed: false,
-          }));
-
-          return ctx.db.insert(playfieldEntries).values(entries);
-        }
+          const game = await tx
+            .insert(games)
+            .values({ userId: ctx.session.user.id, name: input.name })
+            .returning();
+          const gameId = game[0]?.id;
+          if (gameId && playfieldId) {
+            return tx.insert(gameToPlayfield).values({
+              gameId,
+              playfieldId,
+            });
+          }
+        });
       } catch (e) {
         console.error(e);
         throw e;
@@ -129,13 +138,10 @@ export const bingoRouter = createTRPCRouter({
       .select({ id: playfields.id })
       .from(playfields)
       .where(eq(playfields.userId, ctx.session.user.id));
-
     if (!playfield) {
       throw new Error("Playfield not found");
     }
-
     const playfieldId = playfield[0]?.id;
-
     if (playfieldId) {
       await ctx.db
         .delete(playfieldEntries)

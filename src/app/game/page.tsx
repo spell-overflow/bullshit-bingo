@@ -8,6 +8,7 @@ import {
   faIcons,
 } from "@fortawesome/pro-regular-svg-icons";
 import DialogWindow from "../_components/dialogWindow";
+import CreateGameDialog from "../_components/createGameDialog";
 import Container from "../_components/container";
 
 export default function Games() {
@@ -24,53 +25,69 @@ export default function Games() {
   const [onSecondaryClick, setOnSecondaryClick] = React.useState<
     (() => void) | undefined
   >();
-  const { handleDeletePlayfield } = useDeletePlayfield(setOpen);
+  const handleDeletePlayfield = useDeletePlayfield(setOpen);
+  const [createGameDialogOpen, setCreateGameDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
-    <Container className="flex flex-col">
-      <Button
-        variant="default"
-        onClick={() => {
-          setDialogTitle("Delete Playfield?");
-          setDialogText(
-            "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
-          );
-          setWindowIcon(faDiamondExclamation);
-          setPrimaryButtonText("No. Bring me back");
-          setOnPrimaryClick(() => () => {
-            setOpen(false);
-          });
-          setSecondaryButtonText("Yes, delete it");
-          setOnSecondaryClick(() => () => {
-            handleDeletePlayfield().catch((e) => {
-              console.error(e);
+    <div className="flex flex-col gap-4">
+      <Container className="flex flex-col">
+        <Button
+          variant="default"
+          onClick={() => {
+            setDialogTitle("Delete Playfield?");
+            setDialogText(
+              "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
+            );
+            setWindowIcon(faDiamondExclamation);
+            setPrimaryButtonText("No. Bring me back");
+            setOnPrimaryClick(() => () => {
+              setOpen(false);
             });
+            setSecondaryButtonText("Yes, delete it");
+            setOnSecondaryClick(() => () => {
+              handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
+                console.error(e);
+              });
+              setOpen(false);
+            });
+            setOpen(true);
+          }}
+          className="w-full"
+        >
+          delete Playfield
+        </Button>
+        <Button
+          className="w-full"
+          onClick={() => {
+            setCreateGameDialogOpen(true);
+          }}
+        >
+          Create Game
+        </Button>
+        <DialogWindow
+          open={open}
+          onOpenChange={() => {
             setOpen(false);
-          });
-          setOpen(true);
-        }}
-        className="w-full"
-      >
-        delete Playfield
-      </Button>
-      <DialogWindow
-        open={open}
-        onOpenChange={() => {
-          setOpen(false);
-        }}
-        title={dialogTitle}
-        windowIcon={windowIcon}
-        dialogText={dialogText}
-        primaryButtonText={primaryButtonText}
-        onPrimaryClick={
-          onPrimaryClick ??
-          (() => {
-            setOpen(false);
-          })
-        }
-        secondaryButtonText={secondaryButtonText}
-        onSecondaryClick={onSecondaryClick}
-      />
-    </Container>
+          }}
+          title={dialogTitle}
+          windowIcon={windowIcon}
+          dialogText={dialogText}
+          primaryButtonText={primaryButtonText}
+          onPrimaryClick={
+            onPrimaryClick ??
+            (() => {
+              setOpen(false);
+            })
+          }
+          secondaryButtonText={secondaryButtonText}
+          onSecondaryClick={onSecondaryClick}
+        ></DialogWindow>
+        <CreateGameDialog
+          open={createGameDialogOpen}
+          setOpen={setCreateGameDialogOpen}
+        />
+      </Container>
+    </div>
   );
 }

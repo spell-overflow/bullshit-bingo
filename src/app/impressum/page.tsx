@@ -1,11 +1,9 @@
-import SheetState from "../_components/sheetState";
 import Container from "../_components/container";
 
 export default function Impressum() {
   return (
     <Container className="my-4 flex h-full flex-col bg-card md:w-3/5">
       <div className="m-2 rounded-lg p-4">
-        <SheetState />
         <div className="prose dark:prose-invert">
           <h1>Impressum</h1>
           <p>Angaben gemäß § 5 DDG</p>
