@@ -23,7 +23,7 @@ const MobileNav: React.FC<MobileNavProperties> = ({ className }) => {
 
   return (
     <div className={className}>
-      <div className="bottom-0 w-full rounded-t-md bg-card py-2">
+      <div className="fixed bottom-0 w-full rounded-t-md bg-card py-2">
         <div className="my-1 flex text-center">
           {navItems.navBar.map((item, index) =>
             item.subItems ? (
