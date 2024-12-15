@@ -2,7 +2,7 @@ import Container from "../_components/container";
 
 export default function Impressum() {
   return (
-    <Container className="my-4 flex h-full flex-col bg-card md:w-3/5">
+    <Container className="my-4 flex h-full flex-col bg-card">
       <div className="m-2 rounded-lg p-4">
         <div className="prose dark:prose-invert">
           <h1>Impressum</h1>

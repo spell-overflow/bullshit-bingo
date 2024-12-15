@@ -2,8 +2,8 @@ import Container from "../_components/container";
 
 export default function Datenschutz() {
   return (
-    <Container className="my-4 flex h-full flex-col bg-card md:w-3/5">
-      <div className="w-full max-w-full flex-auto rounded-lg p-4">
+    <Container className="my-4 flex h-full flex-col bg-card">
+      <div className="flex-auto rounded-lg p-4">
         <div className="prose dark:prose-invert">
           <h1>Datenschutz&shy;erkl&auml;rung</h1>
           <h2>1. Datenschutz auf einen Blick</h2>
