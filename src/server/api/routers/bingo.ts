@@ -150,4 +150,12 @@ export const bingoRouter = createTRPCRouter({
     }
     return { success: true };
   }),
+
+  getGames: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select()
+      .from(games)
+      .where(eq(games.userId, ctx.session.user.id))
+      .orderBy(desc(games.updatedAt));
+  }),
 });

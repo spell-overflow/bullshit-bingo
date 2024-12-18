@@ -10,6 +10,8 @@ import {
 import DialogWindow from "../_components/dialogWindow";
 import CreateGameDialog from "../_components/createGameDialog";
 import Container from "../_components/container";
+import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
+import { api } from "~/trpc/react";
 
 export default function Games() {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -28,43 +30,58 @@ export default function Games() {
   const handleDeletePlayfield = useDeletePlayfield(setOpen);
   const [createGameDialogOpen, setCreateGameDialogOpen] =
     React.useState<boolean>(false);
+  const games = api.bingo.getGames.useQuery();
 
   return (
     <div className="flex flex-col gap-4">
-      <Container className="flex flex-col">
-        <Button
-          variant="default"
-          onClick={() => {
-            setDialogTitle("Delete Playfield?");
-            setDialogText(
-              "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
-            );
-            setWindowIcon(faDiamondExclamation);
-            setPrimaryButtonText("No. Bring me back");
-            setOnPrimaryClick(() => () => {
-              setOpen(false);
-            });
-            setSecondaryButtonText("Yes, delete it");
-            setOnSecondaryClick(() => () => {
-              handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
-                console.error(e);
+      <Container className="grid grid-cols-2 gap-4">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Games</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul>
+              {games.data?.map((game) => <li key={game.id}>{game.name}</li>)}
+            </ul>
+          </CardContent>
+        </Card>
+
+        <div className="flex flex-col gap-4">
+          <Button
+            variant="default"
+            onClick={() => {
+              setDialogTitle("Delete Playfield?");
+              setDialogText(
+                "Are you sure you want to delete the whole Playfield and Game? This can't be undone!",
+              );
+              setWindowIcon(faDiamondExclamation);
+              setPrimaryButtonText("No. Bring me back");
+              setOnPrimaryClick(() => () => {
+                setOpen(false);
               });
-              setOpen(false);
-            });
-            setOpen(true);
-          }}
-          className="w-full"
-        >
-          delete Playfield
-        </Button>
-        <Button
-          className="w-full"
-          onClick={() => {
-            setCreateGameDialogOpen(true);
-          }}
-        >
-          Create Game
-        </Button>
+              setSecondaryButtonText("Yes, delete it");
+              setOnSecondaryClick(() => () => {
+                handleDeletePlayfield.handleDeletePlayfield().catch((e) => {
+                  console.error(e);
+                });
+                setOpen(false);
+              });
+              setOpen(true);
+            }}
+            className="w-full"
+          >
+            delete Playfield
+          </Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              setCreateGameDialogOpen(true);
+            }}
+          >
+            Create Game
+          </Button>
+        </div>
+
         <DialogWindow
           open={open}
           onOpenChange={() => {
