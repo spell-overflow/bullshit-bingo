@@ -12,6 +12,7 @@ import CreateGameDialog from "../_components/createGameDialog";
 import Container from "../_components/container";
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { api } from "~/trpc/react";
+import { games } from "~/server/db/schema";
 
 export default function Games() {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -31,6 +32,8 @@ export default function Games() {
   const [createGameDialogOpen, setCreateGameDialogOpen] =
     React.useState<boolean>(false);
   const games = api.bingo.getGames.useQuery();
+  type Game = NonNullable<typeof games.data>[number];
+  const [selectedGame, setSelectedGame] = React.useState<Game | null>(null);
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,9 +43,41 @@ export default function Games() {
             <CardTitle>Games</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul>
-              {games.data?.map((game) => <li key={game.id}>{game.name}</li>)}
+            <ul className="space-y-2">
+              {games.data?.map((game) => (
+                <li
+                  key={game.id}
+                  onClick={() => setSelectedGame(game)}
+                  className="cursor-pointer rounded-md p-2 hover:bg-gray-100"
+                >
+                  {game.name}
+                </li>
+              ))}
             </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Game Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {selectedGame ? (
+              <div className="space-y-2">
+                <p>
+                  <strong>Name:</strong> {selectedGame?.name}
+                </p>
+                <p>
+                  <strong>ID:</strong> {selectedGame?.id}
+                </p>
+                <p>
+                  <strong>Start Date: </strong>{" "}
+                  {selectedGame?.createdAt.toLocaleDateString()}
+                </p>
+              </div>
+            ) : (
+              <p className="text-gray-500">choose a game from the list</p>
+            )}
           </CardContent>
         </Card>
 
